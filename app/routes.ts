@@ -4,6 +4,7 @@ export default [
     index("routes/home.tsx"),
     layout("routes/layout.tsx",[
         route("product","routes/product.tsx"),
+        route("dashboard","routes/dashboard.tsx"),
     ]),
 
 ] satisfies RouteConfig;
