@@ -6,7 +6,7 @@ import { ThemeProvider } from "./theme-provider";
 
 export default function Layout() {
     return (
-         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+         <ThemeProvider defaultTheme="dark" defaultThemeColor="default" storageKey="vite-ui-theme">
      
             <SidebarProvider
                 style={
