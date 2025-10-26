@@ -1,3 +1,4 @@
+import Welcome from '~/home/welcome';
 import type { Route } from './+types/home';
 
 export function meta({}: Route.MetaArgs) {
@@ -8,5 +9,5 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <div>Helo World!</div>;
+  return <Welcome />;
 }
