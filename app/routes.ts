@@ -7,6 +7,8 @@ export default [
 
     layout("components/layout-home.tsx",[
          index("routes/home.tsx"),
+
+
          route("error/401","errors/401.tsx"),
          route("error/403","errors/403.tsx"),
          route("error/500","errors/500.tsx"),
@@ -17,7 +19,14 @@ export default [
    ...prefix("dashboard", [
     layout("components/layout.tsx",[
         index("routes/dashboard.tsx"),
-        route("product","routes/product.tsx"),
+        route("product","routes/dashboard/product.tsx"),
+        route("account","routes/dashboard/account.tsx"),
+        route("billing","routes/dashboard/billing.tsx"),
+        route("notifications","routes/dashboard/notifications.tsx"),
+
+
+
+
         route("error/401","errors/dashboard/401.tsx"),
          route("error/403","errors/dashboard/403.tsx"),
          route("error/500","errors/dashboard/500.tsx"),

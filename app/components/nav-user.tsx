@@ -5,6 +5,7 @@ import {
   IconNotification,
   IconUserCircle,
 } from "@tabler/icons-react"
+import { Link } from "react-router"
 
 import {
   Avatar,
@@ -83,14 +84,17 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
+                <Link to="/dashboard/account" className="absolute inset-0" />
                 <IconUserCircle />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
+                <Link to="/dashboard/billing" className="absolute inset-0" />
                 <IconCreditCard />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>
+                <Link to="/dashboard/notifications" className="absolute inset-0" />
                 <IconNotification />
                 Notifications
               </DropdownMenuItem>

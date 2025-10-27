@@ -10,8 +10,11 @@ import { useTheme } from "./theme-provider";
 export function SiteHeader() {
 
   const location = useLocation();
-  const pathname: string = location.pathname;
-  const title = pathname[1].toUpperCase() + pathname.substring(2);
+const pathname: string = location.pathname;
+const segments: string[] = pathname.split("/").filter(Boolean);
+const lastSegment: string = segments.length ? segments[segments.length - 1] : "home";
+const title: string = lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
+
   const {theme} = useTheme()
 
 
