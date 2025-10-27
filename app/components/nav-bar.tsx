@@ -10,7 +10,7 @@ interface NavbarProps {
   isAuthenticated?: boolean;
 }
 
-export function Navbar({ isAuthenticated = false }: NavbarProps) {
+export function Navbar({ isAuthenticated = true }: NavbarProps) {
     const isMobile = useIsMobile();
     const authMenu = getAuthMenu(isAuthenticated)
    return (
@@ -97,11 +97,11 @@ function DesktopNavigation({ authMenu }: NavigationProps) {
       {/* Auth Menu Items */}
       <div className="flex items-center gap-4 ml-6">
         {authMenu.map((item) => (
-          <Link key={item.href} to={item.href}>
+          <a key={item.href} href={item.href}>
             <Button variant={item.variant}>
-              {item.label}
+              {item.label} 
             </Button>
-          </Link>
+          </a>
         ))}
       </div>
     </div>
