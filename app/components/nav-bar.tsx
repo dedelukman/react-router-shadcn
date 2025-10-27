@@ -97,11 +97,11 @@ function DesktopNavigation({ authMenu }: NavigationProps) {
       {/* Auth Menu Items */}
       <div className="flex items-center gap-4 ml-6">
         {authMenu.map((item) => (
-          <a key={item.href} href={item.href}>
+          <Link key={item.href} to={item.href}>
             <Button variant={item.variant}>
               {item.label} 
             </Button>
-          </a>
+          </Link>
         ))}
       </div>
     </div>
