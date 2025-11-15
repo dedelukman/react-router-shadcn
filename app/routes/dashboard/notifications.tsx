@@ -69,10 +69,40 @@ export default function Page() {
   React.useEffect(() => {
     try {
       localStorage.setItem('app_notifications', JSON.stringify(items));
+      // notify other listeners in same tab
+      window.dispatchEvent(new Event('app_notifications_changed'));
     } catch {}
   }, [items]);
 
+  // Listen for updates coming from other parts of the app (popover or other tabs)
+  React.useEffect(() => {
+    function handleUpdate() {
+      try {
+        const raw = localStorage.getItem('app_notifications');
+        const parsed = raw ? (JSON.parse(raw) as Notification[]) : SAMPLE;
+        // update only when different
+        const a = JSON.stringify(parsed || []);
+        const b = JSON.stringify(items || []);
+        if (a !== b) setItems(parsed);
+      } catch {
+        // ignore
+      }
+    }
+
+    function onStorage(e: StorageEvent) {
+      if (e.key === 'app_notifications') handleUpdate();
+    }
+
+    window.addEventListener('app_notifications_changed', handleUpdate);
+    window.addEventListener('storage', onStorage);
+    return () => {
+      window.removeEventListener('app_notifications_changed', handleUpdate);
+      window.removeEventListener('storage', onStorage);
+    };
+  }, [items]);
+
   const counts = React.useMemo(() => {
+    // 'All' shows all notifications (including archived)
     const all = items.length;
     const fav = items.filter((i) => i.favorite && !i.archived).length;
     const archived = items.filter((i) => i.archived).length;
@@ -149,7 +179,8 @@ export default function Page() {
     .filter((it) => {
       if (tab === 'favorites') return it.favorite && !it.archived;
       if (tab === 'archived') return it.archived;
-      return !it.archived;
+      // 'all' should include everything
+      return true;
     })
     .filter((it) => {
       if (!query) return true;
