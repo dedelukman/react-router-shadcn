@@ -1,6 +1,7 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import { Button } from "./ui/button"
 import { useTheme } from "./theme-provider"
+import { Check } from "lucide-react"
 
 const THEME_OPTIONS = [
   { value: "default", color: "text-gray-400", label: "Default" },
@@ -14,7 +15,7 @@ const THEME_OPTIONS = [
 ] as const
 
 export function ThemeToggle() {
-  const { setThemeColor } = useTheme()
+  const { setThemeColor, themeColor } = useTheme()
 
   return (
     <DropdownMenu>
@@ -32,6 +33,7 @@ export function ThemeToggle() {
             className={color}
           >
             {label}
+            {value === themeColor && <Check className='ml-auto size-4' />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
