@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { Button } from '~/components/ui/button';
-import { Card } from '~/components/ui/card';
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+} from '~/components/ui/card';
+import { Badge } from '~/components/ui/badge';
 import { IconDownload, IconEye, IconCreditCard } from '@tabler/icons-react';
 import {
   Table,
@@ -98,51 +106,79 @@ export default function Page() {
   return (
     <div className='m-2 grid grid-cols-1 lg:grid-cols-3 gap-6'>
       <div className='lg:col-span-1'>
-        <Card className='p-4'>
-          <h2 className='text-lg font-semibold'>Subscription</h2>
-          <p className='text-muted-foreground text-sm mb-4'>
-            Choose a plan that fits your needs.
-          </p>
-
-          <div className='flex flex-col gap-3'>
-            {PLANS.map((p) => (
-              <label
-                key={p.id}
-                className='border rounded-md p-3 flex items-center justify-between'
+        <Card>
+          <CardHeader>
+            <div>
+              <CardTitle>Subscription</CardTitle>
+              <CardDescription>
+                Choose a plan that fits your needs.
+              </CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className='flex flex-col gap-3'>
+              {PLANS.map((p) => {
+                const active = selectedPlan === p.id;
+                return (
+                  <label
+                    key={p.id}
+                    className={
+                      `flex items-center justify-between gap-4 p-3 rounded-md border transition-colors cursor-pointer ` +
+                      (active
+                        ? 'bg-muted/10 border-primary'
+                        : 'hover:bg-muted/5 border-border')
+                    }
+                    onClick={() => setSelectedPlan(p.id)}
+                  >
+                    <div>
+                      <div className='font-medium'>{p.name}</div>
+                      <div className='text-sm text-muted-foreground'>
+                        {p.desc}
+                      </div>
+                    </div>
+                    <div className='flex items-center gap-3'>
+                      <Badge variant='outline' className='text-sm'>
+                        {p.price}
+                      </Badge>
+                      <input
+                        type='radio'
+                        name='plan'
+                        value={p.id}
+                        checked={active}
+                        onChange={() => setSelectedPlan(p.id)}
+                        className='sr-only'
+                        aria-label={p.name}
+                      />
+                      <div
+                        className={
+                          active
+                            ? 'h-4 w-4 rounded-full bg-primary'
+                            : 'h-4 w-4 rounded-full border'
+                        }
+                        aria-hidden
+                      />
+                    </div>
+                  </label>
+                );
+              })}
+            </div>
+          </CardContent>
+          <CardFooter>
+            <div className='flex items-center gap-2'>
+              <Button onClick={() => alert(`Subscribed to ${selectedPlan}`)}>
+                Update Plan
+              </Button>
+              <Button
+                variant='outline'
+                onClick={() => {
+                  setSelectedPlan('basic');
+                  localStorage.removeItem('billing_plan');
+                }}
               >
-                <div>
-                  <div className='font-medium'>{p.name}</div>
-                  <div className='text-sm text-muted-foreground'>{p.desc}</div>
-                </div>
-                <div className='flex items-center gap-4'>
-                  <div className='text-sm text-muted-foreground'>{p.price}</div>
-                  <input
-                    type='radio'
-                    name='plan'
-                    value={p.id}
-                    checked={selectedPlan === p.id}
-                    onChange={() => setSelectedPlan(p.id)}
-                    className='radio'
-                  />
-                </div>
-              </label>
-            ))}
-          </div>
-
-          <div className='mt-4 flex gap-2'>
-            <Button onClick={() => alert(`Subscribed to ${selectedPlan}`)}>
-              Update Plan
-            </Button>
-            <Button
-              variant='outline'
-              onClick={() => {
-                setSelectedPlan('basic');
-                localStorage.removeItem('billing_plan');
-              }}
-            >
-              Reset
-            </Button>
-          </div>
+                Reset
+              </Button>
+            </div>
+          </CardFooter>
         </Card>
       </div>
 
@@ -172,7 +208,7 @@ export default function Page() {
             </div>
           </div>
 
-          <Table>
+          <Table className='text-sm'>
             <TableHeader>
               <TableRow>
                 <TableHead>Invoice</TableHead>
@@ -190,29 +226,42 @@ export default function Page() {
                   <TableCell>{inv.date}</TableCell>
                   <TableCell>{inv.plan}</TableCell>
                   <TableCell className='text-right'>{inv.amount}</TableCell>
-                  <TableCell
-                    className={
-                      inv.status === 'paid'
-                        ? 'text-green-500'
-                        : inv.status === 'pending'
-                          ? 'text-orange-500'
-                          : 'text-red-500'
-                    }
-                  >
-                    {inv.status}
+                  <TableCell>
+                    {inv.status === 'paid' ? (
+                      <Badge
+                        className='border-green-200 text-green-700'
+                        variant='outline'
+                      >
+                        Paid
+                      </Badge>
+                    ) : inv.status === 'pending' ? (
+                      <Badge
+                        className='border-orange-200 text-orange-700'
+                        variant='outline'
+                      >
+                        Pending
+                      </Badge>
+                    ) : (
+                      <Badge
+                        className='border-red-200 text-red-700'
+                        variant='outline'
+                      >
+                        Failed
+                      </Badge>
+                    )}
                   </TableCell>
                   <TableCell>
                     <div className='flex items-center gap-2'>
                       <Button
                         variant='ghost'
-                        size='sm'
+                        size='icon-sm'
                         onClick={() => viewInvoice(inv)}
                       >
                         <IconEye className='size-4' />
                       </Button>
                       <Button
                         variant='ghost'
-                        size='sm'
+                        size='icon-sm'
                         onClick={() => downloadInvoice(inv)}
                       >
                         <IconDownload className='size-4' />
