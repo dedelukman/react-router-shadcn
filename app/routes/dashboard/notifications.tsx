@@ -103,7 +103,7 @@ export default function Page() {
 
   const counts = React.useMemo(() => {
     // 'All' shows all notifications (including archived)
-    const all = items.length;
+    const all = items.filter((i) => !i.archived).length;
     const fav = items.filter((i) => i.favorite && !i.archived).length;
     const archived = items.filter((i) => i.archived).length;
     const unread = items.filter((i) => !i.read && !i.archived).length;
@@ -179,6 +179,7 @@ export default function Page() {
     .filter((it) => {
       if (tab === 'favorites') return it.favorite && !it.archived;
       if (tab === 'archived') return it.archived;
+      if (tab === 'all') return !it.archived;
       // 'all' should include everything
       return true;
     })
@@ -342,7 +343,9 @@ export default function Page() {
                         aria-label={n.archived ? 'Unarchive' : 'Archive'}
                         onClick={() => toggleArchive(n.id)}
                       >
-                        <IconArchive />
+                        <IconArchive 
+                         className={n.archived ? 'opacity-50' : ''}
+                        />
                       </Button>
                       <Button
                         variant='ghost'
