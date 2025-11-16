@@ -96,7 +96,7 @@ export default function Settings() {
         </p>
       </div>
 
-      <Tabs defaultValue='logo' className='w-full'>
+      <Tabs defaultValue='company' className='w-full'>
         <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='company'>Company</TabsTrigger>
           <TabsTrigger value='website'>Website Frontend</TabsTrigger>
