@@ -1,0 +1,47 @@
+{
+    "login": "Login",
+  "signup": "Sign Up",
+  "home": "Home",
+
+  "error": {
+    "401": "Unauthorized",
+    "403": "Forbidden",
+    "500": "Server Error",
+    "503": "Service Unavailable",
+    "404": "Page Not Found"
+  },
+
+
+  "dashboard": {
+    "": "Dashboard",
+    "settings": "Settings",
+    "gethelp": "Get Help",
+    "search": "Search",
+    "account": "Account",
+    "billing": "Billing",
+    "notifications": "Notifications",
+
+    "error": {
+      "401": "Unauthorized (Dashboard)",
+      "403": "Forbidden (Dashboard)",
+      "500": "Server Error (Dashboard)",
+      "503": "Service Unavailable (Dashboard)",
+      "404": "Page Not Found (Dashboard)"
+    }
+  },
+
+
+  "settings": "Settings",
+  "settingsdetail": "Manage your application settings: branding, company info, and website frontend.",
+  "companyinfo": "Company Info",
+  "companycardtitle": "Company Information",
+  "companycarddescription": "Update your company details such as name, address, and contact information.",
+  "companylogo": "Company Logo",
+
+
+
+
+  "notifications": "Notifications",
+  "language": "Language",
+  "welcome": "Welcome"
+}

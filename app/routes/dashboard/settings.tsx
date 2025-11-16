@@ -18,6 +18,7 @@ import {
   FieldError,
 } from '~/components/ui/field';
 import { Avatar, AvatarImage, AvatarFallback } from '~/components/ui/avatar';
+import { useTranslation } from "react-i18next";
 
 export default function Settings() {
   // Logo Tab State
@@ -45,6 +46,10 @@ export default function Settings() {
 
   // File input refs
   const logoFileRef = React.useRef<HTMLInputElement>(null);
+
+   const { t } = useTranslation();
+
+
 
   function handleLogoUpload() {
     logoFileRef.current?.click();
@@ -89,16 +94,15 @@ export default function Settings() {
   return (
     <div className='space-y-6 m-4'>
       <div>
-        <h1 className='text-2xl font-semibold'>Settings</h1>
+        <h1 className='text-2xl font-semibold'>{t("settings")}</h1>
         <p className='text-sm text-muted-foreground'>
-          Manage your application settings: branding, company info, and website
-          frontend.
+          {t("settingsdetail")}
         </p>
       </div>
 
       <Tabs defaultValue='company' className='w-full'>
         <TabsList className='grid w-full grid-cols-2'>
-          <TabsTrigger value='company'>Company</TabsTrigger>
+          <TabsTrigger value='company'>{t("companyinfo")}</TabsTrigger>
           <TabsTrigger value='website'>Website Frontend</TabsTrigger>
         </TabsList>
 
@@ -106,9 +110,9 @@ export default function Settings() {
         <TabsContent value='company' className='space-y-4'>
           <Card>
             <CardHeader>
-              <CardTitle>Company Information & Logo</CardTitle>
+              <CardTitle>{t("companycardtitle")}</CardTitle>
               <CardDescription>
-                Update your company details, contact information, and logo.
+                {t("companycarddescription")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -116,7 +120,7 @@ export default function Settings() {
                 {/* Logo */}
                 <div className='space-y-2'>
                   <label className='block text-sm font-medium'>
-                    Company Logo
+                    {t("companylogo")}
                   </label>
                   <div className='flex items-center gap-4'>
                     <Avatar className='h-16 w-16'>

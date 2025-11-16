@@ -12,6 +12,7 @@ import {
   import "./app.css";
   import { useNavigate } from "react-router";
   import { AuthProvider } from "~/lib/auth";
+  import './i18n/i18n';
 
   export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },

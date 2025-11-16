@@ -1,0 +1,47 @@
+{
+    "login": "Masuk",
+  "signup": "Daftar",
+  "home": "Beranda",
+
+  "error": {
+    "401": "Tidak Diizinkan",
+    "403": "Akses Dilarang",
+    "500": "Kesalahan Server",
+    "503": "Layanan Tidak Tersedia",
+    "404": "Halaman Tidak Ditemukan"
+  },
+
+  "dashboard": {
+    "": "Dasbor",
+    "settings": "Pengaturan",
+    "gethelp": "Bantuan",
+    "search": "Pencarian",
+    "account": "Akun",
+    "billing": "Tagihan",
+    "notifications": "Notifikasi",
+
+    "error": {
+      "401": "Tidak Diizinkan (Dasbor)",
+      "403": "Akses Dilarang (Dasbor)",
+      "500": "Kesalahan Server (Dasbor)",
+      "503": "Layanan Tidak Tersedia (Dasbor)",
+      "404": "Halaman Tidak Ditemukan (Dasbor)"
+    }
+  },
+
+  "settings": "Pengaturan",
+  "settingsdetail": "Kelola pengaturan aplikasi Anda: merek, info perusahaan, dan frontend situs web.",
+  "companyinfo": "Info Perusahaan",
+  "companycardtitle": "Informasi Perusahaan",
+  "companycarddescription": "Perbarui detail perusahaan Anda seperti nama, alamat, dan informasi kontak.",
+  "companylogo": "Logo Perusahaan",
+
+
+
+  "notifications": "Notifikasi",
+  "language": "Bahasa",
+  "welcome": "Selamat Datang"
+
+
+
+}

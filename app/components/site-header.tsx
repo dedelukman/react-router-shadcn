@@ -5,18 +5,16 @@ import { ModeToggle } from './mode-toggle';
 import { ThemeToggle } from './theme-toggle';
 import NotificationsPopover from './notifications-popover';
 import { useTheme } from './theme-provider';
+import LanguageToggle from './language-toggle';
+import { useTranslation } from 'react-i18next';
+import { translateTitle } from '~/i18n/translate-title';
 
 export function SiteHeader() {
+  const {i18n} = useTranslation();
   const location = useLocation();
-  const pathname: string = location.pathname;
-  const segments: string[] = pathname.split('/').filter(Boolean);
-  const lastSegment: string = segments.length
-    ? segments[segments.length - 1]
-    : 'home';
-  const title: string =
-    lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
-
   const { theme } = useTheme();
+
+  const title = translateTitle(location.pathname);
 
   return (
     <header className='flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)'>
@@ -29,6 +27,7 @@ export function SiteHeader() {
         <h1 className='text-base font-medium'>{title}</h1>
         <div className='ml-auto flex items-center gap-2'>
           <NotificationsPopover />
+          <LanguageToggle />
           <ModeToggle />
           {theme !== 'system' && <ThemeToggle />}
         </div>
