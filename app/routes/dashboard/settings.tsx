@@ -20,9 +20,8 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from '~/components/ui/avatar';
 
 export default function Settings() {
-  // Logo & Icon Tab State
+  // Logo Tab State
   const [logoUrl, setLogoUrl] = React.useState('');
-  const [iconUrl, setIconUrl] = React.useState('');
   const [logoError, setLogoError] = React.useState('');
 
   // Company Tab State
@@ -43,14 +42,9 @@ export default function Settings() {
 
   // File input refs
   const logoFileRef = React.useRef<HTMLInputElement>(null);
-  const iconFileRef = React.useRef<HTMLInputElement>(null);
 
   function handleLogoUpload() {
     logoFileRef.current?.click();
-  }
-
-  function handleIconUpload() {
-    iconFileRef.current?.click();
   }
 
   function handleFileChange(
@@ -65,16 +59,6 @@ export default function Settings() {
       };
       reader.readAsDataURL(file);
     }
-  }
-
-  function handleSaveLogo(e: React.FormEvent) {
-    e.preventDefault();
-    setLogoError('');
-    if (!logoUrl && !iconUrl) {
-      setLogoError('Please upload at least a logo or icon.');
-      return;
-    }
-    alert('Logo & Icon settings saved (local)');
   }
 
   function handleSaveCompany(e: React.FormEvent) {
@@ -110,26 +94,27 @@ export default function Settings() {
       </div>
 
       <Tabs defaultValue='logo' className='w-full'>
-        <TabsList className='grid w-full grid-cols-3'>
-          <TabsTrigger value='logo'>Logo & Icon</TabsTrigger>
+        <TabsList className='grid w-full grid-cols-2'>
           <TabsTrigger value='company'>Company</TabsTrigger>
           <TabsTrigger value='website'>Website Frontend</TabsTrigger>
         </TabsList>
 
-        {/* Logo & Icon Tab */}
-        <TabsContent value='logo' className='space-y-4'>
+        {/* Company Tab */}
+        <TabsContent value='company' className='space-y-4'>
           <Card>
             <CardHeader>
-              <CardTitle>Logo & Icon Settings</CardTitle>
+              <CardTitle>Company Information & Logo</CardTitle>
               <CardDescription>
-                Upload your company logo and application icon.
+                Update your company details, contact information, and logo.
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSaveLogo} className='space-y-4'>
+              <form onSubmit={handleSaveCompany} className='space-y-4'>
                 {/* Logo */}
                 <div className='space-y-2'>
-                  <label className='block text-sm font-medium'>Logo</label>
+                  <label className='block text-sm font-medium'>
+                    Company Logo
+                  </label>
                   <div className='flex items-center gap-4'>
                     <Avatar className='h-16 w-16'>
                       <AvatarImage src={logoUrl} alt='Logo' />
@@ -148,60 +133,6 @@ export default function Settings() {
                   />
                 </div>
 
-                {/* Icon */}
-                <div className='space-y-2'>
-                  <label className='block text-sm font-medium'>App Icon</label>
-                  <div className='flex items-center gap-4'>
-                    <Avatar className='h-16 w-16'>
-                      <AvatarImage src={iconUrl} alt='Icon' />
-                      <AvatarFallback>Icon</AvatarFallback>
-                    </Avatar>
-                    <Button type='button' onClick={handleIconUpload}>
-                      {iconUrl ? 'Change Icon' : 'Upload Icon'}
-                    </Button>
-                  </div>
-                  <input
-                    ref={iconFileRef}
-                    type='file'
-                    accept='image/*'
-                    onChange={(e) => handleFileChange(e, setIconUrl)}
-                    className='hidden'
-                  />
-                </div>
-
-                {logoError && (
-                  <div className='text-sm text-destructive'>{logoError}</div>
-                )}
-
-                <div className='flex gap-2 pt-4'>
-                  <Button type='submit'>Save Logo & Icon</Button>
-                  <Button
-                    type='button'
-                    variant='outline'
-                    onClick={() => {
-                      setLogoUrl('');
-                      setIconUrl('');
-                    }}
-                  >
-                    Clear
-                  </Button>
-                </div>
-              </form>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        {/* Company Tab */}
-        <TabsContent value='company' className='space-y-4'>
-          <Card>
-            <CardHeader>
-              <CardTitle>Company Information</CardTitle>
-              <CardDescription>
-                Update your company details and contact information.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSaveCompany} className='space-y-4'>
                 <Field>
                   <FieldLabel>Company Name</FieldLabel>
                   <FieldContent>
@@ -281,6 +212,7 @@ export default function Settings() {
                     type='button'
                     variant='outline'
                     onClick={() => {
+                      setLogoUrl('');
                       setCompanyName('');
                       setCompanyAddress('');
                       setCompanyCity('');
