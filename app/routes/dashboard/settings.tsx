@@ -31,6 +31,9 @@ export default function Settings() {
   const [companyPostal, setCompanyPostal] = React.useState('');
   const [companyPhone, setCompanyPhone] = React.useState('');
   const [companyEmail, setCompanyEmail] = React.useState('');
+  const [companyLatitude, setCompanyLatitude] = React.useState('');
+  const [companyLongitude, setCompanyLongitude] = React.useState('');
+  const [companyAltitude, setCompanyAltitude] = React.useState('');
   const [companyError, setCompanyError] = React.useState('');
 
   // Website Frontend Tab State
@@ -202,6 +205,45 @@ export default function Settings() {
                   </FieldContent>
                 </Field>
 
+                <div className='grid grid-cols-3 gap-4'>
+                  <Field>
+                    <FieldLabel>Latitude</FieldLabel>
+                    <FieldContent>
+                      <Input
+                        value={companyLatitude}
+                        onChange={(e) => setCompanyLatitude(e.target.value)}
+                        placeholder='-6.2088'
+                        type='number'
+                        step='0.0001'
+                      />
+                    </FieldContent>
+                  </Field>
+                  <Field>
+                    <FieldLabel>Longitude</FieldLabel>
+                    <FieldContent>
+                      <Input
+                        value={companyLongitude}
+                        onChange={(e) => setCompanyLongitude(e.target.value)}
+                        placeholder='106.8456'
+                        type='number'
+                        step='0.0001'
+                      />
+                    </FieldContent>
+                  </Field>
+                  <Field>
+                    <FieldLabel>Altitude</FieldLabel>
+                    <FieldContent>
+                      <Input
+                        value={companyAltitude}
+                        onChange={(e) => setCompanyAltitude(e.target.value)}
+                        placeholder='0'
+                        type='number'
+                        step='0.01'
+                      />
+                    </FieldContent>
+                  </Field>
+                </div>
+
                 {companyError && (
                   <div className='text-sm text-destructive'>{companyError}</div>
                 )}
@@ -219,6 +261,9 @@ export default function Settings() {
                       setCompanyPostal('');
                       setCompanyPhone('');
                       setCompanyEmail('');
+                      setCompanyLatitude('');
+                      setCompanyLongitude('');
+                      setCompanyAltitude('');
                     }}
                   >
                     Clear
