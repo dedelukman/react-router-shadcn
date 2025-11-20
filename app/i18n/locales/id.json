@@ -1,5 +1,6 @@
 {
-    "login": "Masuk",
+  "login": "Masuk",
+  "logout": "Keluar",
   "signup": "Daftar",
   "home": "Beranda",
 
@@ -18,15 +19,8 @@
     "search": "Pencarian",
     "account": "Akun",
     "billing": "Tagihan",
-    "notifications": "Notifikasi",
+    "notifications": "Notifikasi"
 
-    "error": {
-      "401": "Tidak Diizinkan (Dasbor)",
-      "403": "Akses Dilarang (Dasbor)",
-      "500": "Kesalahan Server (Dasbor)",
-      "503": "Layanan Tidak Tersedia (Dasbor)",
-      "404": "Halaman Tidak Ditemukan (Dasbor)"
-    }
   },
 
   "settings": "Pengaturan",
@@ -37,11 +31,29 @@
   "companylogo": "Logo Perusahaan",
 
 
-
   "notifications": "Notifikasi",
   "language": "Bahasa",
-  "welcome": "Selamat Datang"
+  "welcome": "Selamat Datang",
 
-
+ "nonotifications": "Tidak ada notifikasi baru",
+  "markall": "Tandai semua",
+  "viewall": "Lihat semua",
+  "modeToggleLight": "Terang",
+  "modeToggleDark": "Gelap",
+  "modeToggleSytem": "Sistem",
+  
+  "theme": {
+    "toggle": "Alih warna tema",
+    "changeColor": "Ubah warna tema", 
+    "color": "Warna Tema",
+    "default": "Bawaan",
+    "red": "Merah",
+    "rose": "Mawar",
+    "orange": "Jingga",
+    "green": "Hijau",
+    "blue": "Biru",
+    "yellow": "Kuning",
+    "violet": "Ungu"
+  }
 
 }

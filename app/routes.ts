@@ -20,7 +20,7 @@ export default [
     layout("components/layout.tsx",[
         index("routes/dashboard.tsx"),
         route("settings","routes/dashboard/settings.tsx"),
-        route("gethelp","routes/dashboard/gethelp.tsx"),
+        route("getHelp","routes/dashboard/gethelp.tsx"),
         route("search","routes/dashboard/search.tsx"),
         route("account","routes/dashboard/account.tsx"),
         route("billing","routes/dashboard/billing.tsx"),

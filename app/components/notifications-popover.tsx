@@ -13,6 +13,7 @@ import {
 } from '~/components/ui/dropdown-menu';
 import { Button } from '~/components/ui/button';
 import { Badge } from '~/components/ui/badge';
+import { useTranslation } from 'react-i18next';
 
 type Notification = {
   id: string;
@@ -35,6 +36,7 @@ function readNotifications(): Notification[] {
 }
 
 export function NotificationsPopover() {
+  const {t} = useTranslation ();
   const [items, setItems] = React.useState<Notification[]>(() =>
     readNotifications()
   );
@@ -113,7 +115,7 @@ export function NotificationsPopover() {
 
       <DropdownMenuContent className='min-w-56 p-1'>
         <div className='flex items-center justify-between px-2 py-1'>
-          <div className='text-sm font-medium'>Notifications</div>
+          <div className='text-sm font-medium'>{t('notifications')}</div>
           <div className='flex items-center gap-2'>
             <Button
               variant='ghost'
@@ -121,10 +123,10 @@ export function NotificationsPopover() {
               onClick={markAllRead}
               aria-label='Mark all read'
             >
-              Mark all
+              {t('markall')}
             </Button>
             <Link to='/dashboard/notifications' className='text-sm px-2 py-1'>
-              View all
+             {t('viewall')}
             </Link>
           </div>
         </div>
@@ -133,7 +135,7 @@ export function NotificationsPopover() {
 
         {list.length === 0 ? (
           <div className='px-3 py-2 text-sm text-muted-foreground'>
-            No notifications
+           {t('nonotifications')}
           </div>
         ) : (
           list.map((n) => (

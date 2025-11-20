@@ -31,125 +31,129 @@ import {
   SidebarMenuItem,
 } from "~/components/ui/sidebar"
 import { Link } from "react-router"
+import { useTranslation } from "react-i18next"
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "./avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: IconDashboard,
-    },
-    {
-      title: "Lifecycle",
-      url: "#",
-      icon: IconListDetails,
-    },
-    {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-  ],
-  navSecondary: [
-    {
-      title: "Settings",
-      url: "/dashboard/settings",
-      icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "/dashboard/gethelp",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "/dashboard/search",
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
-    },
-  ],
-}
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+   const { t } = useTranslation()
+
+  const data = {
+    user: {
+      name: "shadcn",
+      email: "m@example.com",
+      avatar: "./avatars/shadcn.jpg",
+    },
+    navMain: [
+      {
+        title: t("dashboard."),
+        url: "/dashboard",
+        icon: IconDashboard,
+      },
+      {
+        title: t("lifecycle"),
+        url: "#",
+        icon: IconListDetails,
+      },
+      {
+        title: t("analytics"),
+        url: "#",
+        icon: IconChartBar,
+      },
+      {
+        title: t("projects"),
+        url: "#",
+        icon: IconFolder,
+      },
+      {
+        title: t("team"),
+        url: "#",
+        icon: IconUsers,
+      },
+    ],
+    navClouds: [
+      {
+        title: t("capture"),
+        icon: IconCamera,
+        isActive: true,
+        url: "#",
+        items: [
+          {
+            title: t("activeProposals"),
+            url: "#",
+          },
+          {
+            title: t("archived"),
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: t("proposal"),
+        icon: IconFileDescription,
+        url: "#",
+        items: [
+          {
+            title: t("activeProposals"),
+            url: "#",
+          },
+          {
+            title: t("archived"),
+            url: "#",
+          },
+        ],
+      },
+      {
+        title: t("prompts"),
+        icon: IconFileAi,
+        url: "#",
+        items: [
+          {
+            title: t("activeProposals"),
+            url: "#",
+          },
+          {
+            title: t("archived"),
+            url: "#",
+          },
+        ],
+      },
+    ],
+    navSecondary: [
+      {
+        title: t("dashboard.settings"),
+        url: "/dashboard/settings",
+        icon: IconSettings,
+      },
+      {
+        title: t("dashboard.gethelp"),
+        url: "/dashboard/gethelp",
+        icon: IconHelp,
+      },
+      {
+        title: t("dashboard.search"),
+        url: "/dashboard/search",
+        icon: IconSearch,
+      },
+    ],
+    documents: [
+      {
+        name: t("dataLibrary"),
+        url: "#",
+        icon: IconDatabase,
+      },
+      {
+        name: t("reports"),
+        url: "#",
+        icon: IconReport,
+      },
+      {
+        name: t("wordAssistant"),
+        url: "#",
+        icon: IconFileWord,
+      },
+    ],
+  }
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

@@ -24,6 +24,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '~/components/ui/sidebar';
+import { useTranslation } from 'react-i18next';
 
 export function NavUser({
   user,
@@ -37,6 +38,7 @@ export function NavUser({
   const { isMobile } = useSidebar();
   const auth = useAuth();
   const navigate = useNavigate();
+  const {t} = useTranslation();
 
   return (
     <SidebarMenu>
@@ -85,12 +87,12 @@ export function NavUser({
               <DropdownMenuItem>
                 <Link to='/dashboard/account' className='absolute inset-0' />
                 <IconUserCircle />
-                Account
+                {t('dashboard.account')}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link to='/dashboard/billing' className='absolute inset-0' />
                 <IconCreditCard />
-                Billing
+                {t('dashboard.billing')}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link
@@ -98,7 +100,7 @@ export function NavUser({
                   className='absolute inset-0'
                 />
                 <IconNotification />
-                Notifications
+                {t('dashboard.notifications')}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -109,7 +111,7 @@ export function NavUser({
               }}
             >
               <IconLogout />
-              Log out
+              {t('logout')}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

@@ -1,5 +1,6 @@
 {
     "login": "Login",
+    "logout": "Log out",
   "signup": "Sign Up",
   "home": "Home",
 
@@ -19,17 +20,8 @@
     "search": "Search",
     "account": "Account",
     "billing": "Billing",
-    "notifications": "Notifications",
-
-    "error": {
-      "401": "Unauthorized (Dashboard)",
-      "403": "Forbidden (Dashboard)",
-      "500": "Server Error (Dashboard)",
-      "503": "Service Unavailable (Dashboard)",
-      "404": "Page Not Found (Dashboard)"
-    }
+    "notifications": "Notifications"
   },
-
 
   "settings": "Settings",
   "settingsdetail": "Manage your application settings: branding, company info, and website frontend.",
@@ -38,10 +30,28 @@
   "companycarddescription": "Update your company details such as name, address, and contact information.",
   "companylogo": "Company Logo",
 
-
-
-
   "notifications": "Notifications",
   "language": "Language",
-  "welcome": "Welcome"
+  "welcome": "Welcome",
+
+  "nonotifications": "No new notifications",
+  "markall": "Mark all",
+  "viewall": "View all",
+  "modeToggleLight": "Light",
+  "modeToggleDark": "Dark", 
+  "modeToggleSytem": "System",
+
+   "theme": {
+    "toggle": "Toggle theme color",
+    "changeColor": "Change theme color",
+    "color": "Theme Color",
+    "default": "Default",
+    "red": "Red",
+    "rose": "Rose",
+    "orange": "Orange",
+    "green": "Green",
+    "blue": "Blue",
+    "yellow": "Yellow",
+    "violet": "Violet"
+  }
 }
