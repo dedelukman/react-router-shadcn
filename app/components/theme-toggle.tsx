@@ -25,7 +25,7 @@ export function ThemeToggle() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button 
-          variant="outline" 
+          variant="ghost" 
           size="icon" 
           className="relative bg-background hover:bg-accent"
           title={t("theme.changeColor")}

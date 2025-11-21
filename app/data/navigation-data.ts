@@ -30,7 +30,7 @@ export const navigationData = {
     ],
     private: [
       { label: 'Dashboard', href: '/dashboard', type: 'button' as const, variant: 'outline' as const },
-      { label: 'Profile', href: '/profile', type: 'button' as const, variant: 'ghost' as const },
+  
     ],
   },
   footerMenu: [
