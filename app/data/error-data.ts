@@ -1,8 +1,8 @@
 export interface ErrorPageConfig {
   code: number;
-  title: string;
-  message: string;
-  description: string;
+  titleKey: string;
+  messageKey: string;
+  descriptionKey: string;
   showHomeButton: boolean;
   showContactButton: boolean;
   showRetryButton?: boolean;
@@ -11,47 +11,51 @@ export interface ErrorPageConfig {
 export const errorData: Record<number, ErrorPageConfig> = {
   404: {
     code: 404,
-    title: "Page Not Found",
-    message: "Oops! The page you're looking for doesn't exist.",
-    description: "The page you are trying to access might have been moved, deleted, or never existed. Please check the URL and try again.",
+    titleKey: "error.title.404",
+    messageKey: "error.message.404",
+    descriptionKey: "error.description.404",
     showHomeButton: true,
     showContactButton: true,
-    showRetryButton: false,
+    showRetryButton: false
   },
+
   500: {
     code: 500,
-    title: "Server Error",
-    message: "Something went wrong on our end.",
-    description: "We're experiencing some technical difficulties. Please try again in a few moments. If the problem persists, contact our support team.",
+    titleKey: "error.title.500",
+    messageKey: "error.message.500",
+    descriptionKey: "error.description.500",
     showHomeButton: true,
     showContactButton: true,
-    showRetryButton: true,
+    showRetryButton: true
   },
+
   403: {
     code: 403,
-    title: "Access Denied",
-    message: "You don't have permission to access this page.",
-    description: "This page is restricted. Please check your permissions or contact your administrator if you believe this is an error.",
+    titleKey: "error.title.403",
+    messageKey: "error.message.403",
+    descriptionKey: "error.description.403",
     showHomeButton: true,
     showContactButton: true,
-    showRetryButton: false,
+    showRetryButton: false
   },
+
   401: {
     code: 401,
-    title: "Unauthorized",
-    message: "You need to be logged in to access this page.",
-    description: "Please sign in to your account to continue. If you don't have an account, you can create one for free.",
+    titleKey: "error.title.401",
+    messageKey: "error.message.401",
+    descriptionKey: "error.description.401",
     showHomeButton: false,
     showContactButton: false,
-    showRetryButton: false,
+    showRetryButton: false
   },
+
   503: {
     code: 503,
-    title: "Service Unavailable",
-    message: "We're down for maintenance.",
-    description: "We're currently performing scheduled maintenance. We'll be back online shortly. Thank you for your patience.",
+    titleKey: "error.title.503",
+    messageKey: "error.message.503",
+    descriptionKey: "error.description.503",
     showHomeButton: true,
     showContactButton: false,
-    showRetryButton: true,
-  },
+    showRetryButton: true
+  }
 } as const;

@@ -3,6 +3,7 @@ import { Home, Mail, RefreshCw, AlertCircle, Server, Lock, WifiOff } from 'lucid
 import type { ErrorPageConfig } from '~/data/error-data';
 import { Button } from './ui/button';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 interface ErrorLayoutProps {
   errorConfig: ErrorPageConfig;
@@ -11,6 +12,7 @@ interface ErrorLayoutProps {
 }
 
 export function ErrorLayout({ errorConfig, illustration, onRetry }: ErrorLayoutProps) {
+  const { t} = useTranslation();
   const getErrorIcon = () => {
     switch (errorConfig.code) {
       case 404:
@@ -42,26 +44,27 @@ export function ErrorLayout({ errorConfig, illustration, onRetry }: ErrorLayoutP
 
         {/* Error Title */}
         <h1 className="text-2xl font-bold text-foreground mb-4">
-          {errorConfig.title}
+          {t(errorConfig.titleKey)}
         </h1>
 
         {/* Error Message */}
         <p className="text-lg text-muted-foreground mb-4">
-          {errorConfig.message}
+          {t(errorConfig.messageKey)}
         </p>
 
         {/* Error Description */}
         <p className="text-sm text-muted-foreground mb-8">
-          {errorConfig.description}
+          {t(errorConfig.descriptionKey)}
         </p>
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
+
           {errorConfig.showHomeButton && (
             <Button asChild>
               <Link to="/" className="flex items-center gap-2">
                 <Home className="h-4 w-4" />
-                Back to Home
+               {t("backHome")}
               </Link>
             </Button>
           )}
@@ -69,7 +72,7 @@ export function ErrorLayout({ errorConfig, illustration, onRetry }: ErrorLayoutP
           {errorConfig.showRetryButton && onRetry && (
             <Button variant="outline" onClick={onRetry} className="flex items-center gap-2">
               <RefreshCw className="h-4 w-4" />
-              Try Again
+              {t("tryAgain")}
             </Button>
           )}
           
@@ -77,7 +80,7 @@ export function ErrorLayout({ errorConfig, illustration, onRetry }: ErrorLayoutP
             <Button variant="outline" asChild>
               <Link to="/contact" className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                Contact Support
+                {t("contactSupport")}
               </Link>
             </Button>
           )}
@@ -86,18 +89,19 @@ export function ErrorLayout({ errorConfig, illustration, onRetry }: ErrorLayoutP
           {errorConfig.code === 401 && (
             <Button asChild>
               <Link to="/login" className="flex items-center gap-2">
-                Sign In
+                 {t("signIn")}
               </Link>
             </Button>
           )}
+          
         </div>
 
         {/* Additional Help Text for 401 */}
         {errorConfig.code === 401 && (
           <p className="text-sm text-muted-foreground mt-6">
-            Don't have an account?{' '}
+             {t("backHome")}{' '}
             <Link to="/signup" className="text-primary hover:underline">
-              Sign up here
+              {t("signUpHere")}
             </Link>
           </p>
         )}

@@ -3,13 +3,43 @@
     "logout": "Log out",
   "signup": "Sign Up",
   "home": "Home",
+  "backHome": "Back to Home",
+  "tryAgain": "Try Again",
+  "contactSupport": "Contact Support",
+  "signIn": "Sign In",
+  "noAccount": "Don't have an account?",
+  "signUpHere": "Sign up here",
 
-  "error": {
+ "error": {
     "401": "Unauthorized",
     "403": "Forbidden",
+    "404": "Page Not Found",
     "500": "Server Error",
     "503": "Service Unavailable",
-    "404": "Page Not Found"
+
+    "title": {
+      "401": "Unauthorized",
+      "403": "Access Denied",
+      "404": "Page Not Found",
+      "500": "Server Error",
+      "503": "Service Unavailable"
+    },
+
+    "message": {
+      "401": "You must be logged in to access this page.",
+      "403": "You don't have permission to view this page.",
+      "404": "The page you're looking for doesn't exist.",
+      "500": "Something went wrong on our end.",
+      "503": "We're down for maintenance."
+    },
+
+    "description": {
+      "401": "Please sign in to continue.",
+      "403": "This page is restricted. Check your permissions.",
+      "404": "The page may have been removed or never existed.",
+      "500": "Technical issues occurred. Try again shortly.",
+      "503": "We're performing maintenance. Please wait a moment."
+    }
   },
 
 
@@ -22,13 +52,6 @@
     "billing": "Billing",
     "notifications": "Notifications"
   },
-
-  "settings": "Settings",
-  "settingsdetail": "Manage your application settings: branding, company info, and website frontend.",
-  "companyinfo": "Company Info",
-  "companycardtitle": "Company Information",
-  "companycarddescription": "Update your company details such as name, address, and contact information.",
-  "companylogo": "Company Logo",
 
   "notifications": "Notifications",
   "language": "Language",
@@ -53,5 +76,14 @@
     "blue": "Blue",
     "yellow": "Yellow",
     "violet": "Violet"
-  }
+  },
+
+  "settings": "Settings",
+  "settingsdetail": "Manage your application settings: branding, company info, and website frontend.",
+  "companyinfo": "Company Info",
+  "companycardtitle": "Company Information",
+  "companycarddescription": "Update your company details such as name, address, and contact information.",
+  "companylogo": "Company Logo"
+
+
 }

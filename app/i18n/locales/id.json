@@ -3,13 +3,43 @@
   "logout": "Keluar",
   "signup": "Daftar",
   "home": "Beranda",
+  "backHome": "Kembali ke Beranda",
+  "tryAgain": "Coba Lagi",
+  "contactSupport": "Hubungi Bantuan",
+  "signIn": "Masuk",
+  "noAccount": "Belum punya akun?",
+  "signUpHere": "Daftar di sini",
 
-  "error": {
+ "error": {
     "401": "Tidak Diizinkan",
     "403": "Akses Dilarang",
+    "404": "Halaman Tidak Ditemukan",
     "500": "Kesalahan Server",
     "503": "Layanan Tidak Tersedia",
-    "404": "Halaman Tidak Ditemukan"
+
+    "title": {
+      "401": "Tidak Diizinkan",
+      "403": "Akses Dilarang",
+      "404": "Halaman Tidak Ditemukan",
+      "500": "Kesalahan Server",
+      "503": "Layanan Tidak Tersedia"
+    },
+
+    "message": {
+      "401": "Anda harus masuk untuk mengakses halaman ini.",
+      "403": "Anda tidak memiliki izin untuk melihat halaman ini.",
+      "404": "Halaman yang Anda cari tidak ditemukan.",
+      "500": "Terjadi kesalahan pada server.",
+      "503": "Sistem sedang dalam pemeliharaan."
+    },
+
+    "description": {
+      "401": "Silakan masuk untuk melanjutkan.",
+      "403": "Halaman ini dibatasi. Periksa izin akses Anda.",
+      "404": "Halaman mungkin telah dipindahkan, dihapus, atau tidak pernah ada.",
+      "500": "Terjadi masalah teknis. Coba lagi beberapa saat.",
+      "503": "Kami sedang melakukan pemeliharaan. Mohon tunggu sejenak."
+    }
   },
 
   "dashboard": {
@@ -23,14 +53,7 @@
 
   },
 
-  "settings": "Pengaturan",
-  "settingsdetail": "Kelola pengaturan aplikasi Anda: merek, info perusahaan, dan frontend situs web.",
-  "companyinfo": "Info Perusahaan",
-  "companycardtitle": "Informasi Perusahaan",
-  "companycarddescription": "Perbarui detail perusahaan Anda seperti nama, alamat, dan informasi kontak.",
-  "companylogo": "Logo Perusahaan",
-
-
+  
   "notifications": "Notifikasi",
   "language": "Bahasa",
   "welcome": "Selamat Datang",
@@ -54,6 +77,15 @@
     "blue": "Biru",
     "yellow": "Kuning",
     "violet": "Ungu"
-  }
+  },
+
+  "settings": "Pengaturan",
+  "settingsdetail": "Kelola pengaturan aplikasi Anda: merek, info perusahaan, dan frontend situs web.",
+  "companyinfo": "Info Perusahaan",
+  "companycardtitle": "Informasi Perusahaan",
+  "companycarddescription": "Perbarui detail perusahaan Anda seperti nama, alamat, dan informasi kontak.",
+  "companylogo": "Logo Perusahaan"
+
+
 
 }
