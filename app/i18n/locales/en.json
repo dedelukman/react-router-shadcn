@@ -1,7 +1,5 @@
 {
-    "login": "Login",
-    "logout": "Log out",
-  "signup": "Sign Up",
+  "logout": "Log out",
   "home": "Home",
   "backHome": "Back to Home",
   "tryAgain": "Try Again",
@@ -9,6 +7,51 @@
   "signIn": "Sign In",
   "noAccount": "Don't have an account?",
   "signUpHere": "Sign up here",
+
+   "login": {
+    "": "Login",
+    "title": "Login to your account",
+    "subtitle": "Enter your email below to login to your account",
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?",
+    "submit": "Login",
+    "orContinue": "Or continue with",
+    "google": "Login with Google",
+    "noAccount": "Don't have an account?",
+    "signup": "Sign up",
+    "error": "Login failed: provide email and password"
+  },
+
+   "signup": {
+     "": "Sign Up",
+    "title": "Create your account",
+    "subtitle": "Fill in the form below to create your account",
+
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Doe",
+
+    "email": "Email",
+    "emailPlaceholder": "m@example.com",
+    "emailDescription": "We'll use this to contact you. We will not share your email with anyone else.",
+
+    "password": "Password",
+    "passwordDescription": "Must be at least 8 characters long.",
+
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordDescription": "Please confirm your password.",
+
+    "submit": "Create Account",
+    "orContinue": "Or continue with",
+
+    "github": "Sign up with GitHub",
+
+    "haveAccount": "Already have an account?",
+    "signin": "Sign in",
+
+    "error": "Please provide matching passwords and an email"
+  },
 
  "error": {
     "401": "Unauthorized",
