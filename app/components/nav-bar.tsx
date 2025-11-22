@@ -6,6 +6,7 @@ import { useIsMobile } from '~/hooks/use-mobile';
 import { getAuthMenu, navigationData } from '~/data/navigation-data';
 import { useAuth } from '~/lib/auth';
 import { useTranslation } from 'react-i18next';
+import LanguageToggle from './language-toggle';
 
 interface NavbarProps {
   isAuthenticated?: boolean;
@@ -111,12 +112,12 @@ function DesktopNavigation({ authMenu }: NavigationProps) {
 
       {/* Auth Menu Items */}
       <div className='flex items-center gap-4 ml-6'>
-       
         {authMenu.map((item) => (
           <Link key={item.href} to={item.href}>
             <Button variant={item.variant}> {t(item.label)}</Button>
           </Link>
         ))}
+         <LanguageToggle />
       </div>
     </div>
   );
