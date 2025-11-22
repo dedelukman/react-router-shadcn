@@ -1,12 +1,16 @@
 import { Menu } from 'lucide-react';
 import { Link } from 'react-router';
-import { Button } from './ui/button';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import { Button } from '../../../components/ui/button';
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from '../../../components/ui/sheet';
 import { useIsMobile } from '~/hooks/use-mobile';
 import { getAuthMenu, navigationData } from '~/data/navigation-data';
 import { useAuth } from '~/lib/auth';
 import { useTranslation } from 'react-i18next';
-import LanguageToggle from './language-toggle';
+import LanguageToggle from '../../../components/language-toggle';
 
 interface NavbarProps {
   isAuthenticated?: boolean;
@@ -57,7 +61,7 @@ interface NavigationProps {
 }
 
 function MobileNavigation({ authMenu }: NavigationProps) {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -83,7 +87,7 @@ function MobileNavigation({ authMenu }: NavigationProps) {
             {authMenu.map((item) => (
               <Link key={item.href} to={item.href}>
                 <Button variant={item.variant} className='w-full'>
-                   {t(item.label)}
+                  {t(item.label)}
                 </Button>
               </Link>
             ))}
@@ -95,7 +99,7 @@ function MobileNavigation({ authMenu }: NavigationProps) {
 }
 
 function DesktopNavigation({ authMenu }: NavigationProps) {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   return (
     <div className='flex items-center gap-6'>
       {/* Main Menu Items */}
@@ -108,7 +112,6 @@ function DesktopNavigation({ authMenu }: NavigationProps) {
           {t(item.label)}
         </Link>
       ))}
-      
 
       {/* Auth Menu Items */}
       <div className='flex items-center gap-4 ml-6'>
@@ -117,7 +120,7 @@ function DesktopNavigation({ authMenu }: NavigationProps) {
             <Button variant={item.variant}> {t(item.label)}</Button>
           </Link>
         ))}
-         <LanguageToggle />
+        <LanguageToggle />
       </div>
     </div>
   );
