@@ -27,8 +27,6 @@ export default [
         route("notifications","routes/dashboard/pages/notifications.tsx"),
 
 
-
-
         route("error/401","routes/dashboard/errors/401.tsx"),
          route("error/403","routes/dashboard/errors/403.tsx"),
          route("error/500","routes/dashboard/errors/500.tsx"),
