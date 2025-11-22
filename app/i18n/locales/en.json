@@ -121,6 +121,20 @@
     "violet": "Violet"
   },
 
+   "navigation": {
+      "home": "Home",
+      "about": "About",
+      "services": "Services",
+      "blog": "Blog",
+      "contact": "Contact"
+  },
+  "footer": {
+  "privacy": "Privacy",
+  "terms": "Terms",
+  "contact": "Contact",
+  "rights": "All rights reserved."
+},
+
   "settings": "Settings",
   "settingsdetail": "Manage your application settings: branding, company info, and website frontend.",
   "companyinfo": "Company Info",

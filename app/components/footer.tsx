@@ -1,7 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router";
 
 export default function Footer(){
       const currentYear = new Date().getFullYear();
+      const {t} = useTranslation();
     return (
  <footer className="border-t bg-background">
       <div className="container mx-auto px-4 py-8">
@@ -17,19 +19,19 @@ export default function Footer(){
           {/* Links */}
           <div className="flex gap-6 text-sm text-muted-foreground">
             <Link to="/privacy" className="hover:text-foreground transition-colors">
-              Privacy
+              {t('footer.privacy')}
             </Link>
             <Link to="/terms" className="hover:text-foreground transition-colors">
-              Terms
+              {t('footer.terms')}
             </Link>
             <Link to="/contact" className="hover:text-foreground transition-colors">
-              Contact
+              {t('footer.contact')}
             </Link>
           </div>
 
           {/* Copyright */}
           <div className="text-sm text-muted-foreground">
-            © {currentYear} Your Brand. All rights reserved.
+            © {currentYear} Your Brand. {t('footer.rights')}
           </div>
         </div>
       </div>

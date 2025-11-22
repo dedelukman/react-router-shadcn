@@ -17,19 +17,19 @@ export const navigationData = {
     },
   },
   mainMenu: [
-    { label: 'Home', href: '/', type: 'link' as const },
-    { label: 'About', href: '/about', type: 'link' as const },
-    { label: 'Services', href: '/services', type: 'link' as const },
-    { label: 'Blog', href: '/blog', type: 'link' as const },
-    { label: 'Contact', href: '/contact', type: 'link' as const },
+    { label: 'navigation.home', href: '/', type: 'link' as const },
+    { label: 'navigation.about', href: '/about', type: 'link' as const },
+    { label: 'navigation.services', href: '/services', type: 'link' as const },
+    { label: 'navigation.blog', href: '/blog', type: 'link' as const },
+    { label: 'navigation.contact', href: '/contact', type: 'link' as const },
   ],
   authMenu: {
     public: [
-      { label: 'Login', href: '/login', type: 'button' as const, variant: 'ghost' as const },
-      { label: 'Sign Up', href: '/signup', type: 'button' as const, variant: 'default' as const },
+      { label: 'login.', href: '/login', type: 'button' as const, variant: 'ghost' as const },
+      { label: 'signup.', href: '/signup', type: 'button' as const, variant: 'default' as const },
     ],
     private: [
-      { label: 'Dashboard', href: '/dashboard', type: 'button' as const, variant: 'outline' as const },
+      { label: 'dashboard.', href: '/dashboard', type: 'button' as const, variant: 'outline' as const },
   
     ],
   },

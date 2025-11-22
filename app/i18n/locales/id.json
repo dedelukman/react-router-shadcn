@@ -122,6 +122,21 @@
     "violet": "Ungu"
   },
 
+   "navigation": {
+      "home": "Beranda",
+      "about": "Tentang",
+      "services": "Layanan",
+      "blog": "Blog",
+      "contact": "Kontak"    
+  },
+
+  "footer": {
+  "privacy": "Privasi",
+  "terms": "Syarat",
+  "contact": "Kontak",
+  "rights": "Hak cipta dilindungi."
+},
+
   "settings": "Pengaturan",
   "settingsdetail": "Kelola pengaturan aplikasi Anda: merek, info perusahaan, dan frontend situs web.",
   "companyinfo": "Info Perusahaan",
