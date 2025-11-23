@@ -7,6 +7,8 @@
   "signIn": "Sign In",
   "noAccount": "Don't have an account?",
   "signUpHere": "Sign up here",
+  "save": "Save",
+  "clear": "Clear",
 
    "login": {
     "": "Login",
@@ -135,12 +137,40 @@
   "rights": "All rights reserved."
 },
 
-  "settings": "Settings",
-  "settingsdetail": "Manage your application settings: branding, company info, and website frontend.",
-  "companyinfo": "Company Info",
-  "companycardtitle": "Company Information",
-  "companycarddescription": "Update your company details such as name, address, and contact information.",
-  "companylogo": "Company Logo"
+
+  "settings": {
+   "" : "Settings",
+   "company": {
+    "info": "Company Info",
+    "title": "Company Information",
+    "description": "Update your company details such as name, address, and contact information.",
+    "logo": "Company Logo",
+    "changeLogo": "Change Logo",
+    "uploadLogo": "Upload Logo",
+    "name": "Company Name",
+    "address": "Address",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "phone": "Phone",
+    "email": "Email",
+    "error": "Company name is required.",
+    "saved": "Company saved:"
+   },
+   "website": {
+    "info": "Website Info",
+    "title": "Website Settings",
+    "description": "Update your website details such as name, tagline, description, and favicon.",
+    "name": "Website Name",
+    "nameDescription": "Displayed in browser title and meta tags.",
+    "tagline": "Tagline",
+    "descriptionField": "Description",
+    "favicon": "Favicon URL",
+    "error": "Website name is required.",
+    "saved": "Website settings saved:"
+  }
+   
+  
+  }
 
 
 }

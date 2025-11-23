@@ -11,17 +11,11 @@ export default function Settings() {
 
   return (
     <div className="space-y-6 m-4">
-      <div>
-        <h1 className="text-2xl font-semibold">{t("settings")}</h1>
-        <p className="text-sm text-muted-foreground">
-          {t("settingsdetail")}
-        </p>
-      </div>
 
       <Tabs defaultValue="company" className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="company">{t("companyinfo")}</TabsTrigger>
-          <TabsTrigger value="website">Website Frontend</TabsTrigger>
+          <TabsTrigger value="company">{t("settings.company.info")}</TabsTrigger>
+          <TabsTrigger value="website">{t("settings.website.info")}</TabsTrigger>
         </TabsList>
 
         <TabsContent value="company">

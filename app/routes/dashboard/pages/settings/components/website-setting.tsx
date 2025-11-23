@@ -9,6 +9,7 @@ import {
   CardContent,
 } from "~/components/ui/card";
 import { Field, FieldLabel, FieldContent, FieldDescription } from "~/components/ui/field";
+import { useTranslation } from "react-i18next";
 
 export default function WebsiteSettings() {
   const [siteName, setSiteName] = React.useState("");
@@ -16,45 +17,46 @@ export default function WebsiteSettings() {
   const [siteDescription, setSiteDescription] = React.useState("");
   const [siteFaviconUrl, setSiteFaviconUrl] = React.useState("");
   const [websiteError, setWebsiteError] = React.useState("");
+  const {t} = useTranslation();
 
   function handleSaveWebsite(e: React.FormEvent) {
     e.preventDefault();
     setWebsiteError("");
 
     if (!siteName.trim()) {
-      setWebsiteError("Site name is required.");
+      setWebsiteError(`${t("settings.website.error")}`);
       return;
     }
 
-    alert(`Website settings saved: ${siteName}`);
+    alert(`${t("settings.website.saved")}  ${siteName}`);
   }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Website Frontend Settings</CardTitle>
+        <CardTitle>{t("settings.website.title")}</CardTitle>
         <CardDescription>
-          Configure your public website appearance and metadata.
+          {t("settings.website.description")}
         </CardDescription>
       </CardHeader>
 
       <CardContent>
         <form onSubmit={handleSaveWebsite} className="space-y-4">
           <Field>
-            <FieldLabel>Site Name</FieldLabel>
+            <FieldLabel>{t("settings.website.name")}</FieldLabel>
             <FieldContent>
               <Input
                 value={siteName}
                 onChange={(e) => setSiteName(e.target.value)}
               />
               <FieldDescription>
-                Displayed in browser title and meta tags.
+               {t("settings.website.nameDescription")}
               </FieldDescription>
             </FieldContent>
           </Field>
 
           <Field>
-            <FieldLabel>Tagline</FieldLabel>
+            <FieldLabel>{t("settings.website.tagline")}</FieldLabel>
             <FieldContent>
               <Input
                 value={siteTagline}
@@ -64,7 +66,7 @@ export default function WebsiteSettings() {
           </Field>
 
           <Field>
-            <FieldLabel>Site Description</FieldLabel>
+            <FieldLabel>{t("settings.website.descriptionField")}</FieldLabel>
             <FieldContent>
               <textarea
                 value={siteDescription}
@@ -76,7 +78,7 @@ export default function WebsiteSettings() {
           </Field>
 
           <Field>
-            <FieldLabel>Favicon URL</FieldLabel>
+            <FieldLabel>{t("settings.website.favicon")}</FieldLabel>
             <FieldContent>
               <Input
                 value={siteFaviconUrl}
@@ -90,7 +92,7 @@ export default function WebsiteSettings() {
           )}
 
           <div className="flex gap-2 pt-4">
-            <Button type="submit">Save Website Settings</Button>
+            <Button type="submit">{t("save")}</Button>
             <Button
               type="button"
               variant="outline"
@@ -101,7 +103,7 @@ export default function WebsiteSettings() {
                 setSiteFaviconUrl("");
               }}
             >
-              Clear
+              {t("clear")}
             </Button>
           </div>
         </form>

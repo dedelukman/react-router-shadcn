@@ -107,6 +107,8 @@
   "modeToggleLight": "Terang",
   "modeToggleDark": "Gelap",
   "modeToggleSytem": "Sistem",
+  "save": "Simpan",
+  "clear": "Bersihkan",
   
   "theme": {
     "toggle": "Alih warna tema",
@@ -135,14 +137,41 @@
   "terms": "Syarat",
   "contact": "Kontak",
   "rights": "Hak cipta dilindungi."
-},
-
-  "settings": "Pengaturan",
-  "settingsdetail": "Kelola pengaturan aplikasi Anda: merek, info perusahaan, dan frontend situs web.",
-  "companyinfo": "Info Perusahaan",
-  "companycardtitle": "Informasi Perusahaan",
-  "companycarddescription": "Perbarui detail perusahaan Anda seperti nama, alamat, dan informasi kontak.",
-  "companylogo": "Logo Perusahaan"
+  },
+  
+  "settings":{
+  "": "Pengaturan",
+  "company": {
+    "info": "Info Perusahaan",
+    "title": "Informasi Perusahaan",
+    "description": "Perbarui detail perusahaan Anda seperti nama, alamat, dan informasi kontak.",
+    "logo": "Logo Perusahaan",
+    "changeLogo": "Ganti Logo",
+    "uploadLogo": "Upload Logo",
+    "name": "Nama Perusahaan",
+    "address": "Alamat",
+    "city": "Kota",
+    "postalCode": "Kode Pos",
+    "phone": "Telepon",
+    "email": "Email",
+    "error": "Nama Perusahaan wajib diisi.",
+    "saved": "Perusahaan tersimpan :"
+  },
+  "website": {
+    "info": "Info Website",
+    "title": "Pengaturan Website",
+    "description": "Perbarui pengaturan website Anda seperti nama situs, tagline, deskripsi, dan favicon.",
+    "name": "Nama Situs",
+    "nameDesciption": "Ditampilkan di judul browser dan meta tag.",
+    "tagline": "Tagline Situs",
+    "descriptionField": "Deskripsi Situs",
+    "favicon": "Favicon Situs",
+    "error":  "Nama Situs wajib diisi.",
+    "saved": "Pengaturan website tersimpan :"
+  }
+  
+  }
+  
 
 
 

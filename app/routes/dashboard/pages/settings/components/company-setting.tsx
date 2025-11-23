@@ -54,18 +54,18 @@ export default function CompanySettings() {
     setCompanyError("");
 
     if (!companyName.trim()) {
-      setCompanyError("Company name is required.");
+      setCompanyError(`${t("settings.company.error")}`);
       return;
     }
 
-    alert(`Company saved: ${companyName}`);
+    alert(`${t("settings.company.title")} ${companyName}`);
   }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{t("companycardtitle")}</CardTitle>
-        <CardDescription>{t("companycarddescription")}</CardDescription>
+        <CardTitle>{t("settings.company.title")}</CardTitle>
+        <CardDescription>{t("settings.company.description")}</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -73,7 +73,7 @@ export default function CompanySettings() {
           {/* Logo */}
           <div className="space-y-2">
             <label className="block text-sm font-medium">
-              {t("companylogo")}
+              {t("settings.company.logo")}
             </label>
 
             <div className="flex items-center gap-4">
@@ -82,7 +82,7 @@ export default function CompanySettings() {
                 <AvatarFallback>Logo</AvatarFallback>
               </Avatar>
               <Button type="button" onClick={handleLogoUpload}>
-                {logoUrl ? "Change Logo" : "Upload Logo"}
+                {logoUrl ? t("settings.company.changeLogo") : t("settings.company.uploadLogo") }
               </Button>
             </div>
 
@@ -96,7 +96,7 @@ export default function CompanySettings() {
           </div>
 
           <Field>
-            <FieldLabel>Company Name</FieldLabel>
+            <FieldLabel> {t("settings.company.name")}</FieldLabel>
             <FieldContent>
               <Input
                 value={companyName}
@@ -106,7 +106,7 @@ export default function CompanySettings() {
           </Field>
 
           <Field>
-            <FieldLabel>Address</FieldLabel>
+            <FieldLabel> {t("settings.company.address")}</FieldLabel>
             <FieldContent>
               <Input
                 value={companyAddress}
@@ -117,7 +117,7 @@ export default function CompanySettings() {
 
           <div className="grid grid-cols-2 gap-4">
             <Field>
-              <FieldLabel>City</FieldLabel>
+              <FieldLabel>{t("settings.company.city")}</FieldLabel>
               <FieldContent>
                 <Input
                   value={companyCity}
@@ -127,7 +127,7 @@ export default function CompanySettings() {
             </Field>
 
             <Field>
-              <FieldLabel>Postal Code</FieldLabel>
+              <FieldLabel> {t("settings.company.postalCode")}</FieldLabel>
               <FieldContent>
                 <Input
                   value={companyPostal}
@@ -138,7 +138,7 @@ export default function CompanySettings() {
           </div>
 
           <Field>
-            <FieldLabel>Phone</FieldLabel>
+            <FieldLabel> {t("settings.company.phone")}</FieldLabel>
             <FieldContent>
               <Input
                 value={companyPhone}
@@ -148,7 +148,7 @@ export default function CompanySettings() {
           </Field>
 
           <Field>
-            <FieldLabel>Email</FieldLabel>
+            <FieldLabel> {t("settings.company.email")}</FieldLabel>
             <FieldContent>
               <Input
                 value={companyEmail}
@@ -198,7 +198,7 @@ export default function CompanySettings() {
           )}
 
           <div className="flex gap-2 pt-4">
-            <Button type="submit">Save Company Info</Button>
+            <Button type="submit"> {t("save")}</Button>
             <Button
               type="button"
               variant="outline"
@@ -215,7 +215,7 @@ export default function CompanySettings() {
                 setCompanyAltitude("");
               }}
             >
-              Clear
+               {t("clear")}
             </Button>
           </div>
         </form>
