@@ -207,7 +207,7 @@
     },
     "placeholder": {
       "subject": "Contoh: Tidak bisa checkout dengan pembayaran kartu",
-      "description": "Langkah reproduksi:\\n1. \\n2. \\n\\nApa yang Anda harapkan terjadi?\\n\\nApa yang sebenarnya terjadi?\\n\\nLampirkan screenshot jika tersedia (opsional)."
+      "description": "Langkah reproduksi:\n1. \n2. \n\nApa yang Anda harapkan terjadi?\n\nApa yang sebenarnya terjadi?\n\nLampirkan screenshot jika tersedia (opsional)."
     }
   },
   "priorities": {

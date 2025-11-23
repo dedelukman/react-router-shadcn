@@ -206,7 +206,7 @@
     },
     "placeholder": {
       "subject": "Example: Unable to checkout with card payment",
-      "description": "Reproduction steps:\\n1. \\n2. \\n\\nWhat did you expect to happen?\\n\\nWhat actually happened?\\n\\nAttach screenshots if available (optional)."
+      "description": "Reproduction steps:\n1. \n2. \n\nWhat did you expect to happen?\n\nWhat actually happened?\n\nAttach screenshots if available (optional)."
     }
   },
   "priorities": {
