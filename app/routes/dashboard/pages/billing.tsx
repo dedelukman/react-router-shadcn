@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Button } from '~/components/ui/button';
 import {
   Card,
@@ -44,6 +45,7 @@ const PLANS = [
 ];
 
 export default function Page() {
+  const { t } = useTranslation();
   const auth = (() => {
     try {
       return useAuth();
@@ -79,7 +81,13 @@ export default function Page() {
 
   function viewInvoice(inv: Invoice) {
     alert(
-      `Invoice ${inv.id}\nDate: ${inv.date}\nPlan: ${inv.plan}\nAmount: ${inv.amount}\nStatus: ${inv.status}`
+      t('billing.invoice.alert', {
+        id: inv.id,
+        date: inv.date,
+        plan: inv.plan,
+        amount: inv.amount,
+        status: inv.status,
+      })
     );
   }
 
@@ -103,15 +111,23 @@ export default function Page() {
     );
   }
 
+  const getTranslatedPlan = (planId: string) => {
+    return t(`billing.subscription.plans.${planId}.name`, { defaultValue: planId });
+  };
+
+  const getTranslatedStatus = (status: string) => {
+    return t(`billing.billingHistory.statuses.${status}`, { defaultValue: status });
+  };
+
   return (
     <div className='m-2 grid grid-cols-1 lg:grid-cols-3 gap-6'>
       <div className='lg:col-span-1'>
         <Card>
           <CardHeader>
             <div>
-              <CardTitle>Subscription</CardTitle>
+              <CardTitle>{t('billing.subscription.title')}</CardTitle>
               <CardDescription>
-                Choose a plan that fits your needs.
+                {t('billing.subscription.description')}
               </CardDescription>
             </div>
           </CardHeader>
@@ -131,14 +147,16 @@ export default function Page() {
                     onClick={() => setSelectedPlan(p.id)}
                   >
                     <div>
-                      <div className='font-medium'>{p.name}</div>
+                      <div className='font-medium'>
+                        {t(`billing.subscription.plans.${p.id}.name`)}
+                      </div>
                       <div className='text-sm text-muted-foreground'>
-                        {p.desc}
+                        {t(`billing.subscription.plans.${p.id}.desc`)}
                       </div>
                     </div>
                     <div className='flex items-center gap-3'>
                       <Badge variant='outline' className='text-sm'>
-                        {p.price}
+                        {t(`billing.subscription.plans.${p.id}.price`)}
                       </Badge>
                       <input
                         type='radio'
@@ -147,7 +165,7 @@ export default function Page() {
                         checked={active}
                         onChange={() => setSelectedPlan(p.id)}
                         className='sr-only'
-                        aria-label={p.name}
+                        aria-label={t(`billing.subscription.plans.${p.id}.name`)}
                       />
                       <div
                         className={
@@ -165,8 +183,8 @@ export default function Page() {
           </CardContent>
           <CardFooter>
             <div className='flex items-center gap-2'>
-              <Button onClick={() => alert(`Subscribed to ${selectedPlan}`)}>
-                Update Plan
+              <Button onClick={() => alert(t('billing.subscription.success.subscribed', { plan: selectedPlan }))}>
+                {t('billing.subscription.updatePlan')}
               </Button>
               <Button
                 variant='outline'
@@ -175,7 +193,7 @@ export default function Page() {
                   localStorage.removeItem('billing_plan');
                 }}
               >
-                Reset
+                {t('billing.subscription.reset')}
               </Button>
             </div>
           </CardFooter>
@@ -186,13 +204,15 @@ export default function Page() {
         <Card className='p-4'>
           <div className='flex items-center justify-between mb-4'>
             <div>
-              <h2 className='text-lg font-semibold'>Billing history</h2>
+              <h2 className='text-lg font-semibold'>{t('billing.billingHistory.title')}</h2>
               <div className='text-sm text-muted-foreground'>
-                Invoices and payments
+                {t('billing.billingHistory.description')}
               </div>
             </div>
             <div className='flex items-center gap-2'>
-              <label className='text-sm text-muted-foreground'>Rows:</label>
+              <label className='text-sm text-muted-foreground'>
+                {t('billing.billingHistory.rowsPerPage')}
+              </label>
               <select
                 value={pageSize}
                 onChange={(e) => {
@@ -211,12 +231,12 @@ export default function Page() {
           <Table className='text-sm'>
             <TableHeader>
               <TableRow>
-                <TableHead>Invoice</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Plan</TableHead>
-                <TableHead className='text-right'>Amount</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
+                <TableHead>{t('billing.billingHistory.invoice')}</TableHead>
+                <TableHead>{t('billing.billingHistory.date')}</TableHead>
+                <TableHead>{t('billing.billingHistory.plan')}</TableHead>
+                <TableHead className='text-right'>{t('billing.billingHistory.amount')}</TableHead>
+                <TableHead>{t('billing.billingHistory.status')}</TableHead>
+                <TableHead>{t('billing.billingHistory.actions')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -224,7 +244,7 @@ export default function Page() {
                 <TableRow key={inv.id}>
                   <TableCell>{inv.id}</TableCell>
                   <TableCell>{inv.date}</TableCell>
-                  <TableCell>{inv.plan}</TableCell>
+                  <TableCell>{getTranslatedPlan(inv.plan.toLowerCase())}</TableCell>
                   <TableCell className='text-right'>{inv.amount}</TableCell>
                   <TableCell>
                     {inv.status === 'paid' ? (
@@ -232,21 +252,21 @@ export default function Page() {
                         className='border-green-200 text-green-700'
                         variant='outline'
                       >
-                        Paid
+                        {getTranslatedStatus('paid')}
                       </Badge>
                     ) : inv.status === 'pending' ? (
                       <Badge
                         className='border-orange-200 text-orange-700'
                         variant='outline'
                       >
-                        Pending
+                        {getTranslatedStatus('pending')}
                       </Badge>
                     ) : (
                       <Badge
                         className='border-red-200 text-red-700'
                         variant='outline'
                       >
-                        Failed
+                        {getTranslatedStatus('failed')}
                       </Badge>
                     )}
                   </TableCell>
@@ -256,6 +276,7 @@ export default function Page() {
                         variant='ghost'
                         size='icon-sm'
                         onClick={() => viewInvoice(inv)}
+                        title={t('billing.billingHistory.actionsList.view')}
                       >
                         <IconEye className='size-4' />
                       </Button>
@@ -263,13 +284,18 @@ export default function Page() {
                         variant='ghost'
                         size='icon-sm'
                         onClick={() => downloadInvoice(inv)}
+                        title={t('billing.billingHistory.actionsList.download')}
                       >
                         <IconDownload className='size-4' />
                       </Button>
                       {inv.status === 'pending' && (
-                        <Button size='sm' onClick={() => payInvoice(inv.id)}>
+                        <Button 
+                          size='sm' 
+                          onClick={() => payInvoice(inv.id)}
+                          title={t('billing.billingHistory.actionsList.pay')}
+                        >
                           <IconCreditCard className='size-4 mr-2' />
-                          Pay
+                          {t('billing.billingHistory.actionsList.pay')}
                         </Button>
                       )}
                     </div>
@@ -277,19 +303,28 @@ export default function Page() {
                 </TableRow>
               ))}
             </TableBody>
-            <TableCaption>{`Showing ${pageIndex * pageSize + 1} - ${Math.min((pageIndex + 1) * pageSize, invoices.length)} of ${invoices.length}`}</TableCaption>
+            <TableCaption>
+              {t('billing.billingHistory.showing', {
+                start: pageIndex * pageSize + 1,
+                end: Math.min((pageIndex + 1) * pageSize, invoices.length),
+                total: invoices.length
+              })}
+            </TableCaption>
           </Table>
 
           <div className='flex items-center justify-between mt-4'>
             <div className='text-sm text-muted-foreground'>
-              Page {pageIndex + 1} of {pageCount}
+              {t('billing.billingHistory.page', {
+                current: pageIndex + 1,
+                total: pageCount
+              })}
             </div>
             <div className='flex items-center gap-2'>
               <Button
                 disabled={pageIndex === 0}
                 onClick={() => setPageIndex((p) => Math.max(0, p - 1))}
               >
-                Previous
+                {t('billing.billingHistory.previous')}
               </Button>
               <Button
                 disabled={pageIndex >= pageCount - 1}
@@ -297,7 +332,7 @@ export default function Page() {
                   setPageIndex((p) => Math.min(pageCount - 1, p + 1))
                 }
               >
-                Next
+                {t('billing.billingHistory.next')}
               </Button>
             </div>
           </div>

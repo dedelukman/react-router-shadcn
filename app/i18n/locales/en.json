@@ -263,7 +263,67 @@
     "success": {
       "profileSaved": "Profile saved (local) — implement server call to persist changes"
     }
+  },
+
+  
+  "billing": {
+    "title": "Billing & Subscription",
+    "subscription": {
+      "title": "Subscription",
+      "description": "Choose a plan that fits your needs.",
+      "updatePlan": "Update Plan",
+      "reset": "Reset",
+      "plans": {
+        "basic": {
+          "name": "Basic",
+          "price": "$0 / mo",
+          "desc": "For personal use"
+        },
+        "pro": {
+          "name": "Pro",
+          "price": "$12 / mo", 
+          "desc": "For professionals"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "Contact",
+          "desc": "For teams"
+        }
+      },
+      "success": {
+        "subscribed": "Subscribed to {{plan}}"
+      }
+    },
+    "billingHistory": {
+      "title": "Billing History",
+      "description": "Invoices and payments",
+      "rowsPerPage": "Rows:",
+      "invoice": "Invoice",
+      "date": "Date",
+      "plan": "Plan",
+      "amount": "Amount",
+      "status": "Status",
+      "actions": "Actions",
+      "statuses": {
+        "paid": "Paid",
+        "pending": "Pending",
+        "failed": "Failed"
+      },
+      "showing": "Showing {{start}} - {{end}} of {{total}}",
+      "page": "Page {{current}} of {{total}}",
+      "previous": "Previous",
+      "next": "Next",
+      "actionsList": {
+        "view": "View invoice",
+        "download": "Download invoice",
+        "pay": "Pay"
+      }
+    },
+    "invoice": {
+      "alert": "Invoice {{id}}\nDate: {{date}}\nPlan: {{plan}}\nAmount: {{amount}}\nStatus: {{status}}"
+    }
   }
+
 
 
 }

@@ -266,7 +266,67 @@
       "profileSaved": "Profil disimpan (lokal) — implementasikan panggilan server untuk menyimpan perubahan"
     }
   
-}
+},
+
+
+  "billing": {
+    "title": "Tagihan & Langganan",
+    "subscription": {
+      "title": "Langganan",
+      "description": "Pilih paket yang sesuai dengan kebutuhan Anda.",
+      "updatePlan": "Perbarui Paket",
+      "reset": "Reset",
+      "plans": {
+        "basic": {
+          "name": "Basic",
+          "price": "$0 / bln",
+          "desc": "Untuk penggunaan pribadi"
+        },
+        "pro": {
+          "name": "Pro", 
+          "price": "$12 / bln",
+          "desc": "Untuk profesional"
+        },
+        "enterprise": {
+          "name": "Enterprise",
+          "price": "Kontak",
+          "desc": "Untuk tim"
+        }
+      },
+      "success": {
+        "subscribed": "Berlangganan ke {{plan}}"
+      }
+    },
+    "billingHistory": {
+      "title": "Riwayat Tagihan",
+      "description": "Faktur dan pembayaran",
+      "rowsPerPage": "Baris:",
+      "invoice": "Faktur",
+      "date": "Tanggal",
+      "plan": "Paket",
+      "amount": "Jumlah",
+      "status": "Status",
+      "actions": "Aksi",
+      "statuses": {
+        "paid": "Lunas",
+        "pending": "Tertunda", 
+        "failed": "Gagal"
+      },
+      "showing": "Menampilkan {{start}} - {{end}} dari {{total}}",
+      "page": "Halaman {{current}} dari {{total}}",
+      "previous": "Sebelumnya",
+      "next": "Selanjutnya",
+      "actionsList": {
+        "view": "Lihat faktur",
+        "download": "Unduh faktur", 
+        "pay": "Bayar"
+      }
+    },
+    "invoice": {
+      "alert": "Faktur {{id}}\nTanggal: {{date}}\nPaket: {{plan}}\nJumlah: {{amount}}\nStatus: {{status}}"
+    }
+  }
+
 
 
   
