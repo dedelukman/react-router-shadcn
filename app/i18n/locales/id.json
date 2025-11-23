@@ -170,7 +170,71 @@
     "saved": "Pengaturan website tersimpan :"
   }
   
+  },
+
+  "gethelp": {
+  "tickets": {
+    "myTickets": "Tiket Saya",
+    "ticketHistory": "Riwayat tiket yang telah Anda buat. Klik \"Lihat Detail\" untuk membuka info lengkap.",
+    "createTicket": "Buat Tiket",
+    "id": "ID",
+    "subject": "Subjek",
+    "status": "Status",
+    "priority": "Prioritas",
+    "created": "Dibuat",
+    "updated": "Diperbarui",
+    "actions": "Aksi",
+    "viewDetails": "Lihat Detail",
+    "createNewTicket": "Buat Tiket Baru",
+    "fillFormDescription": "Isi formulir untuk mengajukan tiket dukungan.",
+    "subjectTitle": "Subjek / Judul",
+    "required": "wajib diisi",
+    "category": "Kategori",
+    "description": "Deskripsi",
+    "attachmentOptional": "Lampiran (opsional)",
+    "selected": "Terpilih",
+    "submitTicket": "Ajukan Tiket",
+    "close": "Tutup",
+    "ticketDetails": "Detail Tiket",
+    "fullDetails": "Detail lengkap untuk tiket yang dipilih",
+    "none": "Tidak ada",
+    "noTicketSelected": "Tidak ada tiket yang dipilih",
+    "error": {
+      "subjectRequired": "Subjek wajib diisi."
+    },
+    "success": {
+      "ticketSubmitted": "Tiket berhasil diajukan."
+    },
+    "placeholder": {
+      "subject": "Contoh: Tidak bisa checkout dengan pembayaran kartu",
+      "description": "Langkah reproduksi:\\n1. \\n2. \\n\\nApa yang Anda harapkan terjadi?\\n\\nApa yang sebenarnya terjadi?\\n\\nLampirkan screenshot jika tersedia (opsional)."
+    }
+  },
+  "priorities": {
+    "Low": "Rendah",
+    "Normal": "Normal", 
+    "High": "Tinggi",
+    "Critical": "Kritis"
+  },
+  "categories": {
+    "Bug/Error": "Bug/Error",
+    "Feature Question": "Pertanyaan Fitur",
+    "Feature Request": "Permintaan Fitur", 
+    "Account": "Akun",
+    "Payment": "Pembayaran",
+    "Other": "Lainnya"
+  },
+  "statuses": {
+    "Open": "Terbuka",
+    "Responded": "Sudah Direspons",
+    "Investigating": "Sedang Diselidiki",
+    "Pending": "Tertunda",
+    "Done": "Selesai",
+    "Closed": "Ditutup"
   }
+}
+
+
   
 
 

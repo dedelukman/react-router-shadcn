@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
@@ -86,17 +87,17 @@ function priorityVariant(p: Priority) {
 }
 
 export default function GetHelps() {
+  const { t } = useTranslation();
+  
   const [tickets, setTickets] = React.useState<Ticket[]>(() => {
-    // initial mock data
     const now = new Date().toISOString();
     return [
       {
         id: `T-${Date.now() - 100000}`,
-        subject: 'Unable to log into my account',
+        subject: 'Unable to access account settings',
         category: 'Account',
         priority: 'High',
-        description:
-          "I receive an error when trying to log in: 'Invalid credentials'",
+        description: 'Whenever I try to access my account settings, I receive an error message saying "Access Denied". Please assist.',
         status: 'Investigating',
         createdAt: now,
         updatedAt: now,
@@ -141,7 +142,7 @@ export default function GetHelps() {
     setInfo(null);
 
     if (!subject.trim()) {
-      setError('Subject is required.');
+      setError(t('gethelp.tickets.error.subjectRequired'));
       return;
     }
 
@@ -159,29 +160,35 @@ export default function GetHelps() {
     };
 
     setTickets((s) => [newTicket, ...s]);
-    setInfo('Ticket submitted successfully.');
+    setInfo(t('gethelp.tickets.success.ticketSubmitted'));
     resetForm();
     setCreateOpen(false);
   }
 
-  function handleView(t: Ticket) {
-    setSelectedTicket(t);
+  function handleView(ticket: Ticket) {
+    setSelectedTicket(ticket);
     setSheetOpen(true);
   }
 
+  // Helper function to get translated values
+  const getTranslatedValue = (type: 'priorities' | 'categories' | 'statuses', value: string) => {
+    return t(`${type}.${value}`, { defaultValue: value });
+  };
+
   return (
-    <div className='m-2 space-y-6'>
+    <div className='m-5 space-y-6'>
       <div className='space-y-4'>
         <div className='flex items-center justify-between'>
           <div>
-            <h2 className='mb-1 text-lg font-medium'>My Tickets</h2>
+            <h2 className='mb-1 text-lg font-medium'>{t('gethelp.tickets.myTickets')}</h2>
             <p className='text-sm text-muted-foreground'>
-              History of tickets you've created. Click "View Details" to open
-              the full conversation.
+              {t('gethelp.tickets.ticketHistory')}
             </p>
           </div>
           <div>
-            <Button onClick={() => setCreateOpen(true)}>Create Ticket</Button>
+            <Button onClick={() => setCreateOpen(true)}>
+              {t('gethelp.tickets.createTicket')}
+            </Button>
           </div>
         </div>
 
@@ -189,41 +196,43 @@ export default function GetHelps() {
           <div className='rounded-md border p-4 shadow-sm'>
             <Table>
               <TableHeader>
-                <tr>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Subject</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Priority</TableHead>
-                  <TableHead>Created</TableHead>
-                  <TableHead>Updated</TableHead>
-                  <TableHead>Actions</TableHead>
-                </tr>
+                <TableRow>
+                  <TableHead>{t('gethelp.tickets.id')}</TableHead>
+                  <TableHead>{t('gethelp.tickets.subject')}</TableHead>
+                  <TableHead>{t('gethelp.tickets.status')}</TableHead>
+                  <TableHead>{t('gethelp.tickets.priority')}</TableHead>
+                  <TableHead>{t('gethelp.tickets.created')}</TableHead>
+                  <TableHead>{t('gethelp.tickets.updated')}</TableHead>
+                  <TableHead>{t('gethelp.tickets.actions')}</TableHead>
+                </TableRow>
               </TableHeader>
               <TableBody>
-                {tickets.map((t) => (
-                  <TableRow key={t.id}>
-                    <TableCell>{t.id}</TableCell>
+                {tickets.map((ticket) => (
+                  <TableRow key={ticket.id}>
+                    <TableCell>{ticket.id}</TableCell>
                     <TableCell className='max-w-[200px] truncate'>
-                      {t.subject}
+                      {ticket.subject}
                     </TableCell>
                     <TableCell>
-                      <span className='text-sm'>{t.status}</span>
+                      <span className='text-sm'>
+                        {getTranslatedValue('statuses', ticket.status)}
+                      </span>
                     </TableCell>
                     <TableCell>
-                      <Badge variant={priorityVariant(t.priority) as any}>
-                        {t.priority}
+                      <Badge variant={priorityVariant(ticket.priority) as any}>
+                        {getTranslatedValue('priorities', ticket.priority)}
                       </Badge>
                     </TableCell>
-                    <TableCell>{formatDate(t.createdAt)}</TableCell>
-                    <TableCell>{formatDate(t.updatedAt)}</TableCell>
+                    <TableCell>{formatDate(ticket.createdAt)}</TableCell>
+                    <TableCell>{formatDate(ticket.updatedAt)}</TableCell>
                     <TableCell>
                       <div className='flex gap-2'>
                         <Button
                           variant='ghost'
                           size='sm'
-                          onClick={() => handleView(t)}
+                          onClick={() => handleView(ticket)}
                         >
-                          View Details
+                          {t('gethelp.tickets.viewDetails')}
                         </Button>
                       </div>
                     </TableCell>
@@ -234,7 +243,8 @@ export default function GetHelps() {
           </div>
         </div>
       </div>
-      {/* Create ticket sheet/modal */}
+
+      {/* Create ticket sheet */}
       <Sheet
         open={createOpen}
         onOpenChange={(v) => {
@@ -244,9 +254,9 @@ export default function GetHelps() {
       >
         <SheetContent side='bottom'>
           <SheetHeader>
-            <SheetTitle>Create New Ticket</SheetTitle>
+            <SheetTitle>{t('gethelp.tickets.createNewTicket')}</SheetTitle>
             <SheetDescription>
-              Fill out the form to submit a support ticket.
+              {t('gethelp.tickets.fillFormDescription')}
             </SheetDescription>
           </SheetHeader>
 
@@ -254,28 +264,28 @@ export default function GetHelps() {
             <form onSubmit={handleSubmit} className='space-y-3'>
               <div>
                 <label className='mb-1 block text-sm font-medium'>
-                  Subject / Title <span className='text-destructive'>*</span>
+                  {t('gethelp.tickets.subjectTitle')} <span className='text-destructive'>*</span>
                 </label>
                 <Input
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  placeholder='Example: Unable to checkout with card payment'
+                  placeholder={t('gethelp.tickets.placeholder.subject')}
                 />
               </div>
 
               <div className='grid grid-cols-2 gap-3'>
                 <div>
                   <label className='mb-1 block text-sm font-medium'>
-                    Category
+                    {t('gethelp.tickets.category')}
                   </label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     className='border-input h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm'
                   >
-                    {defaultCategories.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
+                    {defaultCategories.map((cat) => (
+                      <option key={cat} value={cat}>
+                        {getTranslatedValue('categories', cat)}
                       </option>
                     ))}
                   </select>
@@ -283,16 +293,16 @@ export default function GetHelps() {
 
                 <div>
                   <label className='mb-1 block text-sm font-medium'>
-                    Priority
+                    {t('gethelp.tickets.priority')}
                   </label>
                   <select
                     value={priority}
                     onChange={(e) => setPriority(e.target.value as Priority)}
                     className='border-input h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm'
                   >
-                    {defaultPriorities.map((p) => (
-                      <option key={p} value={p}>
-                        {p}
+                    {defaultPriorities.map((pri) => (
+                      <option key={pri} value={pri}>
+                        {getTranslatedValue('priorities', pri)}
                       </option>
                     ))}
                   </select>
@@ -301,25 +311,25 @@ export default function GetHelps() {
 
               <div>
                 <label className='mb-1 block text-sm font-medium'>
-                  Description
+                  {t('gethelp.tickets.description')}
                 </label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   rows={6}
-                  placeholder={`Reproduction steps:\n1. \n2. \n\nWhat did you expect to happen?\n\nWhat actually happened?\n\nAttach screenshots if available (optional).`}
+                  placeholder={t('gethelp.tickets.placeholder.description')}
                   className='w-full rounded-md border bg-transparent px-3 py-2 text-sm'
                 />
               </div>
 
               <div>
                 <label className='mb-1 block text-sm font-medium'>
-                  Attachment (optional)
+                  {t('gethelp.tickets.attachmentOptional')}
                 </label>
                 <input onChange={handleFile} type='file' className='text-sm' />
                 {attachmentName ? (
                   <div className='mt-1 text-sm text-muted-foreground'>
-                    Selected: {attachmentName}
+                    {t('gethelp.tickets.selected')}: {attachmentName}
                   </div>
                 ) : null}
               </div>
@@ -330,10 +340,10 @@ export default function GetHelps() {
               {info ? <div className='text-sm text-success'>{info}</div> : null}
 
               <div className='flex items-center gap-2'>
-                <Button type='submit'>Submit Ticket</Button>
+                <Button type='submit'>{t('gethelp.tickets.submitTicket')}</Button>
                 <SheetClose>
                   <Button variant='outline' type='button' onClick={resetForm}>
-                    Close
+                    {t('gethelp.tickets.close')}
                   </Button>
                 </SheetClose>
               </div>
@@ -342,7 +352,7 @@ export default function GetHelps() {
         </SheetContent>
       </Sheet>
 
-      {/* Ticket details sheet/modal */}
+      {/* Ticket details sheet */}
       <Sheet
         open={sheetOpen}
         onOpenChange={(v) => {
@@ -352,9 +362,9 @@ export default function GetHelps() {
       >
         <SheetContent side='right'>
           <SheetHeader>
-            <SheetTitle>Ticket Details</SheetTitle>
+            <SheetTitle>{t('gethelp.tickets.ticketDetails')}</SheetTitle>
             <SheetDescription>
-              Full details for the selected ticket
+              {t('gethelp.tickets.fullDetails')}
             </SheetDescription>
           </SheetHeader>
 
@@ -363,51 +373,51 @@ export default function GetHelps() {
               <>
                 <div className='grid grid-cols-1 gap-2'>
                   <div>
-                    <div className='text-xs text-muted-foreground'>ID</div>
+                    <div className='text-xs text-muted-foreground'>{t('gethelp.tickets.id')}</div>
                     <div className='font-medium'>{selectedTicket.id}</div>
                   </div>
 
                   <div>
-                    <div className='text-xs text-muted-foreground'>Subject</div>
+                    <div className='text-xs text-muted-foreground'>{t('gethelp.tickets.subject')}</div>
                     <div className='font-medium'>{selectedTicket.subject}</div>
                   </div>
 
                   <div className='flex gap-4'>
                     <div>
                       <div className='text-xs text-muted-foreground'>
-                        Category
+                        {t('gethelp.tickets.category')}
                       </div>
-                      <div>{selectedTicket.category}</div>
+                      <div>{getTranslatedValue('categories', selectedTicket.category)}</div>
                     </div>
                     <div>
                       <div className='text-xs text-muted-foreground'>
-                        Priority
+                        {t('gethelp.tickets.priority')}
                       </div>
                       <Badge
                         variant={
                           priorityVariant(selectedTicket.priority) as any
                         }
                       >
-                        {selectedTicket.priority}
+                        {getTranslatedValue('priorities', selectedTicket.priority)}
                       </Badge>
                     </div>
                   </div>
 
                   <div>
-                    <div className='text-xs text-muted-foreground'>Status</div>
-                    <div>{selectedTicket.status}</div>
+                    <div className='text-xs text-muted-foreground'>{t('gethelp.tickets.status')}</div>
+                    <div>{getTranslatedValue('statuses', selectedTicket.status)}</div>
                   </div>
 
                   <div className='flex gap-4'>
                     <div>
                       <div className='text-xs text-muted-foreground'>
-                        Created
+                        {t('gethelp.tickets.created')}
                       </div>
                       <div>{formatDate(selectedTicket.createdAt)}</div>
                     </div>
                     <div>
                       <div className='text-xs text-muted-foreground'>
-                        Updated
+                        {t('gethelp.tickets.updated')}
                       </div>
                       <div>{formatDate(selectedTicket.updatedAt)}</div>
                     </div>
@@ -415,7 +425,7 @@ export default function GetHelps() {
 
                   <div>
                     <div className='text-xs text-muted-foreground'>
-                      Description
+                      {t('gethelp.tickets.description')}
                     </div>
                     <div className='whitespace-pre-wrap'>
                       {selectedTicket.description}
@@ -424,20 +434,20 @@ export default function GetHelps() {
 
                   <div>
                     <div className='text-xs text-muted-foreground'>
-                      Attachment
+                      {t('gethelp.tickets.attachmentOptional')}
                     </div>
-                    <div>{selectedTicket.attachment ?? 'None'}</div>
+                    <div>{selectedTicket.attachment ?? t('gethelp.tickets.none')}</div>
                   </div>
                 </div>
               </>
             ) : (
-              <div>No ticket selected</div>
+              <div>{t('gethelp.tickets.noTicketSelected')}</div>
             )}
           </div>
 
           <SheetFooter>
             <SheetClose>
-              <Button variant='outline'>Close</Button>
+              <Button variant='outline'>{t('gethelp.tickets.close')}</Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

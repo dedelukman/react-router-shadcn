@@ -169,8 +169,69 @@
     "saved": "Website settings saved:"
   }
    
-  
+  },
+
+  "gethelp": {
+  "tickets": {
+    "myTickets": "My Tickets",
+    "ticketHistory": "History of tickets you've created. Click \"View Details\" to open the full conversation.",
+    "createTicket": "Create Ticket",
+    "id": "ID",
+    "subject": "Subject",
+    "status": "Status",
+    "priority": "Priority",
+    "created": "Created",
+    "updated": "Updated",
+    "actions": "Actions",
+    "viewDetails": "View Details",
+    "createNewTicket": "Create New Ticket",
+    "fillFormDescription": "Fill out the form to submit a support ticket.",
+    "subjectTitle": "Subject / Title",
+    "required": "required",
+    "category": "Category",
+    "description": "Description",
+    "attachmentOptional": "Attachment (optional)",
+    "selected": "Selected",
+    "submitTicket": "Submit Ticket",
+    "close": "Close",
+    "ticketDetails": "Ticket Details",
+    "fullDetails": "Full details for the selected ticket",
+    "none": "None",
+    "noTicketSelected": "No ticket selected",
+    "error": {
+      "subjectRequired": "Subject is required."
+    },
+    "success": {
+      "ticketSubmitted": "Ticket submitted successfully."
+    },
+    "placeholder": {
+      "subject": "Example: Unable to checkout with card payment",
+      "description": "Reproduction steps:\\n1. \\n2. \\n\\nWhat did you expect to happen?\\n\\nWhat actually happened?\\n\\nAttach screenshots if available (optional)."
+    }
+  },
+  "priorities": {
+    "Low": "Low",
+    "Normal": "Normal",
+    "High": "High", 
+    "Critical": "Critical"
+  },
+  "categories": {
+    "Bug/Error": "Bug/Error",
+    "Feature Question": "Feature Question",
+    "Feature Request": "Feature Request",
+    "Account": "Account",
+    "Payment": "Payment",
+    "Other": "Other"
+  },
+  "statuses": {
+    "Open": "Open",
+    "Responded": "Responded",
+    "Investigating": "Investigating",
+    "Pending": "Pending",
+    "Done": "Done",
+    "Closed": "Closed"
   }
+}
 
 
 }
