@@ -23,7 +23,7 @@ export default [
         route("getHelp","routes/dashboard/pages/gethelp/index.tsx"),
         route("search","routes/dashboard/pages/search.tsx"),
         route("account","routes/dashboard/pages/account.tsx"),
-        route("billing","routes/dashboard/pages/billing.tsx"),
+        route("billing","routes/dashboard/pages/billing/index.tsx"),
         route("notifications","routes/dashboard/pages/notifications.tsx"),
 
 
