@@ -146,7 +146,7 @@
     "title": "Informasi Perusahaan",
     "description": "Perbarui detail perusahaan Anda seperti nama, alamat, dan informasi kontak.",
     "logo": "Logo Perusahaan",
-    "changeLogo": "Ganti Logo",
+    "changeLogo": "Ubah Logo",
     "uploadLogo": "Upload Logo",
     "name": "Nama Perusahaan",
     "address": "Alamat",
@@ -232,6 +232,40 @@
     "Done": "Selesai",
     "Closed": "Ditutup"
   }
+},
+
+
+  "profile": {
+    "title": "Pengaturan Profil",
+    "uploadImage": "Unggah Gambar",
+    "changeImage": "Ubah Gambar",
+    "deleteImage": "Hapus Gambar",
+    "username": "Nama Pengguna",
+    "usernamePlaceholder": "Nama pengguna Anda",
+    "fullName": "Nama Lengkap",
+    "fullNamePlaceholder": "Nama lengkap Anda",
+    "email": "Email",
+    "emailPlaceholder": "anda@contoh.com",
+    "emailDescription": "Kami akan menggunakan email ini untuk pemberitahuan akun.",
+    "changePassword": "Ubah Kata Sandi",
+    "newPassword": "Kata Sandi Baru",
+    "newPasswordPlaceholder": "Kata sandi baru",
+    "confirmPassword": "Konfirmasi Kata Sandi Baru",
+    "confirmPasswordPlaceholder": "Konfirmasi kata sandi baru",
+    "passwordDescription": "Biarkan kosong untuk menjaga kata sandi saat ini.",
+    "save": "Simpan",
+    "reset": "Reset",
+    "errors": {
+      "usernameRequired": "Nama pengguna wajib diisi",
+      "fullNameRequired": "Nama lengkap wajib diisi",
+      "emailRequired": "Email yang valid wajib diisi",
+      "passwordMinLength": "Kata sandi harus minimal 6 karakter",
+      "passwordsMismatch": "Kata sandi tidak cocok"
+    },
+    "success": {
+      "profileSaved": "Profil disimpan (lokal) — implementasikan panggilan server untuk menyimpan perubahan"
+    }
+  
 }
 
 

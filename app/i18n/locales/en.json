@@ -231,7 +231,39 @@
     "Done": "Done",
     "Closed": "Closed"
   }
-}
+},
+
+ "profile": {
+    "title": "Profile Settings",
+    "uploadImage": "Upload Image",
+    "changeImage": "Change Image",
+    "deleteImage": "Delete Image",
+    "username": "Username",
+    "usernamePlaceholder": "Your username",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Your full name",
+    "email": "Email",
+    "emailPlaceholder": "you@example.com",
+    "emailDescription": "We'll use this email for account notifications.",
+    "changePassword": "Change Password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "New password",
+    "confirmPassword": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Confirm new password",
+    "passwordDescription": "Leave blank to keep your current password.",
+    "save": "Save",
+    "reset": "Reset",
+    "errors": {
+      "usernameRequired": "Username is required",
+      "fullNameRequired": "Full name is required",
+      "emailRequired": "Valid email is required",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "passwordsMismatch": "Passwords do not match"
+    },
+    "success": {
+      "profileSaved": "Profile saved (local) — implement server call to persist changes"
+    }
+  }
 
 
 }

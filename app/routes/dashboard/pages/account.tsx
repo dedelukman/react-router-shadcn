@@ -1,5 +1,6 @@
 import { IconTrash } from '@tabler/icons-react';
 import { useRef, useState, type ChangeEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import { Button } from '~/components/ui/button';
 import { Card } from '~/components/ui/card';
@@ -13,7 +14,8 @@ import {
 } from '~/components/ui/field';
 
 export default function Page() {
-  const [imageUrl, seImageUrl] = useState('');
+  const { t } = useTranslation();
+  const [imageUrl, setImageUrl] = useState('');
   const [username, setUsername] = useState('');
   const [fullname, setFullname] = useState('');
   const [email, setEmail] = useState('');
@@ -21,32 +23,36 @@ export default function Page() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+
   const handleImageUpload = () => {
     fileInputRef.current?.click();
   };
+
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        seImageUrl(reader.result as string);
+        setImageUrl(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
+
   const handleImageDelete = () => {
-    seImageUrl('');
+    setImageUrl('');
   };
+
   const validate = () => {
     const e: Record<string, string> = {};
-    if (!username.trim()) e.username = 'Username is required';
-    if (!fullname.trim()) e.fullname = 'Full name is required';
+    if (!username.trim()) e.username = t('profile.errors.usernameRequired');
+    if (!fullname.trim()) e.fullname = t('profile.errors.fullNameRequired');
     if (!email.trim() || !/\S+@\S+\.\S+/.test(email))
-      e.email = 'Valid email is required';
+      e.email = t('profile.errors.emailRequired');
     if ((newPassword || confirmPassword) && newPassword.length < 6)
-      e.newPassword = 'Password must be at least 6 characters';
+      e.newPassword = t('profile.errors.passwordMinLength');
     if (newPassword !== confirmPassword)
-      e.confirmPassword = 'Passwords do not match';
+      e.confirmPassword = t('profile.errors.passwordsMismatch');
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -57,7 +63,7 @@ export default function Page() {
     // TODO: send to backend / persist
     // For now we'll just log the values
     console.log({ username, fullname, email, newPassword, imageUrl });
-    alert('Profile saved (local) — implement server call to persist changes');
+    alert(t('profile.success.profileSaved'));
     setNewPassword('');
     setConfirmPassword('');
     // optionally keep username/email but clear fullname on save
@@ -66,6 +72,7 @@ export default function Page() {
     // clear fullname input
     setFullname('');
   };
+
   return (
     <div>
       <Card className='m-4 p-2'>
@@ -75,7 +82,7 @@ export default function Page() {
             <AvatarFallback className='rounded-full'>CN</AvatarFallback>
           </Avatar>
           <Button onClick={handleImageUpload}>
-            {imageUrl ? 'Change Image' : 'Upload Image'}
+            {imageUrl ? t('profile.changeImage') : t('profile.uploadImage')}
           </Button>
           {imageUrl && (
             <Button
@@ -89,63 +96,63 @@ export default function Page() {
         {/* Account form */}
         <form onSubmit={handleSave} className='mt-4 grid gap-4'>
           <Field>
-            <FieldLabel>Username</FieldLabel>
+            <FieldLabel>{t('profile.username')}</FieldLabel>
             <FieldContent>
               <Input
                 value={username}
                 onChange={(ev) => setUsername(ev.target.value)}
-                placeholder='Your username'
+                placeholder={t('profile.usernamePlaceholder')}
               />
               <FieldError>{errors.username}</FieldError>
             </FieldContent>
           </Field>
 
           <Field>
-            <FieldLabel>Full name</FieldLabel>
+            <FieldLabel>{t('profile.fullName')}</FieldLabel>
             <FieldContent>
               <Input
                 value={fullname}
                 onChange={(ev) => setFullname(ev.target.value)}
-                placeholder='Your full name'
+                placeholder={t('profile.fullNamePlaceholder')}
               />
               <FieldError>{errors.fullname}</FieldError>
             </FieldContent>
           </Field>
 
           <Field>
-            <FieldLabel>Email</FieldLabel>
+            <FieldLabel>{t('profile.email')}</FieldLabel>
             <FieldContent>
               <Input
                 value={email}
                 onChange={(ev) => setEmail(ev.target.value)}
-                placeholder='you@example.com'
+                placeholder={t('profile.emailPlaceholder')}
                 type='email'
               />
               <FieldDescription>
-                We'll use this email for account notifications.
+                {t('profile.emailDescription')}
               </FieldDescription>
               <FieldError>{errors.email}</FieldError>
             </FieldContent>
           </Field>
 
           <Field>
-            <FieldLabel>Change Password</FieldLabel>
+            <FieldLabel>{t('profile.changePassword')}</FieldLabel>
             <FieldContent>
               <Input
                 value={newPassword}
                 onChange={(ev) => setNewPassword(ev.target.value)}
-                placeholder='New password'
+                placeholder={t('profile.newPasswordPlaceholder')}
                 type='password'
               />
               <Input
                 value={confirmPassword}
                 onChange={(ev) => setConfirmPassword(ev.target.value)}
-                placeholder='Confirm new password'
+                placeholder={t('profile.confirmPasswordPlaceholder')}
                 type='password'
                 className='mt-2'
               />
               <FieldDescription>
-                Leave blank to keep your current password.
+                {t('profile.passwordDescription')}
               </FieldDescription>
               <FieldError>
                 {errors.newPassword || errors.confirmPassword}
@@ -154,7 +161,7 @@ export default function Page() {
           </Field>
 
           <div className='flex items-center gap-2'>
-            <Button type='submit'>Save</Button>
+            <Button type='submit'>{t('profile.save')}</Button>
             <Button
               type='button'
               variant='outline'
@@ -167,7 +174,7 @@ export default function Page() {
                 setErrors({});
               }}
             >
-              Reset
+              {t('profile.reset')}
             </Button>
           </div>
         </form>
