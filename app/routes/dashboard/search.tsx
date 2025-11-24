@@ -3,19 +3,21 @@ import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
 import { Link } from 'react-router';
 import { Search, X, ArrowRight, Folder } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const dashboardRoutes = [
-  { label: 'Account', href: '/dashboard/account' },
-  { label: 'Billing', href: '/dashboard/billing' },
-  { label: 'Notifications', href: '/dashboard/notifications' },
-  { label: 'Settings', href: '/dashboard/settings' },
-  { label: 'Help / Get Help', href: '/dashboard/gethelp' },
-  { label: 'Search', href: '/dashboard/search' },
+  { label: 'account', href: '/dashboard/account' },
+  { label: 'billing', href: '/dashboard/billing' },
+  { label: 'notifications', href: '/dashboard/notifications' },
+  { label: 'settings', href: '/dashboard/settings' },
+  { label: 'gethelp', href: '/dashboard/gethelp' },
+  { label: 'search', href: '/dashboard/search' },
 ];
 
 export default function SearchPage() {
   const [query, setQuery] = React.useState('');
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const {t} = useTranslation();
 
   const results = React.useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -51,10 +53,10 @@ export default function SearchPage() {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Menu Search
+           {t('search.title')}
           </h1>
           <p className="text-muted-foreground">
-            Cari menu dashboard dengan cepat
+            {t('search.description')}
           </p>
         </div>
 
@@ -67,7 +69,7 @@ export default function SearchPage() {
                 ref={inputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Cari menu (nama atau path)..."
+                placeholder={t('search.placeholder')}
                 className="pl-10 border-foreground/20 focus:border-primary transition-colors"
               />
             </div>
@@ -85,7 +87,7 @@ export default function SearchPage() {
           {/* Search Info */}
           {query && (
             <div className="mt-3 text-sm text-muted-foreground">
-              Ditemukan {results.length} menu untuk "{query}"
+               {t('search.results_found', { count: results.length })} "{query}"
             </div>
           )}
         </div>
@@ -98,10 +100,10 @@ export default function SearchPage() {
                 <Search className="w-8 h-8 text-muted-foreground" />
               </div>
               <h3 className="text-lg font-medium text-foreground mb-2">
-                Mulai Pencarian
+               {t('search.start_searching')}
               </h3>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                Ketik di atas untuk mencari menu dashboard berdasarkan nama atau path URL.
+                {t('search.start_description')}
               </p>
               
               {/* Quick Suggestions */}
@@ -123,17 +125,17 @@ export default function SearchPage() {
                 <X className="w-8 h-8 text-muted-foreground" />
               </div>
               <h3 className="text-lg font-medium text-foreground mb-2">
-                Menu tidak ditemukan
+               {t('search.no_results')}
               </h3>
               <p className="text-muted-foreground mb-4">
-                Tidak ada menu yang cocok dengan "<span className="font-medium">{query}</span>".
+                 {t('search.results_found')}<span className="font-medium">{query}</span>
               </p>
               <Button
                 variant="outline"
                 onClick={clearSearch}
                 className="rounded-md"
               >
-                Hapus Pencarian
+               {t('search.start_searching')}
               </Button>
             </div>
           ) : (
@@ -150,7 +152,7 @@ export default function SearchPage() {
                       </div>
                       <div>
                         <h4 className="font-medium text-foreground group-hover:text-primary transition-colors">
-                          {route.label}
+                          {t('search.menu_items.' + route.label)}
                         </h4>
                         <p className="text-sm text-muted-foreground mt-0.5">
                           {route.href}
@@ -161,7 +163,7 @@ export default function SearchPage() {
                       to={route.href}
                       className="flex items-center space-x-2 px-3 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
                     >
-                      <span>Buka</span>
+                      <span> {t('search.open')}</span>
                       <ArrowRight className="w-4 h-4" />
                     </Link>
                   </div>
@@ -173,7 +175,7 @@ export default function SearchPage() {
 
         {/* Footer */}
         <div className="text-center mt-6 text-sm text-muted-foreground">
-          Gunakan pencarian untuk menemukan menu dengan cepat
+           {t('search.footer')}
         </div>
       </div>
     </div>
