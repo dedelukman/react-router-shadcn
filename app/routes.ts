@@ -17,7 +17,7 @@ export default [
         ]),
 
    ...prefix("dashboard", [
-    layout("components/dashboard/layout.tsx",[
+    layout("components/dashboard/layout/index.tsx",[
         index("routes/dashboard/index.tsx"),
         route("settings","routes/dashboard/settings.tsx"),
         route("getHelp","routes/dashboard/gethelp.tsx"),

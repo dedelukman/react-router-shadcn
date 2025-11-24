@@ -1,11 +1,11 @@
 import { useLocation } from 'react-router';
 import { Separator } from '~/components/ui/separator';
 import { SidebarTrigger } from '~/components/ui/sidebar';
-import { ModeToggle } from '../mode-toggle';
-import { ThemeToggle } from '../theme-toggle';
-import NotificationsPopover from '../notifications-popover';
-import { useTheme } from '../theme-provider';
-import LanguageToggle from '../language-toggle';
+import { ModeToggle } from '../../toggle/mode-toggle';
+import { ThemeToggle } from '../../toggle/theme-toggle';
+import NotificationsPopover from '../../toggle/notifications-popover';
+import { useTheme } from '../../toggle/theme-provider';
+import LanguageToggle from '../../toggle/language-toggle';
 import { useTranslation } from 'react-i18next';
 import { translateTitle } from '~/i18n/translate-title';
 

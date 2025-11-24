@@ -6,7 +6,7 @@ import { useIsMobile } from '~/hooks/use-mobile';
 import { getAuthMenu, navigationData } from '~/data/navigation-data';
 import { useAuth } from '~/lib/auth';
 import { useTranslation } from 'react-i18next';
-import LanguageToggle from '../language-toggle';
+import LanguageToggle from '../toggle/language-toggle';
 
 interface NavbarProps {
   isAuthenticated?: boolean;

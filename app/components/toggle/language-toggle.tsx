@@ -5,8 +5,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import { Button } from './ui/button';
+} from '../ui/dropdown-menu';
+import { Button } from '../ui/button';
 
 export default function LanguageToggle() {
   const { i18n } = useTranslation();
@@ -21,12 +21,12 @@ export default function LanguageToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Globe className="h-5 w-5" />
+        <Button variant='ghost' size='icon'>
+          <Globe className='h-5 w-5' />
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align='end'>
         <DropdownMenuItem
           onClick={() => changeLanguage('en')}
           className={currentLang === 'en' ? 'font-bold' : ''}

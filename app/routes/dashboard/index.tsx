@@ -1,6 +1,6 @@
 import { ChartAreaInteractive } from '~/components/dashboard/chart-area-interactive';
 import { DataTable } from '~/components/dashboard/data-table';
-import { SectionCards } from '~/components/section-cards';
+import { SectionCards } from '~/components/dashboard/section-cards';
 import data from '../../data/data.json';
 import { useEffect, useRef, useState } from 'react';
 import { DataTableSkeleton } from '~/components/dashboard/data-table-skleton';

@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router';
-import { AppSidebar } from '~/components/dashboard/app-sidebar';
-import { SiteHeader } from '~/components/dashboard/site-header';
+import { AppSidebar } from '~/components/dashboard/layout/app-sidebar';
+import { SiteHeader } from '~/components/dashboard/layout/site-header';
 import { SidebarInset, SidebarProvider } from '~/components/ui/sidebar';
-import { ThemeProvider } from '../theme-provider';
+import { ThemeProvider } from '../../toggle/theme-provider';
 import { RequireAuth } from '~/lib/auth';
 
 export default function Layout() {

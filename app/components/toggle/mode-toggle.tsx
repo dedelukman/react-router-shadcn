@@ -4,14 +4,14 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
-import { Button } from './ui/button';
+} from '../ui/dropdown-menu';
+import { Button } from '../ui/button';
 import { useTheme } from './theme-provider';
 import { useTranslation } from 'react-i18next';
 
 export function ModeToggle() {
   const { setTheme, theme } = useTheme();
-  const {t} = useTranslation ()
+  const { t } = useTranslation();
 
   return (
     <DropdownMenu>
