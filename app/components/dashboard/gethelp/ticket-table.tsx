@@ -10,8 +10,8 @@ import {
 } from '~/components/ui/table';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import type  { Ticket } from './types';
-import { formatDate, priorityVariant } from './utils';
+import type  { Ticket } from '../../../lib/types';
+import { formatDate, priorityVariant } from '../../../lib/utils';
 
 interface TicketTableProps {
   tickets: Ticket[];

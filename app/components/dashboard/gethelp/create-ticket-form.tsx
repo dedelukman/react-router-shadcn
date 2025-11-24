@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { SheetClose } from '~/components/ui/sheet';
-import type  { Category, Priority } from './types';
-import   {  defaultCategories, defaultPriorities } from './types';
+import type  { Category, Priority } from '../../../lib/types';
+import   {  defaultCategories, defaultPriorities } from '../../../lib/types';
 
 interface CreateTicketFormProps {
   onSubmit: (e: React.FormEvent) => void;

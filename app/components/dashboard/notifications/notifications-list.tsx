@@ -1,7 +1,6 @@
-import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import NotificationItem from './notifications-item';
-import type { Notification } from './types';
+import type { Notification } from '../../../lib/types';
 
 interface NotificationsListProps {
   notifications: Notification[];

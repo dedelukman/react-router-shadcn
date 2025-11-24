@@ -15,8 +15,8 @@ import {
 import TicketTable from './ticket-table';
 import CreateTicketForm from './create-ticket-form';
 import TicketDetails from './ticket-details';
-import type  { Ticket, Category, Priority } from './types';
-import  {  defaultCategories } from './types';
+import type  { Ticket, Category, Priority } from '../../../lib/types';
+import  {  defaultCategories } from '../../../lib/types';
 
 export default function GetHelps() {
   const { t } = useTranslation();

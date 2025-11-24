@@ -2,8 +2,8 @@ import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import PlanCard from './plan-card';
 import BillingHistory from './billing-history';
-import type { Invoice } from './types';
-import { SAMPLE_INVOICES } from './types';
+import type { Invoice } from '../../../lib/types';
+import { SAMPLE_INVOICES } from '../../../lib/types';
 
 export default function Billing() {
   const { t } = useTranslation();

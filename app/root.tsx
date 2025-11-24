@@ -2,7 +2,6 @@ import {
   isRouteErrorResponse,
   Links,
   Meta,
-  Navigate,
   Outlet,
   Scripts,
     ScrollRestoration,

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox } from '~/components/ui/checkbox';
 import { Button } from '~/components/ui/button';
@@ -8,7 +7,7 @@ import {
   IconMail,
   IconStar,
 } from '@tabler/icons-react';
-import type { Notification } from './types';
+import type { Notification } from '../../../lib/types';
 
 interface NotificationItemProps {
   notification: Notification;

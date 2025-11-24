@@ -1,8 +1,7 @@
-import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Tabs, TabsList, TabsTrigger } from '~/components/ui/tabs';
 import { Badge } from '~/components/ui/badge';
-import type { NotificationCounts, NotificationTab } from './types';
+import type { NotificationCounts, NotificationTab } from '../../../lib/types';
 
 interface NotificationsTabsProps {
   activeTab: NotificationTab;

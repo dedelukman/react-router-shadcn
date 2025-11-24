@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CardHeader, CardTitle } from '~/components/ui/card';
 import { Input } from '~/components/ui/input';

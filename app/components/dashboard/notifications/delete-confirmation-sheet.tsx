@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Sheet,
@@ -8,7 +7,7 @@ import {
   SheetDescription,
 } from '~/components/ui/sheet';
 import { Button } from '~/components/ui/button';
-import type { ConfirmMode } from './types';
+import type { ConfirmMode } from '../../../lib/types';
 
 interface DeleteConfirmationSheetProps {
   isOpen: boolean;

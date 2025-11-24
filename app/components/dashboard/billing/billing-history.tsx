@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Card } from '~/components/ui/card';
 import InvoiceTable from './invoice-table';
 import Pagination from './pagination';
-import type { Invoice } from './types';
+import type { Invoice } from '../../../lib/types';
 
 interface BillingHistoryProps {
   invoices: Invoice[];

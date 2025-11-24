@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Card,
@@ -10,8 +9,8 @@ import {
 } from '~/components/ui/card';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import type { Plan } from './types';
-import { PLANS } from './types';
+import type { Plan } from '../../../lib/types';
+import { PLANS } from '../../../lib/types';
 
 interface PlanCardProps {
   selectedPlan: string;

@@ -14,10 +14,10 @@ import type {
   NotificationTab,
   ConfirmMode,
   NotificationCounts,
-} from './types';
+} from '../../../lib/types';
 import  {
   SAMPLE_NOTIFICATIONS,
-} from './types';
+} from '../../../lib/types';
 
 export default function Notifications() {
   const { t } = useTranslation();

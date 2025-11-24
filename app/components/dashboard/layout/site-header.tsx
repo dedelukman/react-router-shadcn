@@ -1,22 +1,10 @@
 import { useLocation } from 'react-router';
 import { Separator } from '~/components/ui/separator';
 import { SidebarTrigger } from '~/components/ui/sidebar';
-import { ModeToggle } from '../../toggle/mode-toggle';
-import { ThemeToggle } from '../../toggle/theme-toggle';
 import NotificationsPopover from '../../toggle/notifications-popover';
 import { useTheme } from '../../toggle/theme-provider';
-import LanguageToggle from '../../toggle/language-toggle';
 import { useTranslation } from 'react-i18next';
 import { translateTitle } from '~/i18n/translate-title';
-import { IconDotsVertical } from '@tabler/icons-react';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '~/components/ui/dropdown-menu';
-import { Button } from '~/components/ui/button';
 import { SettingsDropdown } from '~/components/toggle/settings-dropdown';
 
 export function SiteHeader() {
