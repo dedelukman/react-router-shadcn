@@ -12,11 +12,11 @@ import {
   SheetClose,
 } from '~/components/ui/sheet';
 
-import TicketTable from './components/ticket-table';
-import CreateTicketForm from './components/create-ticket-form';
-import TicketDetails from './components/ticket-details';
-import type  { Ticket, Category, Priority } from './components/types';
-import  {  defaultCategories } from './components/types';
+import TicketTable from './ticket-table';
+import CreateTicketForm from './create-ticket-form';
+import TicketDetails from './ticket-details';
+import type  { Ticket, Category, Priority } from './types';
+import  {  defaultCategories } from './types';
 
 export default function GetHelps() {
   const { t } = useTranslation();

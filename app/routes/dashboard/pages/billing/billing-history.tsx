@@ -37,7 +37,9 @@ export default function BillingHistory({
     <Card className='p-4'>
       <div className='flex items-center justify-between mb-4'>
         <div>
-          <h2 className='text-lg font-semibold'>{t('billing.billingHistory.title')}</h2>
+          <h2 className='text-lg font-semibold'>
+            {t('billing.billingHistory.title')}
+          </h2>
           <div className='text-sm text-muted-foreground'>
             {t('billing.billingHistory.description')}
           </div>

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "~/components/ui/tabs";
 import { useTranslation } from "react-i18next";
-import CompanySettings from "./components/company-setting";
-import WebsiteSettings from "./components/website-setting";
+import CompanySettings from "./company-setting";
+import WebsiteSettings from "./website-setting";
 
 
 

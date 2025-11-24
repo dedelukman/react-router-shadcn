@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
-import { AppSidebar } from '~/routes/dashboard/components/app-sidebar';
-import { SiteHeader } from '~/routes/dashboard/components/site-header';
+import { AppSidebar } from '~/routes/dashboard/app-sidebar';
+import { SiteHeader } from '~/routes/dashboard/site-header';
 import { SidebarInset, SidebarProvider } from '~/components/ui/sidebar';
 import { ThemeProvider } from '../../components/theme-provider';
 import { RequireAuth } from '~/lib/auth';
