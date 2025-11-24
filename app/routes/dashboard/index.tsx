@@ -1,10 +1,10 @@
-import { ChartAreaInteractive } from '~/routes/dashboard/chart-area-interactive';
-import { DataTable } from '~/routes/dashboard/data-table';
+import { ChartAreaInteractive } from '~/components/dashboard/chart-area-interactive';
+import { DataTable } from '~/components/dashboard/data-table';
 import { SectionCards } from '~/components/section-cards';
 import data from '../../data/data.json';
 import { useEffect, useRef, useState } from 'react';
-import { DataTableSkeleton } from '~/routes/dashboard/data-table-skleton';
-import { ChartAreaInteractiveSkeleton } from '~/routes/dashboard/chart-area-interactive-skeleton';
+import { DataTableSkeleton } from '~/components/dashboard/data-table-skleton';
+import { ChartAreaInteractiveSkeleton } from '~/components/dashboard/chart-area-interactive-skeleton';
 
 export default function Page() {
   const [showChart, setShowChart] = useState(false);

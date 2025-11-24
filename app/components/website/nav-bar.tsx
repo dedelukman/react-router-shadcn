@@ -1,16 +1,12 @@
 import { Menu } from 'lucide-react';
 import { Link } from 'react-router';
-import { Button } from '../../../components/ui/button';
-import {
-  Sheet,
-  SheetContent,
-  SheetTrigger,
-} from '../../../components/ui/sheet';
+import { Button } from '../ui/button';
+import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { useIsMobile } from '~/hooks/use-mobile';
 import { getAuthMenu, navigationData } from '~/data/navigation-data';
 import { useAuth } from '~/lib/auth';
 import { useTranslation } from 'react-i18next';
-import LanguageToggle from '../../../components/language-toggle';
+import LanguageToggle from '../language-toggle';
 
 interface NavbarProps {
   isAuthenticated?: boolean;

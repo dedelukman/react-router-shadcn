@@ -25,13 +25,13 @@ export default function Pagination({
 
   return (
     <>
-      <TableCaption>
+      <div className='text-sm text-muted-foreground text-center'>
         {t('billing.billingHistory.showing', {
           start: startItem,
           end: endItem,
           total: totalItems
         })}
-      </TableCaption>
+      </div>
 
       <div className='flex items-center justify-between mt-4'>
         <div className='text-sm text-muted-foreground'>

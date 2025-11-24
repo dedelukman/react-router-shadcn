@@ -10,7 +10,6 @@ import {
   TableHead,
   TableBody,
   TableCell,
-  TableCaption,
 } from '~/components/ui/table';
 import type { Invoice } from './types';
 

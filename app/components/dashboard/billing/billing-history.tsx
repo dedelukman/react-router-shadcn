@@ -1,7 +1,5 @@
-import * as React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Card } from '~/components/ui/card';
-import { TableCaption } from '~/components/ui/table';
 import InvoiceTable from './invoice-table';
 import Pagination from './pagination';
 import type { Invoice } from './types';
@@ -34,7 +32,7 @@ export default function BillingHistory({
   const pageCount = Math.ceil(totalItems / pageSize);
 
   return (
-    <Card className='p-4'>
+    <Card className='p-4' >
       <div className='flex items-center justify-between mb-4'>
         <div>
           <h2 className='text-lg font-semibold'>
@@ -60,7 +58,8 @@ export default function BillingHistory({
         </div>
       </div>
 
-      <InvoiceTable
+      
+        <InvoiceTable
         invoices={invoices}
         onViewInvoice={onViewInvoice}
         onDownloadInvoice={onDownloadInvoice}
@@ -74,6 +73,8 @@ export default function BillingHistory({
         pageSize={pageSize}
         onPageChange={onPageChange}
       />
+
+      
     </Card>
   );
 }
