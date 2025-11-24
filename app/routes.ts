@@ -24,7 +24,7 @@ export default [
         route("search","routes/dashboard/pages/search.tsx"),
         route("account","routes/dashboard/pages/account.tsx"),
         route("billing","routes/dashboard/pages/billing/index.tsx"),
-        route("notifications","routes/dashboard/pages/notifications.tsx"),
+        route("notifications","routes/dashboard/pages/notifications/notifications.tsx"),
 
 
         route("error/401","routes/dashboard/errors/401.tsx"),
