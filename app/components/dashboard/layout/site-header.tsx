@@ -8,6 +8,16 @@ import { useTheme } from '../../toggle/theme-provider';
 import LanguageToggle from '../../toggle/language-toggle';
 import { useTranslation } from 'react-i18next';
 import { translateTitle } from '~/i18n/translate-title';
+import { IconDotsVertical } from '@tabler/icons-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '~/components/ui/dropdown-menu';
+import { Button } from '~/components/ui/button';
+import { SettingsDropdown } from '~/components/toggle/settings-dropdown';
 
 export function SiteHeader() {
   const { i18n } = useTranslation();
@@ -27,9 +37,7 @@ export function SiteHeader() {
         <h1 className='text-base font-medium'>{title}</h1>
         <div className='ml-auto flex items-center gap-2'>
           <NotificationsPopover />
-          <LanguageToggle />
-          <ModeToggle />
-          {theme !== 'system' && <ThemeToggle />}
+           <SettingsDropdown/>
         </div>
       </div>
     </header>
