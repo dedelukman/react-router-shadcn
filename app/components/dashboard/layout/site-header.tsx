@@ -1,16 +1,16 @@
-import { useLocation } from 'react-router';
+import { NavLink, useLocation } from 'react-router';
 import { Separator } from '~/components/ui/separator';
 import { SidebarTrigger } from '~/components/ui/sidebar';
 import NotificationsPopover from '../../toggle/notifications-popover';
-import { useTheme } from '../../toggle/theme-provider';
-import { useTranslation } from 'react-i18next';
 import { translateTitle } from '~/i18n/translate-title';
 import { SettingsDropdown } from '~/components/toggle/settings-dropdown';
+import { IconSearch } from '@tabler/icons-react';
+import { Button } from '~/components/ui/button';
+import { Link } from 'react-router';
 
 export function SiteHeader() {
-  const { i18n } = useTranslation();
   const location = useLocation();
-  const { theme } = useTheme();
+
 
   const title = translateTitle(location.pathname);
 
@@ -24,6 +24,10 @@ export function SiteHeader() {
         />
         <h1 className='text-base font-medium'>{title}</h1>
         <div className='ml-auto flex items-center gap-2'>
+          <Button variant='ghost' aria-label='Search' className='relative'>
+            <Link to={"/dashboard/search"}>
+              <IconSearch className="h-4 w-4" /></Link>
+            </Button>
           <NotificationsPopover />
            <SettingsDropdown/>
         </div>
