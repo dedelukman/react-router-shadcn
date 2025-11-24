@@ -322,6 +322,53 @@
     "invoice": {
       "alert": "Invoice {{id}}\nDate: {{date}}\nPlan: {{plan}}\nAmount: {{amount}}\nStatus: {{status}}"
     }
+  },
+
+  "notifications": {
+    "title": "Notifications",
+    "subtitle": "You have <strong>{{count}}</strong> notifications",
+    "unread": "{{count}} unread",
+    "searchPlaceholder": "Search notifications",
+    "tabs": {
+      "all": "All",
+      "favorites": "Favorites",
+      "archived": "Archived"
+    },
+    "actions": {
+      "search": "Search",
+      "selectAll": "Select all",
+      "markSelectedRead": "Mark selected as read",
+      "deleteSelected": "Delete selected",
+      "markRead": "Mark as read",
+      "markUnread": "Mark as unread",
+      "favorite": "Favorite",
+      "unfavorite": "Unfavorite",
+      "archive": "Archive",
+      "unarchive": "Unarchive",
+      "delete": "Delete"
+    },
+    "toast": {
+      "toggledFavorite": "Toggled favorite",
+      "archivedUpdated": "Archived state updated",
+      "readUpdated": "Read state updated",
+      "deleted": "Notification deleted",
+      "bulkDeleted": "{{count}} notification(s) deleted",
+      "bulkMarkedRead": "{{count}} notification(s) marked read"
+    },
+    "deleteConfirm": {
+      "title": "Confirm delete",
+      "descriptionSingle": "This will delete the selected notification. This action cannot be undone.",
+      "descriptionBulk": "This will delete {{count}} notification(s). This action cannot be undone.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "noNotifications": "No notifications",
+    "status": {
+      "read": "Read",
+      "unread": "Unread",
+      "favorite": "Favorite",
+      "archived": "Archived"
+    }
   }
 
 

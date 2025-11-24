@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Card, CardHeader, CardTitle, CardContent } from '~/components/ui/card';
 import { Input } from '~/components/ui/input';
 import { Button } from '~/components/ui/button';
@@ -44,6 +45,7 @@ const SAMPLE: Notification[] = Array.from({ length: 12 }).map((_, i) => ({
 }));
 
 export default function Page() {
+  const { t } = useTranslation();
   const [items, setItems] = React.useState<Notification[]>(() => {
     try {
       const raw = localStorage.getItem('app_notifications');
@@ -114,21 +116,21 @@ export default function Page() {
     setItems((prev) =>
       prev.map((it) => (it.id === id ? { ...it, favorite: !it.favorite } : it))
     );
-    toast.success('Toggled favorite');
+    toast.success(t('notifications.toast.toggledFavorite'));
   }
 
   function toggleArchive(id: string) {
     setItems((prev) =>
       prev.map((it) => (it.id === id ? { ...it, archived: !it.archived } : it))
     );
-    toast('Archived state updated');
+    toast(t('notifications.toast.archivedUpdated'));
   }
 
   function toggleRead(id: string) {
     setItems((prev) =>
       prev.map((it) => (it.id === id ? { ...it, read: !it.read } : it))
     );
-    toast('Read state updated');
+    toast(t('notifications.toast.readUpdated'));
   }
 
   function openDeleteConfirmSingle(id: string) {
@@ -153,13 +155,13 @@ export default function Page() {
     if (confirmMode === 'single' && targetId) {
       setItems((prev) => prev.filter((it) => it.id !== targetId));
       setSelectedIds((s) => s.filter((id) => id !== targetId));
-      toast.success('Notification deleted');
+      toast.success(t('notifications.toast.deleted'));
     }
 
     if (confirmMode === 'bulk') {
       setItems((prev) => prev.filter((it) => !selectedIds.includes(it.id)));
       setSelectedIds([]);
-      toast.success(`${selectedIds.length} notification(s) deleted`);
+      toast.success(t('notifications.toast.bulkDeleted', { count: selectedIds.length }));
     }
 
     setConfirmOpen(false);
@@ -171,7 +173,7 @@ export default function Page() {
         selectedIds.includes(it.id) ? { ...it, read: true } : it
       )
     );
-    toast.success(`${selectedIds.length} notification(s) marked read`);
+    toast.success(t('notifications.toast.bulkMarkedRead', { count: selectedIds.length }));
     setSelectedIds([]);
   }
 
@@ -199,26 +201,31 @@ export default function Page() {
           <div className='flex items-center gap-3'>
             <IconBell className='size-5' />
             <div>
-              <CardTitle>Notifications</CardTitle>
-              <div className='text-sm text-muted-foreground'>
-                You have <strong>{counts.all}</strong> notifications{' '}
-                <span className='ml-2 text-sm'>
-                  <Badge variant='secondary'>{counts.unread} unread</Badge>
-                </span>
-              </div>
+              <CardTitle>{t('notifications.title')}</CardTitle>
+              <div 
+                className='text-sm text-muted-foreground'
+                dangerouslySetInnerHTML={{
+                  __html: t('notifications.subtitle', { count: counts.all })
+                }}
+              />
+              <span className='ml-2 text-sm'>
+                <Badge variant='secondary'>
+                  {t('notifications.unread', { count: counts.unread })}
+                </Badge>
+              </span>
             </div>
           </div>
 
           <div className='flex items-center gap-2'>
             <div className='flex items-center gap-2'>
               <Input
-                placeholder='Search notifications'
+                placeholder={t('notifications.searchPlaceholder')}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className='max-w-sm'
                 spellCheck={false}
               />
-              <Button variant='ghost' aria-label='Search'>
+              <Button variant='ghost' aria-label={t('notifications.actions.search')}>
                 <IconSearch />
               </Button>
             </div>
@@ -230,13 +237,13 @@ export default function Page() {
             <Tabs value={tab} onValueChange={(v) => setTab(v as any)}>
               <TabsList>
                 <TabsTrigger value='all'>
-                  All <Badge className='ml-2'>{counts.all}</Badge>
+                  {t('notifications.tabs.all')} <Badge className='ml-2'>{counts.all}</Badge>
                 </TabsTrigger>
                 <TabsTrigger value='favorites'>
-                  Favorites <Badge className='ml-2'>{counts.fav}</Badge>
+                  {t('notifications.tabs.favorites')} <Badge className='ml-2'>{counts.fav}</Badge>
                 </TabsTrigger>
                 <TabsTrigger value='archived'>
-                  Archived <Badge className='ml-2'>{counts.archived}</Badge>
+                  {t('notifications.tabs.archived')} <Badge className='ml-2'>{counts.archived}</Badge>
                 </TabsTrigger>
               </TabsList>
             </Tabs>
@@ -262,13 +269,13 @@ export default function Page() {
                     setSelectedIds([]);
                   else setSelectedIds(filtered.map((f) => f.id));
                 }}
-                aria-label='Select all'
+                aria-label={t('notifications.actions.selectAll')}
               />
               <Button
                 variant='ghost'
                 onClick={() => bulkMarkRead()}
                 disabled={selectedIds.length === 0}
-                aria-label='Mark selected read'
+                aria-label={t('notifications.actions.markSelectedRead')}
               >
                 <IconMail />
               </Button>
@@ -276,7 +283,7 @@ export default function Page() {
                 variant='ghost'
                 onClick={() => openDeleteConfirmBulk()}
                 disabled={selectedIds.length === 0}
-                aria-label='Delete selected'
+                aria-label={t('notifications.actions.deleteSelected')}
               >
                 <IconTrash />
               </Button>
@@ -286,7 +293,7 @@ export default function Page() {
           <div className='grid gap-3'>
             {filtered.length === 0 ? (
               <div className='text-sm text-muted-foreground'>
-                No notifications
+                {t('notifications.noNotifications')}
               </div>
             ) : (
               filtered.map((n) => (
@@ -298,7 +305,7 @@ export default function Page() {
                     <Checkbox
                       checked={selectedIds.includes(n.id)}
                       onCheckedChange={() => toggleSelectOne(n.id) as any}
-                      aria-label={`Select ${n.title}`}
+                      aria-label={`${t('notifications.actions.selectAll')} ${n.title}`}
                     />
                     <div className='flex-1'>
                       <div className='flex items-center gap-2'>
@@ -320,7 +327,7 @@ export default function Page() {
                       <Button
                         variant='ghost'
                         size='icon'
-                        aria-label={n.read ? 'Mark unread' : 'Mark read'}
+                        aria-label={n.read ? t('notifications.actions.markUnread') : t('notifications.actions.markRead')}
                         onClick={() => toggleRead(n.id)}
                       >
                         <IconMail
@@ -330,7 +337,7 @@ export default function Page() {
                       <Button
                         variant='ghost'
                         size='icon'
-                        aria-label={n.favorite ? 'Unfavorite' : 'Favorite'}
+                        aria-label={n.favorite ? t('notifications.actions.unfavorite') : t('notifications.actions.favorite')}
                         onClick={() => toggleFavorite(n.id)}
                       >
                         <IconStar
@@ -340,7 +347,7 @@ export default function Page() {
                       <Button
                         variant='ghost'
                         size='icon'
-                        aria-label={n.archived ? 'Unarchive' : 'Archive'}
+                        aria-label={n.archived ? t('notifications.actions.unarchive') : t('notifications.actions.archive')}
                         onClick={() => toggleArchive(n.id)}
                       >
                         <IconArchive 
@@ -350,7 +357,7 @@ export default function Page() {
                       <Button
                         variant='ghost'
                         size='icon'
-                        aria-label='Delete'
+                        aria-label={t('notifications.actions.delete')}
                         onClick={() => openDeleteConfirmSingle(n.id)}
                       >
                         <IconTrash />
@@ -367,17 +374,15 @@ export default function Page() {
       <Sheet open={confirmOpen} onOpenChange={setConfirmOpen}>
         <SheetContent side='bottom'>
           <SheetHeader>
-            <SheetTitle>Confirm delete</SheetTitle>
+            <SheetTitle>{t('notifications.deleteConfirm.title')}</SheetTitle>
             <SheetDescription>
               {confirmMode === 'bulk' ? (
                 <>
-                  This will delete {selectedIds.length} notification(s). This
-                  action cannot be undone.
+                  {t('notifications.deleteConfirm.descriptionBulk', { count: selectedIds.length })}
                 </>
               ) : (
                 <>
-                  This will delete the selected notification. This action cannot
-                  be undone.
+                  {t('notifications.deleteConfirm.descriptionSingle')}
                 </>
               )}
             </SheetDescription>
@@ -385,10 +390,10 @@ export default function Page() {
           <div className='p-4'>
             <div className='flex gap-2 justify-end'>
               <Button variant='outline' onClick={() => setConfirmOpen(false)}>
-                Cancel
+                {t('notifications.deleteConfirm.cancel')}
               </Button>
               <Button onClick={performDelete} variant='destructive'>
-                Delete
+                {t('notifications.deleteConfirm.delete')}
               </Button>
             </div>
           </div>

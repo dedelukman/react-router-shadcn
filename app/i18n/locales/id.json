@@ -325,6 +325,53 @@
     "invoice": {
       "alert": "Faktur {{id}}\nTanggal: {{date}}\nPaket: {{plan}}\nJumlah: {{amount}}\nStatus: {{status}}"
     }
+  },
+
+  "notifications": {
+    "title": "Notifikasi",
+    "subtitle": "Anda memiliki <strong>{{count}}</strong> notifikasi",
+    "unread": "{{count}} belum dibaca",
+    "searchPlaceholder": "Cari notifikasi",
+    "tabs": {
+      "all": "Semua",
+      "favorites": "Favorit",
+      "archived": "Diarsipkan"
+    },
+    "actions": {
+      "search": "Cari",
+      "selectAll": "Pilih semua",
+      "markSelectedRead": "Tandai yang dipilih sebagai sudah dibaca",
+      "deleteSelected": "Hapus yang dipilih",
+      "markRead": "Tandai sudah dibaca",
+      "markUnread": "Tandai belum dibaca",
+      "favorite": "Favorit",
+      "unfavorite": "Hapus dari favorit",
+      "archive": "Arsipkan",
+      "unarchive": "Batalkan arsip",
+      "delete": "Hapus"
+    },
+    "toast": {
+      "toggledFavorite": "Status favorit diubah",
+      "archivedUpdated": "Status arsip diperbarui",
+      "readUpdated": "Status baca diperbarui",
+      "deleted": "Notifikasi dihapus",
+      "bulkDeleted": "{{count}} notifikasi dihapus",
+      "bulkMarkedRead": "{{count}} notifikasi ditandai sudah dibaca"
+    },
+    "deleteConfirm": {
+      "title": "Konfirmasi Hapus",
+      "descriptionSingle": "Ini akan menghapus notifikasi yang dipilih. Tindakan ini tidak dapat dibatalkan.",
+      "descriptionBulk": "Ini akan menghapus {{count}} notifikasi. Tindakan ini tidak dapat dibatalkan.",
+      "cancel": "Batal",
+      "delete": "Hapus"
+    },
+    "noNotifications": "Tidak ada notifikasi",
+    "status": {
+      "read": "Sudah dibaca",
+      "unread": "Belum dibaca",
+      "favorite": "Favorit",
+      "archived": "Diarsipkan"
+    }
   }
 
 
