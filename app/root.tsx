@@ -12,6 +12,7 @@ import {
   import { useNavigate } from "react-router";
   import { AuthProvider } from "~/lib/auth";
   import './i18n/i18n';
+import { Spinner } from "./components/ui/spinner";
 
   export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -80,3 +81,13 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 
 
 }
+
+// existing imports & exports
+
+export function HydrateFallback() {
+  return (
+    <Spinner className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-12 w-12" />
+
+  );
+}
+
