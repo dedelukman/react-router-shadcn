@@ -27,14 +27,16 @@ export function NavSecondary({
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
-                <NavLink to={item.url}>
+            <NavLink to={item.url} key={item.title}>
+               {({ isActive }) => (
+            <SidebarMenuItem >
+              <SidebarMenuButton className={ item.url === "#" ? "" : isActive ? "text-primary bg-primary/5" : ` ` }>
                   <item.icon />
                   <span>{item.title}</span>
-                </NavLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
+               )}
+            </NavLink>
           ))}
         </SidebarMenu>
       </SidebarGroupContent>

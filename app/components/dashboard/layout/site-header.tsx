@@ -6,7 +6,6 @@ import { translateTitle } from '~/i18n/translate-title';
 import { SettingsDropdown } from '~/components/toggle/settings-dropdown';
 import { IconSearch } from '@tabler/icons-react';
 import { Button } from '~/components/ui/button';
-import { Link } from 'react-router';
 
 export function SiteHeader() {
   const location = useLocation();
@@ -24,10 +23,13 @@ export function SiteHeader() {
         />
         <h1 className='text-base font-medium'>{title}</h1>
         <div className='ml-auto flex items-center gap-2'>
-          <Button variant='ghost' aria-label='Search' className='relative'>
-            <Link to={"/dashboard/search"}>
-              <IconSearch className="h-4 w-4" /></Link>
-            </Button>
+          <NavLink to={"/dashboard/search"}>
+            {({ isActive }) => (
+              <Button variant='ghost' aria-label='Search' className={isActive ? "text-primary bg-primary/5" : ` ` }>
+                <IconSearch />
+              </Button>
+              )}
+            </NavLink>
           <NotificationsPopover />
            <SettingsDropdown/>
         </div>

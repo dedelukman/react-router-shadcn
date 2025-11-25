@@ -44,12 +44,14 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => (
             <NavLink to={item.url} key={item.title} >
+           {({ isActive }) => (
             <SidebarMenuItem >
-              <SidebarMenuButton tooltip={item.title}>
+              <SidebarMenuButton tooltip={item.title}  className={ item.url === "#" ? "" : isActive ? "text-primary bg-primary/5" : ` ` }>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
+            )}
             </NavLink>
           ))}
         </SidebarMenu>
