@@ -125,7 +125,7 @@ export function NotificationsPopover() {
             >
               {t('markall')}
             </Button>
-            <Link to='/dashboard/notifications' className='text-sm px-2 py-1'>
+            <Link to='/app/notifications' className='text-sm px-2 py-1'>
              {t('viewall')}
             </Link>
           </div>

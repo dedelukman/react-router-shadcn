@@ -1,11 +1,9 @@
 import {
-  IconCreditCard,
   IconDotsVertical,
   IconLogout,
-  IconNotification,
-  IconUserCircle,
+  type Icon,
 } from '@tabler/icons-react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { useAuth } from '~/lib/auth';
 
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
@@ -33,12 +31,17 @@ export function NavUser({
     name: string;
     email: string;
     avatar: string;
+    items: { title: string; url: string, icon: Icon }[];
   };
 }) {
   const { isMobile } = useSidebar();
   const auth = useAuth();
   const navigate = useNavigate();
   const {t} = useTranslation();
+  const location = useLocation();
+  
+  // Cek apakah salah satu item user aktif berdasarkan URL saat ini
+  const isActive = user.items.some(item => location.pathname === item.url);
 
   return (
     <SidebarMenu>
@@ -47,7 +50,9 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size='lg'
-              className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
+              className={`data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground ${
+                isActive ? 'text-primary bg-primary/5' : ''
+              }`}
             >
               <Avatar className='h-8 w-8 rounded-lg grayscale'>
                 <AvatarImage src={user.avatar} alt={user.name} />
@@ -84,24 +89,20 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Link to='/app/account' className='absolute inset-0' />
-                <IconUserCircle />
-                {t('dashboard.account')}
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link to='/app/billing' className='absolute inset-0' />
-                <IconCreditCard />
-                {t('dashboard.billing')}
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link
-                  to='/app/notifications'
-                  className='absolute inset-0'
-                />
-                <IconNotification />
-                {t('dashboard.notifications')}
-              </DropdownMenuItem>
+              {user.items.map((item) => (
+                <DropdownMenuItem 
+                  key={item.title}
+                  className={location.pathname === item.url ? "text-primary bg-primary/5" : ""}
+                  onClick={() => {
+                    if (item.url !== "#") {
+                      navigate(item.url);
+                    }
+                  }}
+                >
+                  <item.icon />
+                  <span>{item.title}</span>
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem

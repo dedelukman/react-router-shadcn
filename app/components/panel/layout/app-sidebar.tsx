@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   IconCamera,
   IconChartBar,
+  IconCreditCard,
   IconDashboard,
   IconDatabase,
   IconFileAi,
@@ -11,9 +12,11 @@ import {
   IconHelp,
   IconInnerShadowTop,
   IconListDetails,
+  IconNotification,
   IconReport,
   IconSearch,
   IconSettings,
+  IconUserCircle,
   IconUsers,
 } from '@tabler/icons-react';
 
@@ -30,7 +33,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '~/components/ui/sidebar';
-import { Link } from 'react-router';
 import { useTranslation } from 'react-i18next';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -41,6 +43,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       name: 'shadcn',
       email: 'm@example.com',
       avatar: './avatars/shadcn.jpg',
+      items: [
+        { title: t('dashboard.account'), url: '/app/account', icon: IconUserCircle },
+        { title: t('dashboard.billing'), url: '/app/billing', icon: IconCreditCard },
+        { title: t('dashboard.notifications'), url: '/app/notifications', icon: IconNotification },
+      ],
     },
     navMain: [
       {
@@ -162,10 +169,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className='data-[slot=sidebar-menu-button]:!p-1.5'
             >
-              <Link to='/'>
+              <a href='/'>
                 <IconInnerShadowTop className='!size-5' />
                 <span className='text-base font-semibold'>Acme Inc.</span>
-              </Link>
+              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
