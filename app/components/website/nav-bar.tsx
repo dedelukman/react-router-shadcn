@@ -81,11 +81,11 @@ function MobileNavigation({ authMenu }: NavigationProps) {
           {/* Auth Menu Items */}
           <div className='flex flex-col gap-2 mt-4 pt-4 border-t'>
             {authMenu.map((item) => (
-              <Link key={item.href} to={item.href}>
+              <a key={item.href} href={item.href}>
                 <Button variant={item.variant} className='w-full'>
                   {t(item.label)}
                 </Button>
-              </Link>
+              </a>
             ))}
           </div>
         </nav>

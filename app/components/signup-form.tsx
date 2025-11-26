@@ -32,7 +32,7 @@ export function SignupForm({
       return;
     }
     const ok = await auth.signup(name, email, password);
-    if (ok) navigate('/dashboard');
+    if (ok) navigate('/app/dashboard');
   }
 
   return (

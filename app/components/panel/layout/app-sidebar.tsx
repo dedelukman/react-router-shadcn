@@ -17,10 +17,10 @@ import {
   IconUsers,
 } from '@tabler/icons-react';
 
-import { NavDocuments } from '~/components/dashboard/layout/nav-documents';
-import { NavMain } from '~/components/dashboard/layout/nav-main';
-import { NavSecondary } from '~/components/dashboard/layout/nav-secondary';
-import { NavUser } from '~/components/dashboard/layout/nav-user';
+import { NavDocuments } from '~/components/panel/layout/nav-documents';
+import { NavMain } from '~/components/panel/layout/nav-main';
+import { NavSecondary } from '~/components/panel/layout/nav-secondary';
+import { NavUser } from '~/components/panel/layout/nav-user';
 import {
   Sidebar,
   SidebarContent,
@@ -45,7 +45,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navMain: [
       {
         title: t('dashboard.'),
-        url: '/dashboard',
+        url: '/app/dashboard',
         icon: IconDashboard,
       },
       {
@@ -120,17 +120,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navSecondary: [
       {
         title: t('dashboard.settings'),
-        url: '/dashboard/settings',
+        url: '/app/settings',
         icon: IconSettings,
       },
       {
         title: t('dashboard.gethelp'),
-        url: '/dashboard/gethelp',
+        url: '/app/gethelp',
         icon: IconHelp,
       },
       {
         title: t('dashboard.search'),
-        url: '/dashboard/search',
+        url: '/app/search',
         icon: IconSearch,
       },
     ],

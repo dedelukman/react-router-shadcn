@@ -27,7 +27,7 @@ export function LoginForm({
     const password = String(fd.get('password') ?? '');
     const ok = await auth.login(email, password);
     if (ok) {
-      navigate('/dashboard');
+      navigate('/app/dashboard');
     } else {
       alert(t('login.error'));
     }

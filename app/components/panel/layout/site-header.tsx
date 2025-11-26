@@ -23,7 +23,7 @@ export function SiteHeader() {
         />
         <h1 className='text-base font-medium'>{title}</h1>
         <div className='ml-auto flex items-center gap-2'>
-          <NavLink to={"/dashboard/search"}>
+          <NavLink to={"/app/search"}>
             {({ isActive }) => (
               <Button variant='ghost' aria-label='Search' className={isActive ? "text-primary bg-primary/5" : ` ` }>
                 <IconSearch />

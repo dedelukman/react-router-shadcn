@@ -29,7 +29,7 @@ export const navigationData = {
       { label: 'signup.', href: '/signup', type: 'button' as const, variant: 'default' as const },
     ],
     private: [
-      { label: 'dashboard.', href: '/dashboard', type: 'button' as const, variant: 'outline' as const },
+      { label: 'dashboard.', href: '/app/dashboard', type: 'button' as const, variant: 'outline' as const },
   
     ],
   },

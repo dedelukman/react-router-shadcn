@@ -85,18 +85,18 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link to='/dashboard/account' className='absolute inset-0' />
+                <Link to='/app/account' className='absolute inset-0' />
                 <IconUserCircle />
                 {t('dashboard.account')}
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link to='/dashboard/billing' className='absolute inset-0' />
+                <Link to='/app/billing' className='absolute inset-0' />
                 <IconCreditCard />
                 {t('dashboard.billing')}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link
-                  to='/dashboard/notifications'
+                  to='/app/notifications'
                   className='absolute inset-0'
                 />
                 <IconNotification />

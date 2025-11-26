@@ -1,4 +1,4 @@
-import GetHelp from '~/components/dashboard/gethelp';
+import GetHelp from '~/components/panel/gethelp';
 
 export default function GetHelpPage() {
   return <GetHelp />;

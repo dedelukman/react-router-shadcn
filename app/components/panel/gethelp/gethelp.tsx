@@ -15,12 +15,12 @@ import {
 import TicketTable from './ticket-table';
 import CreateTicketForm from './create-ticket-form';
 import TicketDetails from './ticket-details';
-import type  { Ticket, Category, Priority } from '../../../lib/types';
-import  {  defaultCategories } from '../../../lib/types';
+import type { Ticket, Category, Priority } from '../../../lib/types';
+import { defaultCategories } from '../../../lib/types';
 
 export default function GetHelps() {
   const { t } = useTranslation();
-  
+
   const [tickets, setTickets] = React.useState<Ticket[]>(() => {
     const now = new Date().toISOString();
     return [
@@ -29,7 +29,8 @@ export default function GetHelps() {
         subject: 'Unable to access account settings',
         category: 'Account',
         priority: 'High',
-        description: 'Whenever I try to access my account settings, I receive an error message saying "Access Denied". Please assist.',
+        description:
+          'Whenever I try to access my account settings, I receive an error message saying "Access Denied". Please assist.',
         status: 'Investigating',
         createdAt: now,
         updatedAt: now,
@@ -107,7 +108,9 @@ export default function GetHelps() {
       <div className='space-y-4'>
         <div className='flex items-center justify-between'>
           <div>
-            <h2 className='mb-1 text-lg font-medium'>{t('gethelp.tickets.myTickets')}</h2>
+            <h2 className='mb-1 text-lg font-medium'>
+              {t('gethelp.tickets.myTickets')}
+            </h2>
             <p className='text-sm text-muted-foreground'>
               {t('gethelp.tickets.ticketHistory')}
             </p>

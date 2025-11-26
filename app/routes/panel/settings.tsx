@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '~/components/ui/tabs';
 import { useTranslation } from 'react-i18next';
-import CompanySettings from '../../components/dashboard/settings/company-setting';
-import WebsiteSettings from '../../components/dashboard/settings/website-setting';
+import CompanySettings from '../../components/panel/settings/company-setting';
+import WebsiteSettings from '../../components/panel/settings/website-setting';
 
 export default function Settings() {
   const { t } = useTranslation();

@@ -16,22 +16,22 @@ export default [
          route("*","routes/website/errors/404.tsx"),
         ]),
 
-   ...prefix("dashboard", [
-    layout("components/dashboard/layout/index.tsx",[
-        index("routes/dashboard/index.tsx"),
-        route("settings","routes/dashboard/settings.tsx"),
-        route("getHelp","routes/dashboard/gethelp.tsx"),
-        route("search","routes/dashboard/search.tsx"),
-        route("account","routes/dashboard/account.tsx"),
-        route("billing","routes/dashboard/billing.tsx"),
-        route("notifications","routes/dashboard/notifications.tsx"),
+   ...prefix("app", [
+    layout("components/panel/layout/index.tsx",[
+        route("dashboard","routes/panel/dashboard.tsx"),
+        route("settings","routes/panel/settings.tsx"),
+        route("getHelp","routes/panel/gethelp.tsx"),
+        route("search","routes/panel/search.tsx"),
+        route("account","routes/panel/account.tsx"),
+        route("billing","routes/panel/billing.tsx"),
+        route("notifications","routes/panel/notifications.tsx"),
 
 
-        route("error/401","routes/dashboard/errors/401.tsx"),
-         route("error/403","routes/dashboard/errors/403.tsx"),
-         route("error/500","routes/dashboard/errors/500.tsx"),
-         route("error/503","routes/dashboard/errors/503.tsx"),
-         route("*","routes/dashboard/errors/404.tsx"),
+        route("error/401","routes/panel/errors/401.tsx"),
+         route("error/403","routes/panel/errors/403.tsx"),
+         route("error/500","routes/panel/errors/500.tsx"),
+         route("error/503","routes/panel/errors/503.tsx"),
+         route("*","routes/panel/errors/404.tsx"),
     ]),
    ])
     
