@@ -11,6 +11,7 @@ import {
   IconFolder,
   IconHelp,
   IconInnerShadowTop,
+  
   IconListDetails,
   IconNotification,
   IconReport,
@@ -44,14 +45,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       email: 'm@example.com',
       avatar: './avatars/shadcn.jpg',
       items: [
-        { title: t('dashboard.account'), url: '/app/account', icon: IconUserCircle },
-        { title: t('dashboard.billing'), url: '/app/billing', icon: IconCreditCard },
-        { title: t('dashboard.notifications'), url: '/app/notifications', icon: IconNotification },
+        {
+          title: t('panel.account'),
+          url: '/app/account',
+          icon: IconUserCircle,
+        },
+        {
+          title: t('panel.billing'),
+          url: '/app/billing',
+          icon: IconCreditCard,
+        },
+        {
+          title: t('panel.notifications'),
+          url: '/app/notifications',
+          icon: IconNotification,
+        },
       ],
     },
     navMain: [
       {
-        title: t('dashboard.'),
+        title: t('panel.dashboard'),
         url: '/app/dashboard',
         icon: IconDashboard,
       },
@@ -126,17 +139,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     ],
     navSecondary: [
       {
-        title: t('dashboard.settings'),
+        title: t('panel.settings'),
         url: '/app/settings',
         icon: IconSettings,
       },
       {
-        title: t('dashboard.gethelp'),
+        title: t('panel.gethelp'),
         url: '/app/gethelp',
         icon: IconHelp,
       },
       {
-        title: t('dashboard.search'),
+        title: t('panel.search'),
         url: '/app/search',
         icon: IconSearch,
       },

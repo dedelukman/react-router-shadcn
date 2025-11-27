@@ -88,8 +88,8 @@
   },
 
 
-  "dashboard": {
-    "": "Dashboard",
+  "panel": {
+    "dashboard": "Dashboard",
     "settings": "Settings",
     "gethelp": "Get Help",
     "search": "Search",
