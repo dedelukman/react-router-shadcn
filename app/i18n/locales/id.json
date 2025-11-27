@@ -161,7 +161,7 @@
     "title": "Pengaturan Website",
     "description": "Perbarui pengaturan website Anda seperti nama situs, tagline, deskripsi, dan favicon.",
     "name": "Nama Situs",
-    "nameDesciption": "Ditampilkan di judul browser dan meta tag.",
+    "nameDescription": "Ditampilkan di judul browser dan meta tag.",
     "tagline": "Tagline Situs",
     "descriptionField": "Deskripsi Situs",
     "favicon": "Favicon Situs",
