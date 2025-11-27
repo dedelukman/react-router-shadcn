@@ -85,7 +85,7 @@
     }
   },
 
-  "panel": {
+  "app": {
     "dashboard": "Dasbor",
     "settings": "Pengaturan",
     "gethelp": "Bantuan",

@@ -1,4 +1,3 @@
-
 import {
   IconDashboard,
   IconListDetails,
@@ -12,7 +11,7 @@ import {
   IconReport,
   IconFileWord,
   IconNotification,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react';
 
 export interface AppNavItem {
   /** i18n key */
@@ -22,9 +21,9 @@ export interface AppNavItem {
   /** Lucide/Tabler icon component */
   icon?: any;
   /** Variant for buttons (Navbar usage) */
-  variant?: "default" | "ghost" | "outline" | "secondary" | "destructive";
+  variant?: 'default' | 'ghost' | 'outline' | 'secondary' | 'destructive';
   /** Button or Link — Navbar mobile usage */
-  type?: "link" | "button";
+  type?: 'link' | 'button';
   /** Show only if logged in or logged out */
   requiresAuth?: boolean;
   /** Expandable sidebar menu */
@@ -32,7 +31,6 @@ export interface AppNavItem {
   /** Role-based restrictions (future support) */
   roles?: string[];
 }
-
 
 export const navigationData: {
   site: {
@@ -53,116 +51,127 @@ export const navigationData: {
       secondary: AppNavItem[];
       documents: AppNavItem[];
       user: {
-        name: string
-        avatar: string
-        email: string
-         menu: AppNavItem[] // <-- here unified
-  }
+        name: string;
+        avatar: string;
+        email: string;
+        menu: AppNavItem[]; // <-- here unified
+      };
     };
   };
 } = {
   site: {
-    name: "Your Brand",
+    name: 'Your Brand',
     logo: {
-      text: "L",
-      image: "/logo.png",
+      text: 'L',
+      image: '/logo.png',
     },
   },
   menu: {
     main: [
-      { label: "navigation.home", href: "/", type: "link" },
-      { label: "navigation.about", href: "/about", type: "link" },
-      { label: "navigation.services", href: "/services", type: "link" },
-      { label: "navigation.blog", href: "/blog", type: "link" },
-      { label: "navigation.contact", href: "/contact", type: "link" },
+      { label: 'navigation.home', href: '/', type: 'link' },
+      { label: 'navigation.about', href: '/about', type: 'link' },
+      { label: 'navigation.services', href: '/services', type: 'link' },
+      { label: 'navigation.blog', href: '/blog', type: 'link' },
+      { label: 'navigation.contact', href: '/contact', type: 'link' },
     ],
     auth: {
       public: [
-        { label: "login", href: "/login", type: "button", variant: "ghost" },
-        { label: "signup", href: "/signup", type: "button", variant: "default" },
+        { label: 'login', href: '/login', type: 'button', variant: 'ghost' },
+        {
+          label: 'signup',
+          href: '/signup',
+          type: 'button',
+          variant: 'default',
+        },
       ],
       private: [
-        { label: "panel.dashboard", href: "/app/dashboard", type: "button", variant: "outline" },
+        {
+          label: 'app.dashboard',
+          href: '/app/dashboard',
+          type: 'button',
+          variant: 'outline',
+        },
       ],
     },
     sidebar: {
       main: [
         {
-          label: "panel.dashboard",
-          href: "/app/dashboard",
+          label: 'app.dashboard',
+          href: '/app/dashboard',
           icon: IconDashboard,
         },
         {
-          label: "lifecycle",
-          href: "#",
+          label: 'lifecycle',
+          href: '#',
           icon: IconListDetails,
         },
         {
-          label: "analytics",
-          href: "#",
+          label: 'analytics',
+          href: '#',
           icon: IconChartBar,
         },
         {
-          label: "projects",
-          href: "#",
+          label: 'projects',
+          href: '#',
           icon: IconFolder,
         },
         {
-          label: "team",
-          href: "#",
+          label: 'team',
+          href: '#',
           icon: IconUsers,
         },
       ],
       secondary: [
         {
-          label: "panel.settings",
-          href: "/app/settings",
+          label: 'app.settings',
+          href: '/app/settings',
           icon: IconSettings,
         },
-         {
-          label: "panel.gethelp",
-          href: "/app/gethelp",
+        {
+          label: 'app.gethelp',
+          href: '/app/gethelp',
           icon: IconHelp,
         },
         {
-          label: "panel.search",
-          href: "/app/search",
+          label: 'app.search',
+          href: '/app/search',
           icon: IconSearch,
         },
       ],
       documents: [
         {
-          label: "dataLibrary",
-          href: "#",
+          label: 'dataLibrary',
+          href: '#',
           icon: IconDatabase,
         },
         {
-          label: "reports",
-          href: "#",
+          label: 'reports',
+          href: '#',
           icon: IconReport,
         },
         {
-          label: "wordAssistant",
-          href: "#",
+          label: 'wordAssistant',
+          href: '#',
           icon: IconFileWord,
         },
       ],
       user: {
-        name: "John Doe",
-        avatar: "/avatars/johndoe.jpg",
-        email: "d@emi.com",
-        menu:
-        [
-        { label: "panel.account", href: "/app/account", icon: IconSettings },
-        { label: "panel.billing", href: "/app/billing", icon: IconSettings },
-        { label: "panel.notifications", href: "/app/notifications", icon: IconNotification },],
-      }
-      
-      
+        name: 'John Doe',
+        avatar: '/avatars/johndoe.jpg',
+        email: 'd@emi.com',
+        menu: [
+          { label: 'app.account', href: '/app/account', icon: IconSettings },
+          { label: 'app.billing', href: '/app/billing', icon: IconSettings },
+          {
+            label: 'app.notifications',
+            href: '/app/notifications',
+            icon: IconNotification,
+          },
+        ],
+      },
     },
   },
 };
-
 
 export const getAuthMenu = (isAuthenticated: boolean = false) => {
   return isAuthenticated
