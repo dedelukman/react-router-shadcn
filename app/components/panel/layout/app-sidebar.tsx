@@ -1,24 +1,6 @@
 import * as React from 'react';
 import {
-  IconCamera,
-  IconChartBar,
-  IconCreditCard,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
   IconInnerShadowTop,
-  
-  IconListDetails,
-  IconNotification,
-  IconReport,
-  IconSearch,
-  IconSettings,
-  IconUserCircle,
-  IconUsers,
 } from '@tabler/icons-react';
 
 import { NavDocuments } from '~/components/panel/layout/nav-documents';
@@ -35,143 +17,11 @@ import {
   SidebarMenuItem,
 } from '~/components/ui/sidebar';
 import { useTranslation } from 'react-i18next';
+import { navigationData, type AppNavItem } from '~/data/navigation-data';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useTranslation();
-
-  const data = {
-    user: {
-      name: 'shadcn',
-      email: 'm@example.com',
-      avatar: './avatars/shadcn.jpg',
-      items: [
-        {
-          title: t('panel.account'),
-          url: '/app/account',
-          icon: IconUserCircle,
-        },
-        {
-          title: t('panel.billing'),
-          url: '/app/billing',
-          icon: IconCreditCard,
-        },
-        {
-          title: t('panel.notifications'),
-          url: '/app/notifications',
-          icon: IconNotification,
-        },
-      ],
-    },
-    navMain: [
-      {
-        title: t('panel.dashboard'),
-        url: '/app/dashboard',
-        icon: IconDashboard,
-      },
-      {
-        title: t('lifecycle'),
-        url: '#',
-        icon: IconListDetails,
-      },
-      {
-        title: t('analytics'),
-        url: '#',
-        icon: IconChartBar,
-      },
-      {
-        title: t('projects'),
-        url: '#',
-        icon: IconFolder,
-      },
-      {
-        title: t('team'),
-        url: '#',
-        icon: IconUsers,
-      },
-    ],
-    navClouds: [
-      {
-        title: t('capture'),
-        icon: IconCamera,
-        isActive: true,
-        url: '#',
-        items: [
-          {
-            title: t('activeProposals'),
-            url: '#',
-          },
-          {
-            title: t('archived'),
-            url: '#',
-          },
-        ],
-      },
-      {
-        title: t('proposal'),
-        icon: IconFileDescription,
-        url: '#',
-        items: [
-          {
-            title: t('activeProposals'),
-            url: '#',
-          },
-          {
-            title: t('archived'),
-            url: '#',
-          },
-        ],
-      },
-      {
-        title: t('prompts'),
-        icon: IconFileAi,
-        url: '#',
-        items: [
-          {
-            title: t('activeProposals'),
-            url: '#',
-          },
-          {
-            title: t('archived'),
-            url: '#',
-          },
-        ],
-      },
-    ],
-    navSecondary: [
-      {
-        title: t('panel.settings'),
-        url: '/app/settings',
-        icon: IconSettings,
-      },
-      {
-        title: t('panel.gethelp'),
-        url: '/app/gethelp',
-        icon: IconHelp,
-      },
-      {
-        title: t('panel.search'),
-        url: '/app/search',
-        icon: IconSearch,
-      },
-    ],
-    documents: [
-      {
-        name: t('dataLibrary'),
-        url: '#',
-        icon: IconDatabase,
-      },
-      {
-        name: t('reports'),
-        url: '#',
-        icon: IconReport,
-      },
-      {
-        name: t('wordAssistant'),
-        url: '#',
-        icon: IconFileWord,
-      },
-    ],
-  };
+  const data = navigationData.menu.sidebar;
 
   return (
     <Sidebar collapsible='offcanvas' {...props}>
@@ -191,13 +41,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className='mt-auto' />
+         <NavMain items={data.main.map(mapItem)} />
+        <NavDocuments items={data.documents.map(mapItem)} />
+        <NavSecondary items={data.secondary.map(mapItem)} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser
+          user={{
+            ...data.user,
+            items: data.user.menu.map(mapItem),
+          }}
+        />
       </SidebarFooter>
     </Sidebar>
   );
+
+  function mapItem(item: AppNavItem) {
+    return {
+      ...item,
+      title: t(item.label),
+      name: t(item.label),
+      url: item.href,
+    };
+  }
 }

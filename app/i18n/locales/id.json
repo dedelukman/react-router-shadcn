@@ -85,8 +85,8 @@
     }
   },
 
-  "dashboard": {
-    "": "Dasbor",
+  "panel": {
+    "dashboard": "Dasbor",
     "settings": "Pengaturan",
     "gethelp": "Bantuan",
     "search": "Pencarian",
@@ -375,7 +375,7 @@
 
   "search": {
     "title": "Pencarian Menu",
-    "description": "Cari menu dashboard dengan cepat",
+    "description": "Cari menu aplikasi dengan cepat",
     "placeholder": "Cari menu (nama atau path)...",
     "clear": "Hapus",
     "searching_for": "Menelusuri untuk",
@@ -384,7 +384,7 @@
     "no_results_message": "Tidak ada menu yang cocok dengan",
     "clear_search": "Hapus Pencarian",
     "start_searching": "Mulai Pencarian",
-    "start_description": "Ketik di atas untuk mencari menu dashboard berdasarkan nama atau path URL.",
+    "start_description": "Ketik di atas untuk mencari menu aplikasi berdasarkan nama atau path URL.",
     "quick_suggestions": "Saran Cepat",
     "open": "Buka",
     "footer": "Gunakan pencarian untuk menemukan menu dengan cepat",

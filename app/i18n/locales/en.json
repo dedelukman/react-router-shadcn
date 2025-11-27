@@ -372,7 +372,7 @@
 
    "search": {
     "title": "Menu Search",
-    "description": "Quickly search dashboard menus",
+    "description": "Quickly search aplication menus",
     "placeholder": "Search menu (name or path)...",
     "clear": "Clear",
     "searching_for": "Searching for",
@@ -381,7 +381,7 @@
     "no_results_message": "No menu matching",
     "clear_search": "Clear Search",
     "start_searching": "Start Searching",
-    "start_description": "Type above to search dashboard menus by name or URL path.",
+    "start_description": "Type above to search aplication menus by name or URL path.",
     "quick_suggestions": "Quick Suggestions",
     "open": "Open",
     "footer": "Use search to quickly find menus",

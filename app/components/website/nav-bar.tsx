@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { Button } from '../ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '../ui/sheet';
 import { useIsMobile } from '~/hooks/use-mobile';
-import { getAuthMenu, navigationData } from '~/data/navigation-data';
+import {  getAuthMenu, navigationData, type AppNavItem } from '~/data/navigation-data';
 import { useAuth } from '~/lib/auth';
 import { useTranslation } from 'react-i18next';
 import LanguageToggle from '../toggle/language-toggle';
@@ -13,6 +13,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ isAuthenticated }: NavbarProps) {
+   const { t } = useTranslation();
   const isMobile = useIsMobile();
   const auth = (() => {
     try {
@@ -21,6 +22,8 @@ export function Navbar({ isAuthenticated }: NavbarProps) {
       return null as any;
     }
   })();
+
+  const mainMenu = navigationData.menu.main as AppNavItem[];
 
   const resolvedAuth = isAuthenticated ?? Boolean(auth?.user);
   const authMenu = getAuthMenu(resolvedAuth);
@@ -42,10 +45,10 @@ export function Navbar({ isAuthenticated }: NavbarProps) {
           <span className='text-xl font-bold'>{navigationData.site.name}</span>
         </Link>
 
-        {isMobile ? (
-          <MobileNavigation authMenu={authMenu} />
+       {isMobile ? (
+          <MobileNavigation mainMenu={mainMenu} authMenu={authMenu} />
         ) : (
-          <DesktopNavigation authMenu={authMenu} />
+          <DesktopNavigation mainMenu={mainMenu} authMenu={authMenu} />
         )}
       </div>
     </nav>
@@ -53,10 +56,11 @@ export function Navbar({ isAuthenticated }: NavbarProps) {
 }
 
 interface NavigationProps {
-  authMenu: readonly any[];
+  mainMenu: AppNavItem[];
+  authMenu: AppNavItem[];
 }
 
-function MobileNavigation({ authMenu }: NavigationProps) {
+function MobileNavigation({ mainMenu, authMenu }: NavigationProps) {
   const { t } = useTranslation();
   return (
     <Sheet>
@@ -68,7 +72,7 @@ function MobileNavigation({ authMenu }: NavigationProps) {
       <SheetContent side='right' className='w-[240px] sm:w-[300px]'>
         <nav className='flex flex-col gap-4 mt-8'>
           {/* Main Menu Items */}
-          {navigationData.mainMenu.map((item) => (
+          {mainMenu.map((item) => (
             <Link
               key={item.href}
               to={item.href}
@@ -94,12 +98,12 @@ function MobileNavigation({ authMenu }: NavigationProps) {
   );
 }
 
-function DesktopNavigation({ authMenu }: NavigationProps) {
+function DesktopNavigation({ mainMenu, authMenu }: NavigationProps) {
   const { t } = useTranslation();
   return (
     <div className='flex items-center gap-6'>
       {/* Main Menu Items */}
-      {navigationData.mainMenu.map((item) => (
+      {mainMenu.map((item) => (
         <Link
           key={item.href}
           to={item.href}
