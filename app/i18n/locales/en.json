@@ -23,7 +23,14 @@
     "google": "Login with Google",
     "noAccount": "Don't have an account?",
     "signup": "Sign up",
-    "error": "Login failed: provide email and password"
+    
+    "errors": {
+      "fillAllFields": "Please enter both email and password",
+      "invalidCredentials": "Invalid email or password",
+      "loginFailed": "Login failed. Please try again."
+    },
+    "signingIn": "Signing in..."
+  
   },
 
    "signup": {
@@ -52,7 +59,14 @@
     "haveAccount": "Already have an account?",
     "signin": "Sign in",
 
-    "error": "Please provide matching passwords and an email"
+     "errors": {
+      "fillAllFields": "Please fill in all fields",
+      "passwordMismatch": "Passwords do not match",
+      "passwordLength": "Password must be at least 6 characters long",
+      "registrationFailed": "Registration failed. Please try again.",
+      "emailAlreadyTaken": "Email is already taken"
+    },
+    "creatingAccount": "Creating account..."
   },
 
  "error": {

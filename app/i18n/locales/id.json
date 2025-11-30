@@ -21,7 +21,12 @@
     "google": "Masuk dengan Google",
     "noAccount": "Belum punya akun?",
     "signup": "Daftar",
-    "error": "Gagal login: masukkan email dan kata sandi"
+    "errors": {
+      "fillAllFields": "Mohon masukkan email dan kata sandi",
+      "invalidCredentials": "Email atau kata sandi tidak valid",
+      "loginFailed": "Gagal masuk. Mohon coba lagi."
+    },
+    "signingIn": "Sedang masuk..."
   },
 
     "signup": {
@@ -50,7 +55,14 @@
     "haveAccount": "Sudah punya akun?",
     "signin": "Masuk",
 
-    "error": "Silakan isi email dan pastikan kata sandi cocok"
+    "errors": {
+    "fillAllFields": "Mohon isi semua kolom",
+    "passwordMismatch": "Kata sandi tidak cocok",
+    "passwordLength": "Kata sandi harus terdiri setidaknya 6 karakter",
+    "registrationFailed": "Pendaftaran gagal. Mohon coba lagi.",
+    "emailAlreadyTaken": "Email sudah digunakan"
+},
+"creatingAccount": "Membuat akun..."
   },
 
  "error": {

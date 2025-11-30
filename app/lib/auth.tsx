@@ -1,10 +1,21 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router';
 
-type User = {
+// Tambahkan interface untuk response API
+interface AuthResponse {
+  token: string;
+  id: number;
+  name: string;
+  email: string;
+  role: string;
+}
+
+interface User {
+  id?: number;
   name?: string;
   email?: string;
-};
+  role?: string;
+}
 
 type AuthContextValue = {
   user: User | null;
@@ -15,10 +26,46 @@ type AuthContextValue = {
 };
 
 const STORAGE_KEY = 'app_auth';
+const API_BASE_URL = 'http://localhost:8080/api/v1/auth';
 
-const AuthContext = React.createContext<AuthContextValue | undefined>(
-  undefined
-);
+// Auth service untuk API calls
+const authService = {
+  async login(credentials: { email: string; password: string }): Promise<AuthResponse> {
+    const response = await fetch(`${API_BASE_URL}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(credentials),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error || 'Login failed');
+    }
+
+    return response.json();
+  },
+
+  async register(userData: { name: string; email: string; password: string }): Promise<AuthResponse> {
+    const response = await fetch(`${API_BASE_URL}/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error || 'Registration failed');
+    }
+
+    return response.json();
+  },
+};
+
+const AuthContext = React.createContext<AuthContextValue | undefined>(undefined);
 
 function readFromStorage(): { user: User | null; token: string | null } {
   try {
@@ -39,37 +86,49 @@ function writeToStorage(payload: { user: User | null; token: string | null }) {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = React.useState<User | null>(
-    () => readFromStorage().user
-  );
-  const [token, setToken] = React.useState<string | null>(
-    () => readFromStorage().token
-  );
+  const [user, setUser] = React.useState<User | null>(() => readFromStorage().user);
+  const [token, setToken] = React.useState<string | null>(() => readFromStorage().token);
 
   React.useEffect(() => {
     writeToStorage({ user, token });
   }, [user, token]);
 
   const login = React.useCallback(async (email: string, password: string) => {
-    // Mock login: accept any non-empty email/password. Replace with real API call.
-    if (!email || !password) return false;
-    const fakeToken = `token-${Date.now()}`;
-    setUser({ email });
-    setToken(fakeToken);
-    return true;
+    try {
+      const response = await authService.login({ email, password });
+      
+      setUser({
+        id: response.id,
+        name: response.name,
+        email: response.email,
+        role: response.role
+      });
+      setToken(response.token);
+      return true;
+    } catch (error) {
+      console.error('Login error:', error);
+      return false;
+    }
   }, []);
 
-  const signup = React.useCallback(
-    async (name: string, email: string, password: string) => {
-      // Mock signup: accept inputs and auto-login. Replace with real API call.
-      if (!email || !password) return false;
-      const fakeToken = `token-${Date.now()}`;
-      setUser({ name, email });
-      setToken(fakeToken);
-      return true;
-    },
-    []
-  );
+ const signup = React.useCallback(async (name: string, email: string, password: string) => {
+  try {
+    const response = await authService.register({ name, email, password });
+    
+    setUser({
+      id: response.id,
+      name: response.name,
+      email: response.email,
+      role: response.role
+    });
+    setToken(response.token);
+    return; // tidak perlu return apa-apa, karena sukses
+  } catch (error) {
+    console.error('Signup error:', error.message);
+    // Lempar ulang error agar bisa ditangani di form
+    throw error;
+  }
+}, []);
 
   const logout = React.useCallback(() => {
     setUser(null);
