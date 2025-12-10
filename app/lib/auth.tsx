@@ -1,14 +1,5 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router';
-
-// Tambahkan interface untuk response API
-interface AuthResponse {
-  token: string;
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-}
+import React from "react";
+import { Navigate, useLocation } from "react-router";
 
 interface User {
   id?: number;
@@ -19,145 +10,136 @@ interface User {
 
 type AuthContextValue = {
   user: User | null;
-  token: string | null;
   login: (email: string, password: string) => Promise<boolean>;
   signup: (name: string, email: string, password: string) => Promise<boolean>;
-  logout: () => void;
+  logout: () => Promise<void>;
+  checkAuth: () => Promise<void>;
 };
 
-const STORAGE_KEY = 'app_auth';
-const API_BASE_URL = 'http://localhost:8080/api/v1/auth';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL + "auth";
+const STORAGE_KEY = "app_user"; // hanya simpan user, bukan token
 
-// Auth service untuk API calls
-const authService = {
-  async login(credentials: { email: string; password: string }): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE_URL}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(error || 'Login failed');
-    }
-
-    return response.json();
-  },
-
-  async register(userData: { name: string; email: string; password: string }): Promise<AuthResponse> {
-    const response = await fetch(`${API_BASE_URL}/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(error || 'Registration failed');
-    }
-
-    return response.json();
-  },
-};
-
-const AuthContext = React.createContext<AuthContextValue | undefined>(undefined);
-
-function readFromStorage(): { user: User | null; token: string | null } {
+// ===============================
+// STORAGE HELPERS
+// ===============================
+function readUser(): User | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { user: null, token: null };
-    return JSON.parse(raw);
+    return raw ? JSON.parse(raw) : null;
   } catch {
-    return { user: null, token: null };
+    return null;
   }
 }
 
-function writeToStorage(payload: { user: User | null; token: string | null }) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-  } catch {
-    // ignore
+function saveUser(user: User | null) {
+  if (!user) {
+    localStorage.removeItem(STORAGE_KEY);
+  } else {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
   }
 }
+
+// ===============================
+// CONTEXT
+// ===============================
+const AuthContext = React.createContext<AuthContextValue | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = React.useState<User | null>(() => readFromStorage().user);
-  const [token, setToken] = React.useState<string | null>(() => readFromStorage().token);
-
-  React.useEffect(() => {
-    writeToStorage({ user, token });
-  }, [user, token]);
+  const [user, setUser] = React.useState<User | null>(() => readUser());
 
   const login = React.useCallback(async (email: string, password: string) => {
     try {
-      const response = await authService.login({ email, password });
-      
-      setUser({
-        id: response.id,
-        name: response.name,
-        email: response.email,
-        role: response.role
+      const res = await fetch(`${API_BASE_URL}/login`, {
+        method: "POST",
+        credentials: "include", // ✔ penting
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
       });
-      setToken(response.token);
+
+      if (!res.ok) return false;
+
+      const data = await res.json(); // hanya info user, bukan token
+      setUser(data);
+      saveUser(data);
+
       return true;
-    } catch (error) {
-      console.error('Login error:', error);
+    } catch (e) {
+      console.error("Login error:", e);
       return false;
     }
   }, []);
 
- const signup = React.useCallback(async (name: string, email: string, password: string) => {
-  try {
-    const response = await authService.register({ name, email, password });
-    
-    setUser({
-      id: response.id,
-      name: response.name,
-      email: response.email,
-      role: response.role
-    });
-    setToken(response.token);
-    return; // tidak perlu return apa-apa, karena sukses
-  } catch (error) {
-    console.error('Signup error:', error.message);
-    // Lempar ulang error agar bisa ditangani di form
-    throw error;
-  }
-}, []);
+  const signup = React.useCallback(
+    async (name: string, email: string, password: string) => {
+      const res = await fetch(`${API_BASE_URL}/register`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
 
-  const logout = React.useCallback(() => {
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err);
+      }
+
+      const data = await res.json();
+      setUser(data);
+      saveUser(data);
+      return true;
+    },
+    []
+  );
+
+  const logout = React.useCallback(async () => {
+    await fetch(`${API_BASE_URL}/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+
     setUser(null);
-    setToken(null);
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-    } catch {}
+    saveUser(null);
   }, []);
 
-  const value = React.useMemo(
-    () => ({ user, token, login, signup, logout }),
-    [user, token, login, signup, logout]
-  );
+  const checkAuth = React.useCallback(async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/me`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        setUser(null);
+        saveUser(null);
+        return;
+      }
+
+      const data = await res.json();
+      setUser(data);
+      saveUser(data);
+    } catch {
+      setUser(null);
+      saveUser(null);
+    }
+  }, []);
+
+  const value = { user, login, signup, logout, checkAuth };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
   const ctx = React.useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
+  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
   return ctx;
 }
 
 export function RequireAuth({ children }: { children: React.ReactNode }) {
-  const auth = React.useContext(AuthContext);
+  const auth = useAuth();
   const location = useLocation();
 
-  if (!auth || !auth.user) {
-    return <Navigate to='/login' state={{ from: location.pathname }} replace />;
+  if (!auth.user) {
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
   return <>{children}</>;
