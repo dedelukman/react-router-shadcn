@@ -25,23 +25,32 @@ import {
 import { useTranslation } from 'react-i18next';
 
 export function NavUser({
-  user,
+  items,
+  ...props
 }: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
-    items: { title: string; url: string, icon: Icon }[];
-  };
+  items: {
+    title: string
+    url: string
+    icon: Icon
+  }[]
 }) {
   const { isMobile } = useSidebar();
   const auth = useAuth();
   const navigate = useNavigate();
   const {t} = useTranslation();
   const location = useLocation();
+
+  const userData = auth.user; // <— berasal dari localStorage
+
+  const user = {
+    name: userData?.name || "Guest",
+    email: userData?.email || "guest@example.com",
+    avatar: "",
+  
+  };
   
   // Cek apakah salah satu item user aktif berdasarkan URL saat ini
-  const isActive = user.items.some(item => location.pathname === item.url);
+  const isActive = items.some(item => location.pathname === item.url);
 
   return (
     <SidebarMenu>
@@ -89,7 +98,7 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              {user.items.map((item) => (
+              {items.map((item) => (
                 <DropdownMenuItem 
                   key={item.title}
                   className={location.pathname === item.url ? "text-primary bg-primary/5" : ""}

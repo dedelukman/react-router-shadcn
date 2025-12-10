@@ -50,12 +50,7 @@ export const navigationData: {
       main: AppNavItem[];
       secondary: AppNavItem[];
       documents: AppNavItem[];
-      user: {
-        name: string;
-        avatar: string;
-        email: string;
-        menu: AppNavItem[]; // <-- here unified
-      };
+      user: AppNavItem[];
     };
   };
 } = {
@@ -155,11 +150,7 @@ export const navigationData: {
           icon: IconFileWord,
         },
       ],
-      user: {
-        name: 'John Doe',
-        avatar: '/avatars/johndoe.jpg',
-        email: 'd@emi.com',
-        menu: [
+      user: [
           { label: 'app.account', href: '/app/account', icon: IconSettings },
           { label: 'app.billing', href: '/app/billing', icon: IconSettings },
           {
@@ -168,7 +159,6 @@ export const navigationData: {
             icon: IconNotification,
           },
         ],
-      },
     },
   },
 };

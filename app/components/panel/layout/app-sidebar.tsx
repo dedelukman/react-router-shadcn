@@ -46,12 +46,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.secondary.map(mapItem)} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            ...data.user,
-            items: data.user.menu.map(mapItem),
-          }}
-        />
+        <NavUser items={data.user.map(mapItem)}    />
       </SidebarFooter>
     </Sidebar>
   );
