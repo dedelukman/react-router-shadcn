@@ -101,27 +101,80 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     saveUser(null);
   }, []);
 
-  const checkAuth = React.useCallback(async () => {
-    try {
-      const res = await fetch(`${API_BASE_URL}/me`, {
-        method: "GET",
-        credentials: "include",
-      });
+// 1. REFRESH TOKEN OTOMATIS
+const refreshAccessToken = React.useCallback(async () => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/refresh`, {
+      method: "POST",
+      credentials: "include",
+    });
 
-      if (!res.ok) {
+    if (!res.ok) return false;
+
+    // backend sudah taruh access token baru di cookie
+    return true;
+  } catch {
+    return false;
+  }
+}, []);
+
+// 2. PERBAIKAN checkAuth UNTUK Cek Ulang Jika 401
+const checkAuth = React.useCallback(async () => {
+  try {
+    const res = await fetch(`${API_BASE_URL}/me`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (res.status === 401) {
+      // coba refresh token
+      const refreshed = await refreshAccessToken();
+      if (!refreshed) {
         setUser(null);
         saveUser(null);
         return;
       }
 
-      const data = await res.json();
+      // setelah refresh → cek ulang
+      const again = await fetch(`${API_BASE_URL}/me`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (!again.ok) {
+        setUser(null);
+        saveUser(null);
+        return;
+      }
+
+      const data = await again.json();
       setUser(data);
       saveUser(data);
-    } catch {
-      setUser(null);
-      saveUser(null);
+      return;
     }
-  }, []);
+
+    const data = await res.json();
+    setUser(data);
+    saveUser(data);
+  } catch {
+    setUser(null);
+    saveUser(null);
+  }
+}, [refreshAccessToken]);
+
+// 3. panggil checkAuth saat load pertama
+React.useEffect(() => {
+  checkAuth();
+}, [checkAuth]);
+
+// 4. Refresh otomatis setiap 5 menit (opsional)
+React.useEffect(() => {
+  const interval = setInterval(() => {
+    refreshAccessToken();
+  }, 5 * 60 * 1000);
+
+  return () => clearInterval(interval);
+}, [refreshAccessToken]);
 
   const value = { user, login, signup, logout, checkAuth };
 
