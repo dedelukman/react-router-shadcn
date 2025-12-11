@@ -6,6 +6,7 @@ interface User {
   name?: string;
   email?: string;
   role?: string;
+  username?: string;
 }
 
 type AuthContextValue = {
@@ -16,7 +17,7 @@ type AuthContextValue = {
   checkAuth: () => Promise<void>;
 };
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL + "auth";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const STORAGE_KEY = "app_user"; // hanya simpan user, bukan token
 
 // ===============================
@@ -49,7 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const login = React.useCallback(async (email: string, password: string) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/login`, {
+      const res = await fetch(`${API_BASE_URL}auth/login`, {
         method: "POST",
         credentials: "include", // ✔ penting
         headers: { "Content-Type": "application/json" },
@@ -71,7 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signup = React.useCallback(
     async (name: string, email: string, password: string) => {
-      const res = await fetch(`${API_BASE_URL}/register`, {
+      const res = await fetch(`${API_BASE_URL}auth/register`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -92,7 +93,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   const logout = React.useCallback(async () => {
-    await fetch(`${API_BASE_URL}/logout`, {
+    await fetch(`${API_BASE_URL}auth/logout`, {
       method: "POST",
       credentials: "include",
     });
@@ -104,7 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 // 1. REFRESH TOKEN OTOMATIS
 const refreshAccessToken = React.useCallback(async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/refresh`, {
+    const res = await fetch(`${API_BASE_URL}auth/refresh`, {
       method: "POST",
       credentials: "include",
     });
@@ -121,7 +122,7 @@ const refreshAccessToken = React.useCallback(async () => {
 // 2. PERBAIKAN checkAuth UNTUK Cek Ulang Jika 401
 const checkAuth = React.useCallback(async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}/me`, {
+    const res = await fetch(`${API_BASE_URL}user/me`, {
       method: "GET",
       credentials: "include",
     });
@@ -136,7 +137,7 @@ const checkAuth = React.useCallback(async () => {
       }
 
       // setelah refresh → cek ulang
-      const again = await fetch(`${API_BASE_URL}/me`, {
+      const again = await fetch(`${API_BASE_URL}user/me`, {
         method: "GET",
         credentials: "include",
       });
