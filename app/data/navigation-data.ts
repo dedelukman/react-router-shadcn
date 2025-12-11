@@ -71,9 +71,9 @@ export const navigationData: {
     ],
     auth: {
       public: [
-        { label: 'login', href: '/login', type: 'button', variant: 'ghost' },
+        { label: 'login.', href: '/login', type: 'button', variant: 'ghost' },
         {
-          label: 'signup',
+          label: 'signup.',
           href: '/signup',
           type: 'button',
           variant: 'default',

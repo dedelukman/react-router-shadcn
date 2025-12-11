@@ -36,8 +36,11 @@ export default function Page() {
   const fetchCurrentUser = async () => {
     try {
       // Get current user from API
-      const response = await fetch(`${API_BASE_URL}user/me`, {
+      const response = await fetch(`${API_BASE_URL}users/me`, {
         credentials: 'include', // Ini penting untuk mengirim cookies
+        headers: {
+    'Accept': 'application/json',
+  },
       });
       
       if (response.ok) {
@@ -50,7 +53,7 @@ export default function Page() {
         setImageUrl(userData.avatar || userData.imageUrl || '');
       } else if (response.status === 401) {
         // Redirect to login if not authenticated
-        window.location.href = '/login';
+        // window.location.href = '/login';
       }
     } catch (error) {
       console.error('Failed to fetch user:', error);
@@ -170,7 +173,7 @@ export default function Page() {
           <Avatar className='w-30 h-30'>
             <AvatarImage src={imageUrl} alt='Profile' />
             <AvatarFallback className='rounded-full'>
-              {fullname.substring(0, 2).toUpperCase() || 'US'}
+              {(fullname || 'US').substring(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <Button onClick={handleImageUpload}>

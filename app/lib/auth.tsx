@@ -122,7 +122,7 @@ const refreshAccessToken = React.useCallback(async () => {
 // 2. PERBAIKAN checkAuth UNTUK Cek Ulang Jika 401
 const checkAuth = React.useCallback(async () => {
   try {
-    const res = await fetch(`${API_BASE_URL}user/me`, {
+    const res = await fetch(`${API_BASE_URL}users/me`, {
       method: "GET",
       credentials: "include",
     });
@@ -137,7 +137,7 @@ const checkAuth = React.useCallback(async () => {
       }
 
       // setelah refresh → cek ulang
-      const again = await fetch(`${API_BASE_URL}user/me`, {
+      const again = await fetch(`${API_BASE_URL}users/me`, {
         method: "GET",
         credentials: "include",
       });
@@ -163,19 +163,19 @@ const checkAuth = React.useCallback(async () => {
   }
 }, [refreshAccessToken]);
 
-// 3. panggil checkAuth saat load pertama
-React.useEffect(() => {
-  checkAuth();
-}, [checkAuth]);
+// // 3. panggil checkAuth saat load pertama
+// React.useEffect(() => {
+//   checkAuth();
+// }, [checkAuth]);
 
-// 4. Refresh otomatis setiap 5 menit (opsional)
-React.useEffect(() => {
-  const interval = setInterval(() => {
-    refreshAccessToken();
-  }, 5 * 60 * 1000);
+// // 4. Refresh otomatis setiap 5 menit (opsional)
+// React.useEffect(() => {
+//   const interval = setInterval(() => {
+//     refreshAccessToken();
+//   }, 5 * 60 * 1000);
 
-  return () => clearInterval(interval);
-}, [refreshAccessToken]);
+//   return () => clearInterval(interval);
+// }, [refreshAccessToken]);
 
   const value = { user, login, signup, logout, checkAuth };
 
