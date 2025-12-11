@@ -271,10 +271,13 @@
       "fullNameRequired": "Nama lengkap wajib diisi",
       "emailRequired": "Email yang valid wajib diisi",
       "passwordMinLength": "Kata sandi harus minimal 6 karakter",
-      "passwordsMismatch": "Kata sandi tidak cocok"
+      "passwordsMismatch": "Kata sandi tidak cocok",
+      "updateFailed": "Update Gagal. Silakan dicoba Kembali",
+      "usernameAlreadyTaken": "Nama pengguna sudah digunakan",
+      "emailAlreadyTaken": "Email sudah digunakan"
     },
     "success": {
-      "profileSaved": "Profil disimpan (lokal) — implementasikan panggilan server untuk menyimpan perubahan"
+      "profileSaved": "Profil berhasil diupdate"
     }
   
 },

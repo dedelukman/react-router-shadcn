@@ -21,7 +21,7 @@ export default function Page() {
   const [userId, setUserId] = useState<number | null>(null);
   const [imageUrl, setImageUrl] = useState('');
   const [username, setUsername] = useState('');
-  const [fullname, setFullname] = useState('');
+  const [fullName, setfullName] = useState('');
   const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -47,7 +47,7 @@ export default function Page() {
         const userData = await response.json();
         setUserId(userData.id);
         setUsername(userData.username || '');
-        setFullname(userData.fullname || userData.fullName || '');
+        setfullName(userData.fullName || userData.fullName || '');
         setEmail(userData.email || '');
         // Jika ada avatar/image dari backend
         setImageUrl(userData.avatar || userData.imageUrl || '');
@@ -82,7 +82,7 @@ export default function Page() {
   const validate = () => {
     const e: Record<string, string> = {};
     if (!username.trim()) e.username = t('profile.errors.usernameRequired');
-    if (!fullname.trim()) e.fullname = t('profile.errors.fullNameRequired');
+    if (!fullName.trim()) e.fullName = t('profile.errors.fullNameRequired');
     if (!email.trim() || !/\S+@\S+\.\S+/.test(email))
       e.email = t('profile.errors.emailRequired');
     if ((newPassword || confirmPassword) && newPassword.length < 6)
@@ -102,14 +102,14 @@ export default function Page() {
     // Prepare data object sesuai dengan model User di backend
     const userData: Record<string, any> = {
       username: username.trim(),
-      fullname: fullname.trim(), // atau fullName tergantung backend
+      fullName: fullName.trim(), // atau fullName tergantung backend
       email: email.trim(),
       // Hanya kirim password jika ada perubahan
       ...(newPassword && { password: newPassword }),
     };
     
     try {
-      const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+      const response = await fetch(`${API_BASE_URL}users/${userId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -119,12 +119,12 @@ export default function Page() {
       });
       
       if (response.ok) {
-        const updatedUser = await response.json();
+        // const updatedUser = await response.json();
         
         // Update state dengan data terbaru dari backend
-        setUsername(updatedUser.username || '');
-        setFullname(updatedUser.fullname || updatedUser.fullName || '');
-        setEmail(updatedUser.email || '');
+        // setUsername(updatedUser.username || '');
+        // setfullName(updatedUser.fullName || updatedUser.fullName || '');
+        // setEmail(updatedUser.email || '');
         
         // Clear password fields
         setNewPassword('');
@@ -135,10 +135,16 @@ export default function Page() {
         // Session expired, redirect to login
         window.location.href = '/login';
       } else {
-        const errorData = await response.json();
+        const responseText = await response.text(); // Baca sebagai teks
         
         // Handle validation errors dari backend
-        if (errorData.errors) {
+        if(responseText === 'USERNAME_ALREADY_TAKEN'){
+          setErrors({ submit: t('profile.errors.usernameAlreadyTaken') });
+        }else if(responseText === 'EMAIL_ALREADY_EXISTS'){
+          setErrors({ submit: t('profile.errors.emailAlreadyTaken') });
+        } else {
+          const errorData = await response.json();
+          if (errorData.errors) {
           const backendErrors: Record<string, string> = {};
           Object.keys(errorData.errors).forEach(key => {
             backendErrors[key] = errorData.errors[key];
@@ -149,6 +155,8 @@ export default function Page() {
         } else {
           setErrors({ submit: t('profile.errors.updateFailed') });
         }
+        }
+      
       }
     } catch (error) {
       console.error('Failed to update profile:', error);
@@ -173,7 +181,7 @@ export default function Page() {
           <Avatar className='w-30 h-30'>
             <AvatarImage src={imageUrl} alt='Profile' />
             <AvatarFallback className='rounded-full'>
-              {(fullname || 'US').substring(0, 2).toUpperCase()}
+              {(fullName || 'US').substring(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
           <Button onClick={handleImageUpload}>
@@ -209,12 +217,12 @@ export default function Page() {
             <FieldLabel>{t('profile.fullName')}</FieldLabel>
             <FieldContent>
               <Input
-                value={fullname}
-                onChange={(ev) => setFullname(ev.target.value)}
+                value={fullName}
+                onChange={(ev) => setfullName(ev.target.value)}
                 placeholder={t('profile.fullNamePlaceholder')}
                 disabled={isLoading}
               />
-              <FieldError>{errors.fullname}</FieldError>
+              <FieldError>{errors.fullName}</FieldError>
             </FieldContent>
           </Field>
 

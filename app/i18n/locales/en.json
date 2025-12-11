@@ -271,10 +271,13 @@
       "fullNameRequired": "Full name is required",
       "emailRequired": "Valid email is required",
       "passwordMinLength": "Password must be at least 6 characters",
-      "passwordsMismatch": "Passwords do not match"
+      "passwordsMismatch": "Passwords do not match",
+      "updateFailed": "Update failed. Please try again.",
+      "usernameAlreadyTaken": "This username is already taken",
+      "emailAlreadyTaken": "This email is already taken"
     },
     "success": {
-      "profileSaved": "Profile saved (local) — implement server call to persist changes"
+      "profileSaved": "Profile succes updated"
     }
   },
 

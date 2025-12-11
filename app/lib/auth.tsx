@@ -163,10 +163,10 @@ const checkAuth = React.useCallback(async () => {
   }
 }, [refreshAccessToken]);
 
-// // 3. panggil checkAuth saat load pertama
-// React.useEffect(() => {
-//   checkAuth();
-// }, [checkAuth]);
+// 3. panggil checkAuth saat load pertama
+React.useEffect(() => {
+  checkAuth();
+}, [checkAuth]);
 
 // // 4. Refresh otomatis setiap 5 menit (opsional)
 // React.useEffect(() => {
