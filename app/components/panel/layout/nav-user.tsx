@@ -1,8 +1,4 @@
-import {
-  IconDotsVertical,
-  IconLogout,
-  type Icon,
-} from '@tabler/icons-react';
+import { IconDotsVertical, IconLogout, type Icon } from '@tabler/icons-react';
 import { useNavigate, useLocation } from 'react-router';
 import { useAuth } from '~/lib/auth';
 
@@ -29,28 +25,27 @@ export function NavUser({
   ...props
 }: {
   items: {
-    title: string
-    url: string
-    icon: Icon
-  }[]
+    title: string;
+    url: string;
+    icon: Icon;
+  }[];
 }) {
   const { isMobile } = useSidebar();
   const auth = useAuth();
   const navigate = useNavigate();
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const location = useLocation();
 
   const userData = auth.user; // <— berasal dari localStorage
 
   const user = {
-    name: userData?.name || "Guest",
-    email: userData?.email || "guest@example.com",
-    avatar: "",
-  
+    name: userData?.name || 'Guest',
+    email: userData?.email || 'guest@example.com',
+    avatar: '',
   };
-  
+
   // Cek apakah salah satu item user aktif berdasarkan URL saat ini
-  const isActive = items.some(item => location.pathname === item.url);
+  const isActive = items.some((item) => location.pathname === item.url);
 
   return (
     <SidebarMenu>
@@ -99,11 +94,16 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               {items.map((item) => (
-                <DropdownMenuItem 
+                <DropdownMenuItem
                   key={item.title}
-                  className={location.pathname === item.url ? "text-primary bg-primary/5" : ""}
-                  onClick={() => {
-                    if (item.url !== "#") {
+                  className={
+                    location.pathname === item.url
+                      ? 'text-primary bg-primary/5'
+                      : ''
+                  }
+                  onSelect={(e: any) => {
+                    e.preventDefault();
+                    if (item.url !== '#') {
                       navigate(item.url);
                     }
                   }}
@@ -115,7 +115,8 @@ export function NavUser({
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() => {
+              onSelect={(e: any) => {
+                e.preventDefault();
                 auth.logout();
                 navigate('/login');
               }}
