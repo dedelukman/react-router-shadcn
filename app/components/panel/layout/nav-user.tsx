@@ -38,10 +38,19 @@ export function NavUser({
 
   const userData = auth.user; // <— berasal dari localStorage
 
+  // Derive a display name from common backend fields: prefer `name`, then `fullName`, then `username`, then email local-part
+  const derivedName =
+    userData?.name ||
+    (userData as any)?.fullName ||
+    (userData as any)?.full_name ||
+    userData?.username ||
+    (userData?.email ? userData.email.split('@')[0] : undefined) ||
+    'Guest';
+
   const user = {
-    name: userData?.name || 'Guest',
+    name: derivedName,
     email: userData?.email || 'guest@example.com',
-    avatar: '',
+    avatar: (userData as any)?.avatar || (userData as any)?.imageUrl || '',
   };
 
   // Cek apakah salah satu item user aktif berdasarkan URL saat ini

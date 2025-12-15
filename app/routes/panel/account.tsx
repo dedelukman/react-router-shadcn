@@ -12,8 +12,7 @@ import {
   FieldDescription,
   FieldError,
 } from '~/components/ui/field';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ;
+import { useGetCurrentUserQuery, useUpdateUserMutation } from '~/lib/api';
 
 export default function Page() {
   const { t } = useTranslation();
@@ -29,36 +28,26 @@ export default function Page() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // Fetch user data on component mount
-  useEffect(() => {
-    fetchCurrentUser();
-  }, []);
+  const { data: currentUser, refetch } = useGetCurrentUserQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
-  const fetchCurrentUser = async () => {
-    try {
-      // Get current user from API
-      const response = await fetch(`${API_BASE_URL}users/me`, {
-        credentials: 'include', // Ini penting untuk mengirim cookies
-        headers: {
-    'Accept': 'application/json',
-  },
-      });
-      
-      if (response.ok) {
-        const userData = await response.json();
-        setUserId(userData.id);
-        setUsername(userData.username || '');
-        setfullName(userData.fullName || userData.fullName || '');
-        setEmail(userData.email || '');
-        // Jika ada avatar/image dari backend
-        setImageUrl(userData.avatar || userData.imageUrl || '');
-      } else if (response.status === 401) {
-        // Redirect to login if not authenticated
-        // window.location.href = '/login';
-      }
-    } catch (error) {
-      console.error('Failed to fetch user:', error);
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+
+  useEffect(() => {
+    if (currentUser) {
+      setUserId(currentUser.id ?? null);
+      setUsername(currentUser.username ?? '');
+      // backend may use different keys for full name
+      setfullName(
+        (currentUser as any).fullName ?? (currentUser as any).full_name ?? ''
+      );
+      setEmail(currentUser.email ?? '');
+      setImageUrl(
+        (currentUser as any).avatar ?? (currentUser as any).imageUrl ?? ''
+      );
     }
-  };
+  }, [currentUser]);
 
   const handleImageUpload = () => {
     fileInputRef.current?.click();
@@ -96,9 +85,9 @@ export default function Page() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate() || !userId) return;
-    
+
     setIsLoading(true);
-    
+
     // Prepare data object sesuai dengan model User di backend
     const userData: Record<string, any> = {
       username: username.trim(),
@@ -107,60 +96,36 @@ export default function Page() {
       // Hanya kirim password jika ada perubahan
       ...(newPassword && { password: newPassword }),
     };
-    
+
     try {
-      const response = await fetch(`${API_BASE_URL}users/${userId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include', // Ini penting untuk mengirim cookies
-        body: JSON.stringify(userData),
-      });
-      
-      if (response.ok) {
-        // const updatedUser = await response.json();
-        
-        // Update state dengan data terbaru dari backend
-        // setUsername(updatedUser.username || '');
-        // setfullName(updatedUser.fullName || updatedUser.fullName || '');
-        // setEmail(updatedUser.email || '');
-        
-        // Clear password fields
-        setNewPassword('');
-        setConfirmPassword('');
-        
-        alert(t('profile.success.profileSaved'));
-      } else if (response.status === 401) {
-        // Session expired, redirect to login
-        window.location.href = '/login';
-      } else {
-        const responseText = await response.text(); // Baca sebagai teks
-        
-        // Handle validation errors dari backend
-        if(responseText === 'USERNAME_ALREADY_TAKEN'){
+      await updateUser({ id: userId, body: userData }).unwrap();
+      setNewPassword('');
+      setConfirmPassword('');
+      alert(t('profile.success.profileSaved'));
+      try {
+        await refetch();
+      } catch {}
+    } catch (err: any) {
+      const r = err?.data ?? err;
+      if (typeof r === 'string') {
+        if (r === 'USERNAME_ALREADY_TAKEN') {
           setErrors({ submit: t('profile.errors.usernameAlreadyTaken') });
-        }else if(responseText === 'EMAIL_ALREADY_EXISTS'){
+        } else if (r === 'EMAIL_ALREADY_EXISTS') {
           setErrors({ submit: t('profile.errors.emailAlreadyTaken') });
-        } else {
-          const errorData = await response.json();
-          if (errorData.errors) {
-          const backendErrors: Record<string, string> = {};
-          Object.keys(errorData.errors).forEach(key => {
-            backendErrors[key] = errorData.errors[key];
-          });
-          setErrors(backendErrors);
-        } else if (errorData.message) {
-          setErrors({ submit: errorData.message });
         } else {
           setErrors({ submit: t('profile.errors.updateFailed') });
         }
-        }
-      
+      } else if (r?.errors) {
+        const backendErrors: Record<string, string> = {};
+        Object.keys(r.errors).forEach((key) => {
+          backendErrors[key] = r.errors[key];
+        });
+        setErrors(backendErrors);
+      } else if (r?.message) {
+        setErrors({ submit: r.message });
+      } else {
+        setErrors({ submit: t('profile.errors.updateFailed') });
       }
-    } catch (error) {
-      console.error('Failed to update profile:', error);
-      setErrors({ submit: t('profile.errors.updateFailed') });
     } finally {
       setIsLoading(false);
     }
@@ -168,7 +133,9 @@ export default function Page() {
 
   const handleReset = () => {
     // Reset form ke data asli dari backend
-    fetchCurrentUser();
+    try {
+      refetch();
+    } catch {}
     setNewPassword('');
     setConfirmPassword('');
     setErrors({});
@@ -190,14 +157,14 @@ export default function Page() {
           {imageUrl && (
             <Button
               onClick={handleImageDelete}
-              variant="destructive"
+              variant='destructive'
               className='bg-red-700 hover:bg-red-600'
             >
               <IconTrash />
             </Button>
           )}
         </div>
-        
+
         {/* Account form */}
         <form onSubmit={handleSave} className='mt-4 grid gap-4'>
           <Field>
@@ -284,14 +251,14 @@ export default function Page() {
             </Button>
           </div>
         </form>
-        
+
         {errors.submit && (
           <div className='mt-4 p-3 bg-red-50 border border-red-200 rounded-md'>
             <p className='text-sm text-red-600'>{errors.submit}</p>
           </div>
         )}
       </Card>
-      
+
       {/* Hidden file input */}
       <input
         type='file'
