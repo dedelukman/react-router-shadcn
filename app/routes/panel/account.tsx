@@ -13,6 +13,7 @@ import {
   FieldError,
 } from '~/components/ui/field';
 import { useGetCurrentUserQuery, useUpdateUserMutation } from '~/lib/api';
+import { toast } from "sonner"
 
 export default function Page() {
   const { t } = useTranslation();
@@ -101,7 +102,9 @@ export default function Page() {
       await updateUser({ id: userId, body: userData }).unwrap();
       setNewPassword('');
       setConfirmPassword('');
-      alert(t('profile.success.profileSaved'));
+       toast.success(t('profile.success.profileSaved'), {
+      duration: 3000,
+    })
       try {
         await refetch();
       } catch {}
@@ -174,7 +177,8 @@ export default function Page() {
                 value={username}
                 onChange={(ev) => setUsername(ev.target.value)}
                 placeholder={t('profile.usernamePlaceholder')}
-                disabled={isLoading}
+                disabled={true}
+                
               />
               <FieldError>{errors.username}</FieldError>
             </FieldContent>

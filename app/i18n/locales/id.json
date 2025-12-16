@@ -265,6 +265,7 @@
     "confirmPasswordPlaceholder": "Konfirmasi kata sandi baru",
     "passwordDescription": "Biarkan kosong untuk menjaga kata sandi saat ini.",
     "save": "Simpan",
+    "saving": "Menyimpan...",
     "reset": "Reset",
     "errors": {
       "usernameRequired": "Nama pengguna wajib diisi",

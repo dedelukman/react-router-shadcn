@@ -265,6 +265,7 @@
     "confirmPasswordPlaceholder": "Confirm new password",
     "passwordDescription": "Leave blank to keep your current password.",
     "save": "Save",
+    "saving": "Saving...",
     "reset": "Reset",
     "errors": {
       "usernameRequired": "Username is required",
