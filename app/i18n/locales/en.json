@@ -167,7 +167,8 @@
     "phone": "Phone",
     "email": "Email",
     "error": "Company name is required.",
-    "saved": "Company saved:"
+    "saved": "Company saved:",
+    "updateFailed":"Update failed. Please try again."
    },
    "website": {
     "info": "Website Info",

@@ -166,7 +166,8 @@
     "phone": "Telepon",
     "email": "Email",
     "error": "Nama Perusahaan wajib diisi.",
-    "saved": "Perusahaan tersimpan : "
+    "saved": "Perusahaan tersimpan : ",
+    "updateFailed":"Update gagal. Silakan coba lagi."
   },
   "website": {
     "info": "Info Website",
