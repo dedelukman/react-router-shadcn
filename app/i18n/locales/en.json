@@ -180,7 +180,15 @@
     "descriptionField": "Description",
     "favicon": "Favicon URL",
     "error": "Website name is required.",
-    "saved": "Website settings saved : "
+    "saved": "Website settings saved ",
+     "metaTitle": "Meta Title",
+    "metaDescription": "Meta Description",
+    "metaTitleDescription": "Used for SEO and shown in search results.",
+    "metaKeywords": "Meta Keywords",
+    "updateFailed":"Update failed. Please try again.",
+    "email" :"Email Situs ",
+    "phone": "Telepon Situs",
+    "address": "Alamat Situs"
   }
    
   },

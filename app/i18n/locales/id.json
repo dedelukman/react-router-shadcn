@@ -179,7 +179,15 @@
     "descriptionField": "Deskripsi Situs",
     "favicon": "Favicon Situs",
     "error":  "Nama Situs wajib diisi.",
-    "saved": "Pengaturan website tersimpan :"
+    "saved": "Pengaturan website tersimpan",
+    "metaTitle": "Meta Judul",
+    "metaDescription": "Meta Deskripsi",
+    "metaTitleDescription": "Digunakan untuk SEO dan ditampilkan di hasil pencarian.",
+    "metaKeywords": "Meta Kata Kunci",
+    "updateFailed":"Update gagal. Silakan coba lagi.",
+    "email" :"Email Situs ",
+    "phone": "Telepon Situs",
+    "address": "Alamat Situs"
   }
   
   },

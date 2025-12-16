@@ -22,12 +22,29 @@ interface Company {
   avatar?: string;
 }
 
+export interface Website {
+  name?: string;
+  tagline?: string;
+  description?: string;
+
+  // SEO
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+
+  // Contact
+  email?: string;
+  phone?: string;
+  address?: string;
+}
+
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/';
 
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL, credentials: 'include' }),
-  tagTypes: ['User', 'Company'],
+  tagTypes: ['User', 'Company', 'Website'],
   endpoints: (builder) => ({
     getCurrentUser: builder.query<User | null, void>({
       query: () => 'users/me',
@@ -65,6 +82,23 @@ export const api = createApi({
       }),
       invalidatesTags: [{ type: 'Company', id: 'CURRENT' }],
     }),
+    getWebsite: builder.query<Website | null, void>({
+  query: () => 'website',
+  providesTags: [{ type: 'Website', id: 'SINGLE' }],
+}),
+
+updateWebsite: builder.mutation<
+  Website,
+  { body: Partial<Website> | Record<string, any> }
+>({
+  query: ({ body }) => ({
+    url: 'website',
+    method: 'PUT',
+    body,
+  }),
+  invalidatesTags: [{ type: 'Website', id: 'SINGLE' }],
+}),
+
     signup: builder.mutation<
       User,
       { name: string; email: string; password: string }
@@ -91,6 +125,8 @@ export const {
   useSignupMutation,
   useLogoutMutation,
   useRefreshMutation,
+  useGetWebsiteQuery,
+  useUpdateWebsiteMutation,
 } = api;
 
 export type { User };
