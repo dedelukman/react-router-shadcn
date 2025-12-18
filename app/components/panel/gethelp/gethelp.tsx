@@ -18,10 +18,17 @@ import CreateTicketForm from './create-ticket-form';
 import TicketDetails from './ticket-details';
 import type { Ticket, Category, Priority } from '../../../lib/types';
 import { defaultCategories } from '../../../lib/types';
-import { useGetTicketsQuery, useCreateTicketMutation } from '../../../lib/api';
+import {
+  useGetTicketsQuery,
+  useCreateTicketMutation,
+  useGetCurrentUserQuery,
+} from '../../../lib/api';
 
 export default function GetHelps() {
   const { t } = useTranslation();
+
+  // Get current user to detect user changes
+  const { data: currentUser } = useGetCurrentUserQuery();
 
   // API hooks
   const {
@@ -32,6 +39,12 @@ export default function GetHelps() {
   } = useGetTicketsQuery();
   const [createTicketApi, { isLoading: isSubmitting }] =
     useCreateTicketMutation();
+
+  // Refetch tickets when user changes (login/logout)
+  React.useEffect(() => {
+    console.log('[DEBUG] Current user changed:', currentUser?.id);
+    refetch();
+  }, [currentUser?.id, refetch]);
 
   // Debug logs
   React.useEffect(() => {

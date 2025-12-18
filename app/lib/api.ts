@@ -75,7 +75,12 @@ export const api = createApi({
     // Auth endpoints
     login: builder.mutation<User, { email: string; password: string }>({
       query: (body) => ({ url: 'auth/login', method: 'POST', body }),
-      invalidatesTags: [{ type: 'User', id: 'CURRENT' }],
+      invalidatesTags: [
+        { type: 'User', id: 'CURRENT' },
+        'Ticket',
+        'Company',
+        'Website',
+      ],
     }),
 
     updateUser: builder.mutation<
@@ -136,7 +141,7 @@ export const api = createApi({
           }
         }
       },
-      transformResponse: (response: any[]) => {
+      transformResponse: (response: any) => {
         console.log('[DEBUG] Raw API Response:', response);
         console.log(
           '[DEBUG] Response type:',
@@ -254,7 +259,12 @@ export const api = createApi({
 
     logout: builder.mutation<void, void>({
       query: () => ({ url: 'auth/logout', method: 'POST' }),
-      invalidatesTags: [{ type: 'User', id: 'CURRENT' }],
+      invalidatesTags: [
+        { type: 'User', id: 'CURRENT' },
+        'Ticket',
+        'Company',
+        'Website',
+      ],
     }),
 
     refresh: builder.mutation<void, void>({
