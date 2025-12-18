@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Badge } from '~/components/ui/badge';
-import type  { Ticket } from '../../../lib/types';
+import type { Ticket } from '../../../lib/types';
 import { formatDate, priorityVariant } from '../../../lib/utils';
 
 interface TicketDetailsProps {
@@ -10,7 +10,10 @@ interface TicketDetailsProps {
 export default function TicketDetails({ ticket }: TicketDetailsProps) {
   const { t } = useTranslation();
 
-  const getTranslatedValue = (type: 'priorities' | 'categories' | 'statuses', value: string) => {
+  const getTranslatedValue = (
+    type: 'priorities' | 'categories' | 'statuses',
+    value: string
+  ) => {
     return t(`${type}.${value}`, { defaultValue: value });
   };
 
@@ -22,12 +25,16 @@ export default function TicketDetails({ ticket }: TicketDetailsProps) {
     <div className='p-4 space-y-3'>
       <div className='grid grid-cols-1 gap-2'>
         <div>
-          <div className='text-xs text-muted-foreground'>{t('gethelp.tickets.id')}</div>
-          <div className='font-medium'>{ticket.id}</div>
+          <div className='text-xs text-muted-foreground'>
+            {t('gethelp.tickets.id')}
+          </div>
+          <div className='font-medium'>{ticket.code || ticket.id}</div>
         </div>
 
         <div>
-          <div className='text-xs text-muted-foreground'>{t('gethelp.tickets.subject')}</div>
+          <div className='text-xs text-muted-foreground'>
+            {t('gethelp.tickets.subject')}
+          </div>
           <div className='font-medium'>{ticket.subject}</div>
         </div>
 
@@ -49,7 +56,9 @@ export default function TicketDetails({ ticket }: TicketDetailsProps) {
         </div>
 
         <div>
-          <div className='text-xs text-muted-foreground'>{t('gethelp.tickets.status')}</div>
+          <div className='text-xs text-muted-foreground'>
+            {t('gethelp.tickets.status')}
+          </div>
           <div>{getTranslatedValue('statuses', ticket.status)}</div>
         </div>
 
@@ -72,9 +81,7 @@ export default function TicketDetails({ ticket }: TicketDetailsProps) {
           <div className='text-xs text-muted-foreground'>
             {t('gethelp.tickets.description')}
           </div>
-          <div className='whitespace-pre-wrap'>
-            {ticket.description}
-          </div>
+          <div className='whitespace-pre-wrap'>{ticket.description}</div>
         </div>
 
         <div>

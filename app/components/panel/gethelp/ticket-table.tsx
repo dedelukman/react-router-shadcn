@@ -10,20 +10,52 @@ import {
 } from '~/components/ui/table';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import type  { Ticket } from '../../../lib/types';
+import type { Ticket } from '../../../lib/types';
 import { formatDate, priorityVariant } from '../../../lib/utils';
 
 interface TicketTableProps {
   tickets: Ticket[];
   onView: (ticket: Ticket) => void;
+  isLoading?: boolean;
 }
 
-export default function TicketTable({ tickets, onView }: TicketTableProps) {
+export default function TicketTable({
+  tickets,
+  onView,
+  isLoading = false,
+}: TicketTableProps) {
   const { t } = useTranslation();
 
-  const getTranslatedValue = (type: 'priorities' | 'categories' | 'statuses', value: string) => {
+  const getTranslatedValue = (
+    type: 'priorities' | 'categories' | 'statuses',
+    value: string
+  ) => {
     return t(`${type}.${value}`, { defaultValue: value });
   };
+
+  if (isLoading) {
+    return (
+      <div className='rounded-md border p-4 shadow-sm'>
+        <div className='space-y-2'>
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className='h-12 rounded bg-muted animate-pulse' />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (tickets.length === 0) {
+    return (
+      <div className='rounded-md border p-4 shadow-sm'>
+        <div className='text-center py-8'>
+          <p className='text-muted-foreground'>
+            {t('gethelp.tickets.noTickets')}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className='rounded-md border p-4 shadow-sm'>
@@ -42,7 +74,7 @@ export default function TicketTable({ tickets, onView }: TicketTableProps) {
         <TableBody>
           {tickets.map((ticket) => (
             <TableRow key={ticket.id}>
-              <TableCell>{ticket.id}</TableCell>
+              <TableCell>{ticket.code || ticket.id}</TableCell>
               <TableCell className='max-w-[200px] truncate'>
                 {ticket.subject}
               </TableCell>

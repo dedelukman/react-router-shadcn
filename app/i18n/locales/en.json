@@ -10,7 +10,7 @@
   "save": "Save",
   "clear": "Clear",
 
-   "login": {
+  "login": {
     "": "Login",
     "title": "Login to your account",
     "subtitle": "Enter your email below to login to your account",
@@ -23,18 +23,17 @@
     "google": "Login with Google",
     "noAccount": "Don't have an account?",
     "signup": "Sign up",
-    
+
     "errors": {
       "fillAllFields": "Please enter both email and password",
       "invalidCredentials": "Invalid email or password",
       "loginFailed": "Login failed. Please try again."
     },
     "signingIn": "Signing in..."
-  
   },
 
-   "signup": {
-     "": "Sign Up",
+  "signup": {
+    "": "Sign Up",
     "title": "Create your account",
     "subtitle": "Fill in the form below to create your account",
 
@@ -59,7 +58,7 @@
     "haveAccount": "Already have an account?",
     "signin": "Sign in",
 
-     "errors": {
+    "errors": {
       "fillAllFields": "Please fill in all fields",
       "passwordMismatch": "Passwords do not match",
       "passwordLength": "Password must be at least 6 characters long",
@@ -69,7 +68,7 @@
     "creatingAccount": "Creating account..."
   },
 
- "error": {
+  "error": {
     "401": "Unauthorized",
     "403": "Forbidden",
     "404": "Page Not Found",
@@ -101,7 +100,6 @@
     }
   },
 
-
   "app": {
     "dashboard": "Dashboard",
     "settings": "Settings",
@@ -119,10 +117,10 @@
   "markall": "Mark all",
   "viewall": "View all",
   "modeToggleLight": "Light",
-  "modeToggleDark": "Dark", 
+  "modeToggleDark": "Dark",
   "modeToggleSytem": "System",
 
-   "theme": {
+  "theme": {
     "toggle": "Toggle theme color",
     "changeColor": "Change theme color",
     "color": "Theme Color",
@@ -136,126 +134,127 @@
     "violet": "Violet"
   },
 
-   "navigation": {
-      "home": "Home",
-      "about": "About",
-      "services": "Services",
-      "blog": "Blog",
-      "contact": "Contact"
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "blog": "Blog",
+    "contact": "Contact"
   },
   "footer": {
-  "privacy": "Privacy",
-  "terms": "Terms",
-  "contact": "Contact",
-  "rights": "All rights reserved."
-},
-
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
 
   "settings": {
-   "" : "Settings",
-   "company": {
-    "info": "Company Info",
-    "title": "Company Information",
-    "description": "Update your company details such as name, address, and contact information.",
-    "logo": "Company Logo",
-    "changeLogo": "Change Logo",
-    "uploadLogo": "Upload Logo",
-    "name": "Company Name",
-    "address": "Address",
-    "city": "City",
-    "postalCode": "Postal Code",
-    "phone": "Phone",
-    "email": "Email",
-    "error": "Company name is required.",
-    "saved": "Company saved:",
-    "updateFailed":"Update failed. Please try again."
-   },
-   "website": {
-    "info": "Website Info",
-    "title": "Website Settings",
-    "description": "Update your website details such as name, tagline, description, and favicon.",
-    "name": "Website Name",
-    "nameDescription": "Displayed in browser title and meta tags.",
-    "tagline": "Tagline",
-    "descriptionField": "Description",
-    "favicon": "Favicon URL",
-    "error": "Website name is required.",
-    "saved": "Website settings saved ",
-     "metaTitle": "Meta Title",
-    "metaDescription": "Meta Description",
-    "metaTitleDescription": "Used for SEO and shown in search results.",
-    "metaKeywords": "Meta Keywords",
-    "updateFailed":"Update failed. Please try again.",
-    "email" :"Email Situs ",
-    "phone": "Telepon Situs",
-    "address": "Alamat Situs"
-  }
-   
+    "": "Settings",
+    "company": {
+      "info": "Company Info",
+      "title": "Company Information",
+      "description": "Update your company details such as name, address, and contact information.",
+      "logo": "Company Logo",
+      "changeLogo": "Change Logo",
+      "uploadLogo": "Upload Logo",
+      "name": "Company Name",
+      "address": "Address",
+      "city": "City",
+      "postalCode": "Postal Code",
+      "phone": "Phone",
+      "email": "Email",
+      "error": "Company name is required.",
+      "saved": "Company saved:",
+      "updateFailed": "Update failed. Please try again."
+    },
+    "website": {
+      "info": "Website Info",
+      "title": "Website Settings",
+      "description": "Update your website details such as name, tagline, description, and favicon.",
+      "name": "Website Name",
+      "nameDescription": "Displayed in browser title and meta tags.",
+      "tagline": "Tagline",
+      "descriptionField": "Description",
+      "favicon": "Favicon URL",
+      "error": "Website name is required.",
+      "saved": "Website settings saved ",
+      "metaTitle": "Meta Title",
+      "metaDescription": "Meta Description",
+      "metaTitleDescription": "Used for SEO and shown in search results.",
+      "metaKeywords": "Meta Keywords",
+      "updateFailed": "Update failed. Please try again.",
+      "email": "Email Situs ",
+      "phone": "Telepon Situs",
+      "address": "Alamat Situs"
+    }
   },
 
   "gethelp": {
-  "tickets": {
-    "myTickets": "My Tickets",
-    "ticketHistory": "History of tickets you've created. Click \"View Details\" to open the full conversation.",
-    "createTicket": "Create Ticket",
-    "id": "ID",
-    "subject": "Subject",
-    "status": "Status",
-    "priority": "Priority",
-    "created": "Created",
-    "updated": "Updated",
-    "actions": "Actions",
-    "viewDetails": "View Details",
-    "createNewTicket": "Create New Ticket",
-    "fillFormDescription": "Fill out the form to submit a support ticket.",
-    "subjectTitle": "Subject / Title",
-    "required": "required",
-    "category": "Category",
-    "description": "Description",
-    "attachmentOptional": "Attachment (optional)",
-    "selected": "Selected",
-    "submitTicket": "Submit Ticket",
-    "close": "Close",
-    "ticketDetails": "Ticket Details",
-    "fullDetails": "Full details for the selected ticket",
-    "none": "None",
-    "noTicketSelected": "No ticket selected",
-    "error": {
-      "subjectRequired": "Subject is required."
+    "tickets": {
+      "myTickets": "My Tickets",
+      "ticketHistory": "History of tickets you've created. Click \"View Details\" to open the full conversation.",
+      "createTicket": "Create Ticket",
+      "id": "ID",
+      "subject": "Subject",
+      "status": "Status",
+      "priority": "Priority",
+      "created": "Created",
+      "updated": "Updated",
+      "actions": "Actions",
+      "viewDetails": "View Details",
+      "createNewTicket": "Create New Ticket",
+      "fillFormDescription": "Fill out the form to submit a support ticket.",
+      "subjectTitle": "Subject / Title",
+      "required": "required",
+      "category": "Category",
+      "description": "Description",
+      "attachmentOptional": "Attachment (optional)",
+      "selected": "Selected",
+      "submitTicket": "Submit Ticket",
+      "submitting": "Submitting...",
+      "close": "Close",
+      "ticketDetails": "Ticket Details",
+      "fullDetails": "Full details for the selected ticket",
+      "none": "None",
+      "noTicketSelected": "No ticket selected",
+      "noTickets": "No tickets yet. Create one to get started.",
+      "error": {
+        "subjectRequired": "Subject is required.",
+        "failedToCreate": "Failed to create ticket. Please try again."
+      },
+      "success": {
+        "ticketSubmitted": "Ticket submitted successfully."
+      },
+      "placeholder": {
+        "subject": "Example: Unable to checkout with card payment",
+        "description": "Reproduction steps:\n1. \n2. \n\nWhat did you expect to happen?\n\nWhat actually happened?\n\nAttach screenshots if available (optional)."
+      }
     },
-    "success": {
-      "ticketSubmitted": "Ticket submitted successfully."
+    "priorities": {
+      "Low": "Low",
+      "Normal": "Normal",
+      "High": "High",
+      "Critical": "Critical"
     },
-    "placeholder": {
-      "subject": "Example: Unable to checkout with card payment",
-      "description": "Reproduction steps:\n1. \n2. \n\nWhat did you expect to happen?\n\nWhat actually happened?\n\nAttach screenshots if available (optional)."
+    "categories": {
+      "Bug/Error": "Bug/Error",
+      "Feature Question": "Feature Question",
+      "Feature Request": "Feature Request",
+      "Account": "Account",
+      "Payment": "Payment",
+      "Other": "Other"
+    },
+    "statuses": {
+      "Open": "Open",
+      "Responded": "Responded",
+      "Investigating": "Investigating",
+      "Pending": "Pending",
+      "Done": "Done",
+      "Closed": "Closed"
     }
   },
-  "priorities": {
-    "Low": "Low",
-    "Normal": "Normal",
-    "High": "High", 
-    "Critical": "Critical"
-  },
-  "categories": {
-    "Bug/Error": "Bug/Error",
-    "Feature Question": "Feature Question",
-    "Feature Request": "Feature Request",
-    "Account": "Account",
-    "Payment": "Payment",
-    "Other": "Other"
-  },
-  "statuses": {
-    "Open": "Open",
-    "Responded": "Responded",
-    "Investigating": "Investigating",
-    "Pending": "Pending",
-    "Done": "Done",
-    "Closed": "Closed"
-  }
-},
 
- "profile": {
+  "profile": {
     "title": "Profile Settings",
     "uploadImage": "Upload Image",
     "changeImage": "Change Image",
@@ -291,7 +290,6 @@
     }
   },
 
-  
   "billing": {
     "title": "Billing & Subscription",
     "subscription": {
@@ -307,7 +305,7 @@
         },
         "pro": {
           "name": "Pro",
-          "price": "$12 / mo", 
+          "price": "$12 / mo",
           "desc": "For professionals"
         },
         "enterprise": {
@@ -397,7 +395,7 @@
     }
   },
 
-   "search": {
+  "search": {
     "title": "Menu Search",
     "description": "Quickly search aplication menus",
     "placeholder": "Search menu (name or path)...",
@@ -413,15 +411,12 @@
     "open": "Open",
     "footer": "Use search to quickly find menus",
     "menu_items": {
-    "account": "Account",
-    "billing": "Billing",
-    "notifications": "Notifications",
-    "settings": "Settings",
-    "gethelp": "Help / Get Help",
-    "search": "Search"
+      "account": "Account",
+      "billing": "Billing",
+      "notifications": "Notifications",
+      "settings": "Settings",
+      "gethelp": "Help / Get Help",
+      "search": "Search"
+    }
   }
-  }
-
-
-
 }

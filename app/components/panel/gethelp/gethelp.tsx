@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useTranslation } from 'react-i18next';
+import { toast } from 'sonner';
 
 import { Button } from '~/components/ui/button';
 import {
@@ -17,26 +18,27 @@ import CreateTicketForm from './create-ticket-form';
 import TicketDetails from './ticket-details';
 import type { Ticket, Category, Priority } from '../../../lib/types';
 import { defaultCategories } from '../../../lib/types';
+import { useGetTicketsQuery, useCreateTicketMutation } from '../../../lib/api';
 
 export default function GetHelps() {
   const { t } = useTranslation();
 
-  const [tickets, setTickets] = React.useState<Ticket[]>(() => {
-    const now = new Date().toISOString();
-    return [
-      {
-        id: `T-${Date.now() - 100000}`,
-        subject: 'Unable to access account settings',
-        category: 'Account',
-        priority: 'High',
-        description:
-          'Whenever I try to access my account settings, I receive an error message saying "Access Denied". Please assist.',
-        status: 'Investigating',
-        createdAt: now,
-        updatedAt: now,
-      },
-    ];
-  });
+  // API hooks
+  const {
+    data: tickets = [],
+    isLoading,
+    error: apiError,
+    refetch,
+  } = useGetTicketsQuery();
+  const [createTicketApi, { isLoading: isSubmitting }] =
+    useCreateTicketMutation();
+
+  // Debug logs
+  React.useEffect(() => {
+    console.log('[DEBUG] gethelp.tsx - tickets:', tickets);
+    console.log('[DEBUG] gethelp.tsx - isLoading:', isLoading);
+    console.log('[DEBUG] gethelp.tsx - apiError:', apiError);
+  }, [tickets, isLoading, apiError]);
 
   // form state
   const [subject, setSubject] = React.useState('');
@@ -69,33 +71,51 @@ export default function GetHelps() {
     setAttachmentName(undefined);
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     setInfo(null);
 
     if (!subject.trim()) {
-      setError(t('gethelp.tickets.error.subjectRequired'));
+      const errorMsg = t('gethelp.tickets.error.subjectRequired');
+      setError(errorMsg);
+      toast.error(errorMsg);
       return;
     }
 
-    const now = new Date().toISOString();
-    const newTicket: Ticket = {
-      id: `T-${Date.now()}`,
-      subject: subject.trim(),
-      category,
-      priority,
-      description: description.trim(),
-      attachment: attachmentName,
-      status: 'Open',
-      createdAt: now,
-      updatedAt: now,
-    };
+    try {
+      const result = await createTicketApi({
+        subject: subject.trim(),
+        category,
+        priority,
+        description: description.trim(),
+        attachment: attachmentName,
+      }).unwrap();
 
-    setTickets((s) => [newTicket, ...s]);
-    setInfo(t('gethelp.tickets.success.ticketSubmitted'));
-    resetForm();
-    setCreateOpen(false);
+      const successMsg = t('gethelp.tickets.success.ticketSubmitted');
+      setInfo(successMsg);
+      toast.success(successMsg, {
+        description: `Ticket ID: ${result.code || result.id}`,
+        duration: 4000,
+      });
+
+      // Reset form and close sheet
+      resetForm();
+      setCreateOpen(false);
+
+      // Refetch tickets untuk update table
+      setTimeout(() => {
+        refetch();
+      }, 500);
+    } catch (err: any) {
+      const errorMsg =
+        err?.data?.message || t('gethelp.tickets.error.failedToCreate');
+      setError(errorMsg);
+      toast.error('Failed to create ticket', {
+        description: errorMsg,
+        duration: 5000,
+      });
+    }
   }
 
   function handleView(ticket: Ticket) {
@@ -116,13 +136,38 @@ export default function GetHelps() {
             </p>
           </div>
           <div>
-            <Button onClick={() => setCreateOpen(true)}>
+            <Button onClick={() => setCreateOpen(true)} disabled={isSubmitting}>
               {t('gethelp.tickets.createTicket')}
             </Button>
           </div>
         </div>
 
-        <TicketTable tickets={tickets} onView={handleView} />
+        {/* Debug: Show API error jika ada */}
+        {apiError && (
+          <div className='rounded-md bg-destructive/10 p-4 text-sm text-destructive space-y-2'>
+            <div>
+              <strong>API Error:</strong> {(apiError as any).status} -{' '}
+              {(apiError as any).error || JSON.stringify(apiError)}
+            </div>
+            <div className='text-xs opacity-75'>
+              <p>
+                <strong>Check:</strong>
+              </p>
+              <ul className='list-disc list-inside ml-2 mt-1'>
+                <li>Apakah backend running?</li>
+                <li>Apakah endpoint `/tickets` atau `/api/tickets` sesuai?</li>
+                <li>Lihat VITE_API_BASE_URL di `.env.local`</li>
+                <li>Buka DevTools Console untuk debug logs</li>
+              </ul>
+            </div>
+          </div>
+        )}
+
+        <TicketTable
+          tickets={tickets}
+          onView={handleView}
+          isLoading={isLoading}
+        />
       </div>
 
       {/* Create ticket sheet */}
@@ -156,6 +201,7 @@ export default function GetHelps() {
             error={error}
             info={info}
             resetForm={resetForm}
+            isSubmitting={isSubmitting}
           />
         </SheetContent>
       </Sheet>

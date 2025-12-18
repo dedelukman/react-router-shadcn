@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { SheetClose } from '~/components/ui/sheet';
-import type  { Category, Priority } from '../../../lib/types';
-import   {  defaultCategories, defaultPriorities } from '../../../lib/types';
+import type { Category, Priority } from '../../../lib/types';
+import { defaultCategories, defaultPriorities } from '../../../lib/types';
 
 interface CreateTicketFormProps {
   onSubmit: (e: React.FormEvent) => void;
@@ -21,6 +21,7 @@ interface CreateTicketFormProps {
   error: string | null;
   info: string | null;
   resetForm: () => void;
+  isSubmitting?: boolean;
 }
 
 export default function CreateTicketForm({
@@ -38,10 +39,14 @@ export default function CreateTicketForm({
   error,
   info,
   resetForm,
+  isSubmitting = false,
 }: CreateTicketFormProps) {
   const { t } = useTranslation();
 
-  const getTranslatedValue = (type: 'priorities' | 'categories', value: string) => {
+  const getTranslatedValue = (
+    type: 'priorities' | 'categories',
+    value: string
+  ) => {
     return t(`${type}.${value}`, { defaultValue: value });
   };
 
@@ -50,12 +55,14 @@ export default function CreateTicketForm({
       <form onSubmit={onSubmit} className='space-y-3'>
         <div>
           <label className='mb-1 block text-sm font-medium'>
-            {t('gethelp.tickets.subjectTitle')} <span className='text-destructive'>*</span>
+            {t('gethelp.tickets.subjectTitle')}{' '}
+            <span className='text-destructive'>*</span>
           </label>
           <Input
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
             placeholder={t('gethelp.tickets.placeholder.subject')}
+            disabled={isSubmitting}
           />
         </div>
 
@@ -67,7 +74,8 @@ export default function CreateTicketForm({
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className='border-input h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm'
+              disabled={isSubmitting}
+              className='border-input h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50'
             >
               {defaultCategories.map((cat) => (
                 <option key={cat} value={cat}>
@@ -84,7 +92,8 @@ export default function CreateTicketForm({
             <select
               value={priority}
               onChange={(e) => setPriority(e.target.value as Priority)}
-              className='border-input h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm'
+              disabled={isSubmitting}
+              className='border-input h-9 w-full rounded-md bg-transparent px-3 py-1 text-sm disabled:cursor-not-allowed disabled:opacity-50'
             >
               {defaultPriorities.map((pri) => (
                 <option key={pri} value={pri}>
@@ -104,7 +113,8 @@ export default function CreateTicketForm({
             onChange={(e) => setDescription(e.target.value)}
             rows={6}
             placeholder={t('gethelp.tickets.placeholder.description')}
-            className='w-full rounded-md border bg-transparent px-3 py-2 text-sm'
+            disabled={isSubmitting}
+            className='w-full rounded-md border bg-transparent px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50'
           />
         </div>
 
@@ -112,7 +122,12 @@ export default function CreateTicketForm({
           <label className='mb-1 block text-sm font-medium'>
             {t('gethelp.tickets.attachmentOptional')}
           </label>
-          <input onChange={handleFile} type='file' className='text-sm' />
+          <input
+            onChange={handleFile}
+            type='file'
+            disabled={isSubmitting}
+            className='text-sm disabled:cursor-not-allowed disabled:opacity-50'
+          />
           {attachmentName ? (
             <div className='mt-1 text-sm text-muted-foreground'>
               {t('gethelp.tickets.selected')}: {attachmentName}
@@ -120,15 +135,22 @@ export default function CreateTicketForm({
           ) : null}
         </div>
 
-        {error ? (
-          <div className='text-sm text-destructive'>{error}</div>
-        ) : null}
+        {error ? <div className='text-sm text-destructive'>{error}</div> : null}
         {info ? <div className='text-sm text-success'>{info}</div> : null}
 
         <div className='flex items-center gap-2'>
-          <Button type='submit'>{t('gethelp.tickets.submitTicket')}</Button>
+          <Button type='submit' disabled={isSubmitting}>
+            {isSubmitting
+              ? t('gethelp.tickets.submitting')
+              : t('gethelp.tickets.submitTicket')}
+          </Button>
           <SheetClose asChild>
-            <Button variant='outline' type='button' onClick={resetForm}>
+            <Button
+              variant='outline'
+              type='button'
+              onClick={resetForm}
+              disabled={isSubmitting}
+            >
               {t('gethelp.tickets.close')}
             </Button>
           </SheetClose>

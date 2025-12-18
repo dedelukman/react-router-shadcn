@@ -8,7 +8,7 @@
   "noAccount": "Belum punya akun?",
   "signUpHere": "Daftar di sini",
 
-   "login": {
+  "login": {
     "": "Masuk",
     "title": "Masuk ke akun Anda",
     "subtitle": "Masukkan email Anda di bawah untuk masuk ke akun Anda",
@@ -29,8 +29,8 @@
     "signingIn": "Sedang masuk..."
   },
 
-    "signup": {
-      "":"Daftar",
+  "signup": {
+    "": "Daftar",
     "title": "Buat akun Anda",
     "subtitle": "Isi formulir di bawah ini untuk membuat akun",
 
@@ -56,16 +56,16 @@
     "signin": "Masuk",
 
     "errors": {
-    "fillAllFields": "Mohon isi semua kolom",
-    "passwordMismatch": "Kata sandi tidak cocok",
-    "passwordLength": "Kata sandi harus terdiri setidaknya 6 karakter",
-    "registrationFailed": "Pendaftaran gagal. Mohon coba lagi.",
-    "emailAlreadyTaken": "Email sudah digunakan"
-},
-"creatingAccount": "Membuat akun..."
+      "fillAllFields": "Mohon isi semua kolom",
+      "passwordMismatch": "Kata sandi tidak cocok",
+      "passwordLength": "Kata sandi harus terdiri setidaknya 6 karakter",
+      "registrationFailed": "Pendaftaran gagal. Mohon coba lagi.",
+      "emailAlreadyTaken": "Email sudah digunakan"
+    },
+    "creatingAccount": "Membuat akun..."
   },
 
- "error": {
+  "error": {
     "401": "Tidak Diizinkan",
     "403": "Akses Dilarang",
     "404": "Halaman Tidak Ditemukan",
@@ -105,14 +105,12 @@
     "account": "Akun",
     "billing": "Tagihan",
     "notifications": "Notifikasi"
-
   },
 
-  
   "language": "Bahasa",
   "welcome": "Selamat Datang",
 
- "nonotifications": "Tidak ada notifikasi baru",
+  "nonotifications": "Tidak ada notifikasi baru",
   "markall": "Tandai semua",
   "viewall": "Lihat semua",
   "modeToggleLight": "Terang",
@@ -120,10 +118,10 @@
   "modeToggleSytem": "Sistem",
   "save": "Simpan",
   "clear": "Bersihkan",
-  
+
   "theme": {
     "toggle": "Alih warna tema",
-    "changeColor": "Ubah warna tema", 
+    "changeColor": "Ubah warna tema",
     "color": "Warna Tema",
     "default": "Bawaan",
     "red": "Merah",
@@ -135,125 +133,126 @@
     "violet": "Ungu"
   },
 
-   "navigation": {
-      "home": "Beranda",
-      "about": "Tentang",
-      "services": "Layanan",
-      "blog": "Blog",
-      "contact": "Kontak"    
+  "navigation": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "services": "Layanan",
+    "blog": "Blog",
+    "contact": "Kontak"
   },
 
   "footer": {
-  "privacy": "Privasi",
-  "terms": "Syarat",
-  "contact": "Kontak",
-  "rights": "Hak cipta dilindungi."
+    "privacy": "Privasi",
+    "terms": "Syarat",
+    "contact": "Kontak",
+    "rights": "Hak cipta dilindungi."
   },
-  
-  "settings":{
-  "": "Pengaturan",
-  "company": {
-    "info": "Info Perusahaan",
-    "title": "Informasi Perusahaan",
-    "description": "Perbarui detail perusahaan Anda seperti nama, alamat, dan informasi kontak.",
-    "logo": "Logo Perusahaan",
-    "changeLogo": "Ubah Logo",
-    "uploadLogo": "Upload Logo",
-    "name": "Nama Perusahaan",
-    "address": "Alamat",
-    "city": "Kota",
-    "postalCode": "Kode Pos",
-    "phone": "Telepon",
-    "email": "Email",
-    "error": "Nama Perusahaan wajib diisi.",
-    "saved": "Perusahaan tersimpan : ",
-    "updateFailed":"Update gagal. Silakan coba lagi."
-  },
-  "website": {
-    "info": "Info Website",
-    "title": "Pengaturan Website",
-    "description": "Perbarui pengaturan website Anda seperti nama situs, tagline, deskripsi, dan favicon.",
-    "name": "Nama Situs",
-    "nameDescription": "Ditampilkan di judul browser dan meta tag.",
-    "tagline": "Tagline Situs",
-    "descriptionField": "Deskripsi Situs",
-    "favicon": "Favicon Situs",
-    "error":  "Nama Situs wajib diisi.",
-    "saved": "Pengaturan website tersimpan",
-    "metaTitle": "Meta Judul",
-    "metaDescription": "Meta Deskripsi",
-    "metaTitleDescription": "Digunakan untuk SEO dan ditampilkan di hasil pencarian.",
-    "metaKeywords": "Meta Kata Kunci",
-    "updateFailed":"Update gagal. Silakan coba lagi.",
-    "email" :"Email Situs ",
-    "phone": "Telepon Situs",
-    "address": "Alamat Situs"
-  }
-  
+
+  "settings": {
+    "": "Pengaturan",
+    "company": {
+      "info": "Info Perusahaan",
+      "title": "Informasi Perusahaan",
+      "description": "Perbarui detail perusahaan Anda seperti nama, alamat, dan informasi kontak.",
+      "logo": "Logo Perusahaan",
+      "changeLogo": "Ubah Logo",
+      "uploadLogo": "Upload Logo",
+      "name": "Nama Perusahaan",
+      "address": "Alamat",
+      "city": "Kota",
+      "postalCode": "Kode Pos",
+      "phone": "Telepon",
+      "email": "Email",
+      "error": "Nama Perusahaan wajib diisi.",
+      "saved": "Perusahaan tersimpan : ",
+      "updateFailed": "Update gagal. Silakan coba lagi."
+    },
+    "website": {
+      "info": "Info Website",
+      "title": "Pengaturan Website",
+      "description": "Perbarui pengaturan website Anda seperti nama situs, tagline, deskripsi, dan favicon.",
+      "name": "Nama Situs",
+      "nameDescription": "Ditampilkan di judul browser dan meta tag.",
+      "tagline": "Tagline Situs",
+      "descriptionField": "Deskripsi Situs",
+      "favicon": "Favicon Situs",
+      "error": "Nama Situs wajib diisi.",
+      "saved": "Pengaturan website tersimpan",
+      "metaTitle": "Meta Judul",
+      "metaDescription": "Meta Deskripsi",
+      "metaTitleDescription": "Digunakan untuk SEO dan ditampilkan di hasil pencarian.",
+      "metaKeywords": "Meta Kata Kunci",
+      "updateFailed": "Update gagal. Silakan coba lagi.",
+      "email": "Email Situs ",
+      "phone": "Telepon Situs",
+      "address": "Alamat Situs"
+    }
   },
 
   "gethelp": {
-  "tickets": {
-    "myTickets": "Tiket Saya",
-    "ticketHistory": "Riwayat tiket yang telah Anda buat. Klik \"Lihat Detail\" untuk membuka info lengkap.",
-    "createTicket": "Buat Tiket",
-    "id": "ID",
-    "subject": "Subjek",
-    "status": "Status",
-    "priority": "Prioritas",
-    "created": "Dibuat",
-    "updated": "Diperbarui",
-    "actions": "Aksi",
-    "viewDetails": "Lihat Detail",
-    "createNewTicket": "Buat Tiket Baru",
-    "fillFormDescription": "Isi formulir untuk mengajukan tiket dukungan.",
-    "subjectTitle": "Subjek / Judul",
-    "required": "wajib diisi",
-    "category": "Kategori",
-    "description": "Deskripsi",
-    "attachmentOptional": "Lampiran (opsional)",
-    "selected": "Terpilih",
-    "submitTicket": "Ajukan Tiket",
-    "close": "Tutup",
-    "ticketDetails": "Detail Tiket",
-    "fullDetails": "Detail lengkap untuk tiket yang dipilih",
-    "none": "Tidak ada",
-    "noTicketSelected": "Tidak ada tiket yang dipilih",
-    "error": {
-      "subjectRequired": "Subjek wajib diisi."
+    "tickets": {
+      "myTickets": "Tiket Saya",
+      "ticketHistory": "Riwayat tiket yang telah Anda buat. Klik \"Lihat Detail\" untuk membuka info lengkap.",
+      "createTicket": "Buat Tiket",
+      "id": "ID",
+      "subject": "Subjek",
+      "status": "Status",
+      "priority": "Prioritas",
+      "created": "Dibuat",
+      "updated": "Diperbarui",
+      "actions": "Aksi",
+      "viewDetails": "Lihat Detail",
+      "createNewTicket": "Buat Tiket Baru",
+      "fillFormDescription": "Isi formulir untuk mengajukan tiket dukungan.",
+      "subjectTitle": "Subjek / Judul",
+      "required": "wajib diisi",
+      "category": "Kategori",
+      "description": "Deskripsi",
+      "attachmentOptional": "Lampiran (opsional)",
+      "selected": "Terpilih",
+      "submitTicket": "Ajukan Tiket",
+      "submitting": "Sedang diajukan...",
+      "close": "Tutup",
+      "ticketDetails": "Detail Tiket",
+      "fullDetails": "Detail lengkap untuk tiket yang dipilih",
+      "none": "Tidak ada",
+      "noTicketSelected": "Tidak ada tiket yang dipilih",
+      "noTickets": "Belum ada tiket. Buat satu untuk memulai.",
+      "error": {
+        "subjectRequired": "Subjek wajib diisi.",
+        "failedToCreate": "Gagal membuat tiket. Silakan coba lagi."
+      },
+      "success": {
+        "ticketSubmitted": "Tiket berhasil diajukan."
+      },
+      "placeholder": {
+        "subject": "Contoh: Tidak bisa checkout dengan pembayaran kartu",
+        "description": "Langkah reproduksi:\n1. \n2. \n\nApa yang Anda harapkan terjadi?\n\nApa yang sebenarnya terjadi?\n\nLampirkan screenshot jika tersedia (opsional)."
+      }
     },
-    "success": {
-      "ticketSubmitted": "Tiket berhasil diajukan."
+    "priorities": {
+      "Low": "Rendah",
+      "Normal": "Normal",
+      "High": "Tinggi",
+      "Critical": "Kritis"
     },
-    "placeholder": {
-      "subject": "Contoh: Tidak bisa checkout dengan pembayaran kartu",
-      "description": "Langkah reproduksi:\n1. \n2. \n\nApa yang Anda harapkan terjadi?\n\nApa yang sebenarnya terjadi?\n\nLampirkan screenshot jika tersedia (opsional)."
+    "categories": {
+      "Bug/Error": "Bug/Error",
+      "Feature Question": "Pertanyaan Fitur",
+      "Feature Request": "Permintaan Fitur",
+      "Account": "Akun",
+      "Payment": "Pembayaran",
+      "Other": "Lainnya"
+    },
+    "statuses": {
+      "Open": "Terbuka",
+      "Responded": "Sudah Direspons",
+      "Investigating": "Sedang Diselidiki",
+      "Pending": "Tertunda",
+      "Done": "Selesai",
+      "Closed": "Ditutup"
     }
   },
-  "priorities": {
-    "Low": "Rendah",
-    "Normal": "Normal", 
-    "High": "Tinggi",
-    "Critical": "Kritis"
-  },
-  "categories": {
-    "Bug/Error": "Bug/Error",
-    "Feature Question": "Pertanyaan Fitur",
-    "Feature Request": "Permintaan Fitur", 
-    "Account": "Akun",
-    "Payment": "Pembayaran",
-    "Other": "Lainnya"
-  },
-  "statuses": {
-    "Open": "Terbuka",
-    "Responded": "Sudah Direspons",
-    "Investigating": "Sedang Diselidiki",
-    "Pending": "Tertunda",
-    "Done": "Selesai",
-    "Closed": "Ditutup"
-  }
-},
-
 
   "profile": {
     "title": "Pengaturan Profil",
@@ -289,9 +288,7 @@
     "success": {
       "profileSaved": "Profil berhasil diupdate"
     }
-  
-},
-
+  },
 
   "billing": {
     "title": "Tagihan & Langganan",
@@ -307,7 +304,7 @@
           "desc": "Untuk penggunaan pribadi"
         },
         "pro": {
-          "name": "Pro", 
+          "name": "Pro",
           "price": "$12 / bln",
           "desc": "Untuk profesional"
         },
@@ -333,7 +330,7 @@
       "actions": "Aksi",
       "statuses": {
         "paid": "Lunas",
-        "pending": "Tertunda", 
+        "pending": "Tertunda",
         "failed": "Gagal"
       },
       "showing": "Menampilkan {{start}} - {{end}} dari {{total}}",
@@ -342,7 +339,7 @@
       "next": "Selanjutnya",
       "actionsList": {
         "view": "Lihat faktur",
-        "download": "Unduh faktur", 
+        "download": "Unduh faktur",
         "pay": "Bayar"
       }
     },
@@ -414,19 +411,12 @@
     "open": "Buka",
     "footer": "Gunakan pencarian untuk menemukan menu dengan cepat",
     "menu_items": {
-    "account": "Akun",
-    "billing": "Tagihan",
-    "notifications": "Notifikasi",
-    "settings": "Pengaturan",
-    "gethelp": "Bantuan / Dapatkan Bantuan",
-    "search": "Pencarian"
+      "account": "Akun",
+      "billing": "Tagihan",
+      "notifications": "Notifikasi",
+      "settings": "Pengaturan",
+      "gethelp": "Bantuan / Dapatkan Bantuan",
+      "search": "Pencarian"
+    }
   }
-  }
-
-
-
-  
-
-
-
 }

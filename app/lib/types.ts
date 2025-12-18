@@ -17,7 +17,8 @@ export type TicketStatus =
   | 'Closed';
 
 export type Ticket = {
-  id: string;
+  id: string | number;
+  code?: string;
   subject: string;
   category: Category | string;
   priority: Priority;
@@ -26,6 +27,7 @@ export type Ticket = {
   status: TicketStatus;
   createdAt: string;
   updatedAt: string;
+  companyCode?: string;
 };
 
 export const defaultCategories: Category[] = [
@@ -37,8 +39,12 @@ export const defaultCategories: Category[] = [
   'Other',
 ];
 
-export const defaultPriorities: Priority[] = ['Low', 'Normal', 'High', 'Critical'];
-
+export const defaultPriorities: Priority[] = [
+  'Low',
+  'Normal',
+  'High',
+  'Critical',
+];
 
 // --- BILLING ---
 export type InvoiceStatus = 'paid' | 'pending' | 'failed';
@@ -64,14 +70,15 @@ export const PLANS: Plan[] = [
   { id: 'enterprise', name: 'Enterprise', price: 'Contact', desc: 'For teams' },
 ];
 
-export const SAMPLE_INVOICES: Invoice[] = Array.from({ length: 37 }).map((_, i) => ({
-  id: `INV-${1000 + i}`,
-  date: new Date(Date.now() - i * 1000 * 60 * 60 * 24).toLocaleDateString(),
-  plan: i % 3 === 0 ? 'Pro' : i % 3 === 1 ? 'Basic' : 'Enterprise',
-  amount: `$${(9.99 + (i % 5) * 5).toFixed(2)}`,
-  status: i % 4 === 0 ? 'pending' : 'paid',
-}));
-
+export const SAMPLE_INVOICES: Invoice[] = Array.from({ length: 37 }).map(
+  (_, i) => ({
+    id: `INV-${1000 + i}`,
+    date: new Date(Date.now() - i * 1000 * 60 * 60 * 24).toLocaleDateString(),
+    plan: i % 3 === 0 ? 'Pro' : i % 3 === 1 ? 'Basic' : 'Enterprise',
+    amount: `$${(9.99 + (i % 5) * 5).toFixed(2)}`,
+    status: i % 4 === 0 ? 'pending' : 'paid',
+  })
+);
 
 // --- NOTIFICATIONS ---
 export type NotificationTab = 'all' | 'favorites' | 'archived';
@@ -94,7 +101,9 @@ export interface NotificationCounts {
   unread: number;
 }
 
-export const SAMPLE_NOTIFICATIONS: Notification[] = Array.from({ length: 12 }).map((_, i) => ({
+export const SAMPLE_NOTIFICATIONS: Notification[] = Array.from({
+  length: 12,
+}).map((_, i) => ({
   id: `n-${i}`,
   title: `Notification ${i + 1}`,
   body: `This is the detail for notification ${i + 1}.`,
