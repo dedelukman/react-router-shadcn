@@ -120,7 +120,7 @@ export const api = createApi({
     getTickets: builder.query<Ticket[], void>({
       query: () => {
         console.log('[DEBUG] Fetching tickets from endpoint');
-        return 'tickets';
+        return 'tickets/me';
       },
       providesTags: ['Ticket'],
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
