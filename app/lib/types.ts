@@ -85,13 +85,29 @@ export type NotificationTab = 'all' | 'favorites' | 'archived';
 export type ConfirmMode = 'single' | 'bulk';
 
 export interface Notification {
-  id: string;
+  id: string | number;
   title: string;
   body?: string;
   date: string;
   favorite?: boolean;
   archived?: boolean;
   read?: boolean;
+}
+
+export interface NotificationResponse {
+  id: number;
+  title: string;
+  body?: string;
+  createdAt: string;
+  read?: boolean;
+  favorite?: boolean;
+  archived?: boolean;
+}
+
+export interface NotificationUpdateRequest {
+  read?: boolean;
+  favorite?: boolean;
+  archived?: boolean;
 }
 
 export interface NotificationCounts {

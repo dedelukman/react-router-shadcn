@@ -14,91 +14,63 @@ import {
 import { Button } from '~/components/ui/button';
 import { Badge } from '~/components/ui/badge';
 import { useTranslation } from 'react-i18next';
-
-type Notification = {
-  id: string;
-  title: string;
-  body?: string;
-  date: string;
-  read?: boolean;
-  archived?: boolean;
-};
-
-const STORAGE_KEY = 'app_notifications';
-
-function readNotifications(): Notification[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as Notification[]) : [];
-  } catch {
-    return [];
-  }
-}
+import {
+  useGetNotificationsQuery,
+  useUpdateNotificationMutation,
+} from '~/lib/api';
+import type { NotificationResponse } from '~/lib/types';
 
 export function NotificationsPopover() {
-  const {t} = useTranslation ();
-  const [items, setItems] = React.useState<Notification[]>(() =>
-    readNotifications()
-  );
-  // only count unread non-archived notifications
+  const { t } = useTranslation();
+  const { data: notifications = [], isLoading } = useGetNotificationsQuery();
+  const [updateNotification] = useUpdateNotificationMutation();
+
+  // Only count unread non-archived notifications
   const unreadCount = React.useMemo(
-    () => items.filter((i) => !i.read && !i.archived).length,
-    [items]
+    () => notifications.filter((i) => !i.read && !i.archived).length,
+    [notifications]
   );
 
-  // Keep localStorage in sync and notify other listeners (same-window and cross-window)
-  React.useEffect(() => {
+  // Prioritize unread notifications first, then show read ones to fill up to 5 total
+  const list = React.useMemo(() => {
+    const nonArchived = notifications.filter((i) => !i.archived);
+    const unread = nonArchived.filter((i) => !i.read);
+    const read = nonArchived.filter((i) => i.read);
+
+    // Combine: unread first, then read to reach max 5
+    return [...unread, ...read].slice(0, 5);
+  }, [notifications]);
+
+  async function markRead(id: number) {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-      // dispatch a custom event so same-window listeners can react
-      window.dispatchEvent(new Event('app_notifications_changed'));
-    } catch {}
-  }, [items]);
-
-  // Listen for storage changes (other tabs) and our custom event (same tab)
-  React.useEffect(() => {
-    function handleUpdate() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        const parsed = raw ? (JSON.parse(raw) as Notification[]) : [];
-        // update only when different to avoid loops
-        const a = JSON.stringify(parsed || []);
-        const b = JSON.stringify(items || []);
-        if (a !== b) setItems(parsed);
-      } catch {
-        // ignore
-      }
+      await updateNotification({
+        id,
+        body: { read: true },
+      }).unwrap();
+      toast.success(t('notifications.toast.readUpdated'));
+    } catch (error) {
+      toast.error('Failed to mark as read');
     }
-
-    function onStorage(e: StorageEvent) {
-      if (e.key === STORAGE_KEY) handleUpdate();
-    }
-
-    window.addEventListener('app_notifications_changed', handleUpdate);
-    window.addEventListener('storage', onStorage);
-    return () => {
-      window.removeEventListener('app_notifications_changed', handleUpdate);
-      window.removeEventListener('storage', onStorage);
-    };
-  }, [items]);
-
-  function markRead(id: string) {
-    setItems((prev) =>
-      prev.map((it) => (it.id === id ? { ...it, read: true } : it))
-    );
-    toast.success('Marked read');
   }
 
-  function markAllRead() {
-    // only mark non-archived notifications as read
-    setItems((prev) =>
-      prev.map((it) => (it.archived ? it : { ...it, read: true }))
-    );
-    toast.success('All notifications marked read');
+  async function markAllRead() {
+    try {
+      const unreadNotifications = notifications.filter(
+        (n) => !n.read && !n.archived
+      );
+      await Promise.all(
+        unreadNotifications.map((n) =>
+          updateNotification({
+            id: n.id as number,
+            body: { read: true },
+          }).unwrap()
+        )
+      );
+      toast.success('All notifications marked read');
+    } catch (error) {
+      toast.error('Failed to mark all as read');
+    }
   }
-
-  // show non-archived notifications only in the popover
-  const list = items.filter((i) => !i.archived).slice(0, 5);
 
   return (
     <DropdownMenu>
@@ -122,20 +94,25 @@ export function NotificationsPopover() {
               size='sm'
               onClick={markAllRead}
               aria-label='Mark all read'
+              disabled={isLoading}
             >
               {t('markall')}
             </Button>
             <Link to='/app/notifications' className='text-sm px-2 py-1'>
-             {t('viewall')}
+              {t('viewall')}
             </Link>
           </div>
         </div>
 
         <DropdownMenuSeparator />
 
-        {list.length === 0 ? (
+        {isLoading ? (
           <div className='px-3 py-2 text-sm text-muted-foreground'>
-           {t('nonotifications')}
+            Loading...
+          </div>
+        ) : list.length === 0 ? (
+          <div className='px-3 py-2 text-sm text-muted-foreground'>
+            {t('nonotifications')}
           </div>
         ) : (
           list.map((n) => (
@@ -144,12 +121,14 @@ export function NotificationsPopover() {
                 <div className='flex-1'>
                   <div className='flex items-center gap-2'>
                     <div
-                      className={`text-sm font-medium ${n.read ? 'opacity-60' : ''}`}
+                      className={`text-sm font-medium ${
+                        n.read ? 'opacity-60' : ''
+                      }`}
                     >
                       {n.title}
                     </div>
                     <div className='text-xs text-muted-foreground ml-auto'>
-                      {n.date}
+                      {new Date(n.createdAt).toLocaleDateString()}
                     </div>
                   </div>
                   {n.body && (
@@ -163,7 +142,7 @@ export function NotificationsPopover() {
                     variant='ghost'
                     size='icon'
                     aria-label={n.read ? 'Mark unread' : 'Mark read'}
-                    onClick={() => markRead(n.id)}
+                    onClick={() => markRead(n.id as number)}
                   >
                     <IconMail
                       className={n.read ? 'opacity-50' : 'text-primary'}

@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { Ticket } from './types';
+import type {
+  Ticket,
+  NotificationResponse,
+  NotificationUpdateRequest,
+} from './types';
 import {
   getCategoryForBackend,
   getCategoryForFrontend,
@@ -8,7 +12,7 @@ import {
   getStatusForBackend,
   getStatusForFrontend,
 } from './ticket-mapper';
-import {toast} from "sonner"
+import { toast } from 'sonner';
 
 interface User {
   id?: number;
@@ -53,7 +57,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/';
 export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL, credentials: 'include' }),
-  tagTypes: ['User', 'Company', 'Website', 'Ticket'],
+  tagTypes: ['User', 'Company', 'Website', 'Ticket', 'Notification'],
   endpoints: (builder) => ({
     // User endpoints
     getCurrentUser: builder.query<User | null, void>({
@@ -133,17 +137,21 @@ export const api = createApi({
         try {
           await queryFulfilled;
         } catch (error: any) {
-           if (error.status === 404) {
-          toast.error('Endpoint tidak ditemukan. Silakan hubungi administrator.');
+          if (error.status === 404) {
+            toast.error(
+              'Endpoint tidak ditemukan. Silakan hubungi administrator.'
+            );
           } else if (error.status === 401) {
-      toast.warning('Sesi Anda telah berakhir. Silakan login kembali.');
-  } else if (error.status === 403) {
-    toast.error('Anda tidak memiliki izin untuk mengakses data ini.');
-  } else if (error.status >= 500) {
-    toast.error('Terjadi kesalahan pada server. Silakan coba lagi nanti.');
-  } else {
-    toast.error('Gagal mengambil data tiket. Silakan coba lagi.');
-  }
+            toast.warning('Sesi Anda telah berakhir. Silakan login kembali.');
+          } else if (error.status === 403) {
+            toast.error('Anda tidak memiliki izin untuk mengakses data ini.');
+          } else if (error.status >= 500) {
+            toast.error(
+              'Terjadi kesalahan pada server. Silakan coba lagi nanti.'
+            );
+          } else {
+            toast.error('Gagal mengambil data tiket. Silakan coba lagi.');
+          }
         }
       },
       transformResponse: (response: any) => {
@@ -333,6 +341,99 @@ export const api = createApi({
       invalidatesTags: [{ type: 'Ticket', id: 'LIST' }],
     }),
 
+    // Notification endpoints
+    getNotifications: builder.query<NotificationResponse[], void>({
+      query: () => 'notifications',
+      providesTags: ['Notification'],
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error: any) {
+          if (error.status === 404) {
+            toast.error(
+              'Endpoint tidak ditemukan. Silakan hubungi administrator.'
+            );
+          } else if (error.status === 401) {
+            toast.warning('Sesi Anda telah berakhir. Silakan login kembali.');
+          } else if (error.status >= 500) {
+            toast.error(
+              'Terjadi kesalahan pada server. Silakan coba lagi nanti.'
+            );
+          }
+        }
+      },
+    }),
+
+    getInboxNotifications: builder.query<NotificationResponse[], void>({
+      query: () => 'notifications',
+      providesTags: ['Notification'],
+    }),
+
+    getFavoriteNotifications: builder.query<NotificationResponse[], void>({
+      query: () => 'notifications/favorites',
+      providesTags: ['Notification'],
+    }),
+
+    getArchivedNotifications: builder.query<NotificationResponse[], void>({
+      query: () => 'notifications/archived',
+      providesTags: ['Notification'],
+    }),
+
+    updateNotification: builder.mutation<
+      NotificationResponse,
+      { id: number; body: NotificationUpdateRequest }
+    >({
+      query: ({ id, body }) => ({
+        url: `notifications/${id}`,
+        method: 'PATCH',
+        body,
+      }),
+      async onQueryStarted({ id, body }, { dispatch, queryFulfilled }) {
+        // Optimistic update
+        const patchResult = dispatch(
+          api.util.updateQueryData('getNotifications', undefined, (draft) => {
+            const index = draft.findIndex((n: any) => n.id === id);
+            if (index !== -1) {
+              draft[index] = { ...draft[index], ...body };
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: (result, _error, { id }) => [
+        { type: 'Notification', id },
+        'Notification',
+      ],
+    }),
+
+    deleteNotification: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `notifications/${id}`,
+        method: 'DELETE',
+      }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        // Optimistic update
+        const patchResult = dispatch(
+          api.util.updateQueryData('getNotifications', undefined, (draft) => {
+            const index = draft.findIndex((n: any) => n.id === id);
+            if (index !== -1) {
+              draft.splice(index, 1);
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
+      invalidatesTags: [{ type: 'Notification', id: 'LIST' }],
+    }),
+
     // Auth misc endpoints
     signup: builder.mutation<
       User,
@@ -374,6 +475,12 @@ export const {
   useCreateTicketMutation,
   useUpdateTicketMutation,
   useDeleteTicketMutation,
+  useGetNotificationsQuery,
+  useGetInboxNotificationsQuery,
+  useGetFavoriteNotificationsQuery,
+  useGetArchivedNotificationsQuery,
+  useUpdateNotificationMutation,
+  useDeleteNotificationMutation,
 } = api;
 
 export type { User };

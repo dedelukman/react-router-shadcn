@@ -12,11 +12,11 @@ import type { Notification } from '../../../lib/types';
 interface NotificationItemProps {
   notification: Notification;
   isSelected: boolean;
-  onToggleSelect: (id: string) => void;
-  onToggleFavorite: (id: string) => void;
-  onToggleArchive: (id: string) => void;
-  onToggleRead: (id: string) => void;
-  onDelete: (id: string) => void;
+  onToggleSelect: (id: string | number) => void;
+  onToggleFavorite: (id: string | number) => void;
+  onToggleArchive: (id: string | number) => void;
+  onToggleRead: (id: string | number) => void;
+  onDelete: (id: string | number) => void;
 }
 
 export default function NotificationItem({
@@ -58,7 +58,11 @@ export default function NotificationItem({
           <Button
             variant='ghost'
             size='icon'
-            aria-label={notification.read ? t('notifications.actions.markUnread') : t('notifications.actions.markRead')}
+            aria-label={
+              notification.read
+                ? t('notifications.actions.markUnread')
+                : t('notifications.actions.markRead')
+            }
             onClick={() => onToggleRead(notification.id)}
           >
             <IconMail
@@ -68,7 +72,11 @@ export default function NotificationItem({
           <Button
             variant='ghost'
             size='icon'
-            aria-label={notification.favorite ? t('notifications.actions.unfavorite') : t('notifications.actions.favorite')}
+            aria-label={
+              notification.favorite
+                ? t('notifications.actions.unfavorite')
+                : t('notifications.actions.favorite')
+            }
             onClick={() => onToggleFavorite(notification.id)}
           >
             <IconStar
@@ -78,10 +86,14 @@ export default function NotificationItem({
           <Button
             variant='ghost'
             size='icon'
-            aria-label={notification.archived ? t('notifications.actions.unarchive') : t('notifications.actions.archive')}
+            aria-label={
+              notification.archived
+                ? t('notifications.actions.unarchive')
+                : t('notifications.actions.archive')
+            }
             onClick={() => onToggleArchive(notification.id)}
           >
-            <IconArchive 
+            <IconArchive
               className={notification.archived ? 'opacity-50' : ''}
             />
           </Button>

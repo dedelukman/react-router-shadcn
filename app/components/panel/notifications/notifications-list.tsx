@@ -4,12 +4,12 @@ import type { Notification } from '../../../lib/types';
 
 interface NotificationsListProps {
   notifications: Notification[];
-  selectedIds: string[];
-  onToggleSelect: (id: string) => void;
-  onToggleFavorite: (id: string) => void;
-  onToggleArchive: (id: string) => void;
-  onToggleRead: (id: string) => void;
-  onDelete: (id: string) => void;
+  selectedIds: (string | number)[];
+  onToggleSelect: (id: string | number) => void;
+  onToggleFavorite: (id: string | number) => void;
+  onToggleArchive: (id: string | number) => void;
+  onToggleRead: (id: string | number) => void;
+  onDelete: (id: string | number) => void;
 }
 
 export default function NotificationsList({

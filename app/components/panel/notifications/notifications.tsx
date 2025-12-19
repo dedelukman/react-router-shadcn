@@ -14,111 +14,136 @@ import type {
   NotificationTab,
   ConfirmMode,
   NotificationCounts,
+  NotificationResponse,
 } from '../../../lib/types';
-import  {
-  SAMPLE_NOTIFICATIONS,
-} from '../../../lib/types';
+import {
+  useGetNotificationsQuery,
+  useGetFavoriteNotificationsQuery,
+  useGetArchivedNotificationsQuery,
+  useUpdateNotificationMutation,
+  useDeleteNotificationMutation,
+} from '../../../lib/api';
 
 export default function Notifications() {
   const { t } = useTranslation();
 
-  const [items, setItems] = React.useState<Notification[]>(() => {
-    try {
-      const raw = localStorage.getItem('app_notifications');
-      return raw ? (JSON.parse(raw) as Notification[]) : SAMPLE_NOTIFICATIONS;
-    } catch {
-      return SAMPLE_NOTIFICATIONS;
-    }
-  });
-
   const [activeTab, setActiveTab] = React.useState<NotificationTab>('all');
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [selectedIds, setSelectedIds] = React.useState<string[]>([]);
+  const [selectedIds, setSelectedIds] = React.useState<(string | number)[]>([]);
   const [confirmOpen, setConfirmOpen] = React.useState(false);
   const [confirmMode, setConfirmMode] = React.useState<ConfirmMode>('single');
-  const [targetId, setTargetId] = React.useState<string | null>(null);
+  const [targetId, setTargetId] = React.useState<string | number | null>(null);
 
-  // Persist to localStorage and sync across tabs
-  React.useEffect(() => {
-    try {
-      localStorage.setItem('app_notifications', JSON.stringify(items));
-      window.dispatchEvent(new Event('app_notifications_changed'));
-    } catch {}
-  }, [items]);
+  // Fetch notifications from API based on active tab
+  const { data: allNotifications = [], isLoading: isLoadingAll } =
+    useGetNotificationsQuery();
+  const { data: favoriteNotifications = [], isLoading: isLoadingFav } =
+    useGetFavoriteNotificationsQuery();
+  const { data: archivedNotifications = [], isLoading: isLoadingArchived } =
+    useGetArchivedNotificationsQuery();
+  const [updateNotification] = useUpdateNotificationMutation();
+  const [deleteNotification] = useDeleteNotificationMutation();
 
-  React.useEffect(() => {
-    function handleUpdate() {
-      try {
-        const raw = localStorage.getItem('app_notifications');
-        const parsed = raw ? (JSON.parse(raw) as Notification[]) : SAMPLE_NOTIFICATIONS;
-        const a = JSON.stringify(parsed || []);
-        const b = JSON.stringify(items || []);
-        if (a !== b) setItems(parsed);
-      } catch {}
-    }
+  // Determine which data to use based on active tab
+  const apiNotifications = React.useMemo(() => {
+    if (activeTab === 'favorites') return favoriteNotifications;
+    if (activeTab === 'archived') return archivedNotifications;
+    return allNotifications;
+  }, [
+    activeTab,
+    allNotifications,
+    favoriteNotifications,
+    archivedNotifications,
+  ]);
 
-    function onStorage(e: StorageEvent) {
-      if (e.key === 'app_notifications') handleUpdate();
-    }
+  const isLoading =
+    (activeTab === 'all' && isLoadingAll) ||
+    (activeTab === 'favorites' && isLoadingFav) ||
+    (activeTab === 'archived' && isLoadingArchived);
 
-    window.addEventListener('app_notifications_changed', handleUpdate);
-    window.addEventListener('storage', onStorage);
-    return () => {
-      window.removeEventListener('app_notifications_changed', handleUpdate);
-      window.removeEventListener('storage', onStorage);
-    };
-  }, [items]);
+  // Map API response to local format
+  const items: Notification[] = React.useMemo(() => {
+    return apiNotifications.map((n) => ({
+      id: n.id,
+      title: n.title,
+      body: n.body,
+      date: new Date(n.createdAt).toLocaleString(),
+      favorite: n.favorite || false,
+      archived: n.archived || false,
+      read: n.read || false,
+    }));
+  }, [apiNotifications]);
 
-  // Calculate counts
+  // Calculate counts - use all data for accurate counts
   const counts: NotificationCounts = React.useMemo(() => {
-    const all = items.filter((i) => !i.archived).length;
-    const fav = items.filter((i) => i.favorite && !i.archived).length;
-    const archived = items.filter((i) => i.archived).length;
-    const unread = items.filter((i) => !i.read && !i.archived).length;
+    const all = allNotifications.filter((i) => !i.archived).length;
+    const fav = favoriteNotifications.length;
+    const archived = archivedNotifications.length;
+    const unread = allNotifications.filter(
+      (i) => !i.read && !i.archived
+    ).length;
     return { all, fav, archived, unread };
-  }, [items]);
+  }, [allNotifications, favoriteNotifications, archivedNotifications]);
 
-  // Filter notifications based on tab and search
+  // Filter notifications based on search only (tab filtering already done via API)
   const filteredNotifications = React.useMemo(() => {
-    return items
-      .filter((it) => {
-        if (activeTab === 'favorites') return it.favorite && !it.archived;
-        if (activeTab === 'archived') return it.archived;
-        return !it.archived; // 'all' tab
-      })
-      .filter((it) => {
-        if (!searchQuery) return true;
-        const q = searchQuery.toLowerCase();
-        return (
-          it.title.toLowerCase().includes(q) ||
-          (it.body || '').toLowerCase().includes(q)
-        );
-      });
-  }, [items, activeTab, searchQuery]);
+    return items.filter((it) => {
+      if (!searchQuery) return true;
+      const q = searchQuery.toLowerCase();
+      return (
+        it.title.toLowerCase().includes(q) ||
+        (it.body || '').toLowerCase().includes(q)
+      );
+    });
+  }, [items, searchQuery]);
 
   // Notification actions
-  const toggleFavorite = (id: string) => {
-    setItems((prev) =>
-      prev.map((it) => (it.id === id ? { ...it, favorite: !it.favorite } : it))
-    );
-    toast.success(t('notifications.toast.toggledFavorite'));
+  const toggleFavorite = async (id: string | number) => {
+    const notification = items.find((i) => i.id === id);
+    if (notification) {
+      try {
+        await updateNotification({
+          id: id as number,
+          body: { favorite: !notification.favorite },
+        }).unwrap();
+        toast.success(t('notifications.toast.toggledFavorite'));
+      } catch (error) {
+        toast.error('Failed to update favorite');
+      }
+    }
   };
 
-  const toggleArchive = (id: string) => {
-    setItems((prev) =>
-      prev.map((it) => (it.id === id ? { ...it, archived: !it.archived } : it))
-    );
-    toast(t('notifications.toast.archivedUpdated'));
+  const toggleArchive = async (id: string | number) => {
+    const notification = items.find((i) => i.id === id);
+    if (notification) {
+      try {
+        await updateNotification({
+          id: id as number,
+          body: { archived: !notification.archived },
+        }).unwrap();
+        toast.success(t('notifications.toast.archivedUpdated'));
+      } catch (error) {
+        toast.error('Failed to update archive status');
+      }
+    }
   };
 
-  const toggleRead = (id: string) => {
-    setItems((prev) =>
-      prev.map((it) => (it.id === id ? { ...it, read: !it.read } : it))
-    );
-    toast(t('notifications.toast.readUpdated'));
+  const toggleRead = async (id: string | number) => {
+    const notification = items.find((i) => i.id === id);
+    if (notification) {
+      try {
+        await updateNotification({
+          id: id as number,
+          body: { read: !notification.read },
+        }).unwrap();
+        toast.success(t('notifications.toast.readUpdated'));
+      } catch (error) {
+        toast.error('Failed to update read status');
+      }
+    }
   };
 
-  const toggleSelectOne = (id: string) => {
+  const toggleSelectOne = (id: string | number) => {
     setSelectedIds((prev) =>
       prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]
     );
@@ -132,18 +157,27 @@ export default function Notifications() {
     }
   };
 
-  const handleBulkMarkRead = () => {
-    setItems((prev) =>
-      prev.map((it) =>
-        selectedIds.includes(it.id) ? { ...it, read: true } : it
-      )
-    );
-    toast.success(t('notifications.toast.bulkMarkedRead', { count: selectedIds.length }));
-    setSelectedIds([]);
+  const handleBulkMarkRead = async () => {
+    try {
+      await Promise.all(
+        selectedIds.map((id) =>
+          updateNotification({
+            id: id as number,
+            body: { read: true },
+          }).unwrap()
+        )
+      );
+      toast.success(
+        t('notifications.toast.bulkMarkedRead', { count: selectedIds.length })
+      );
+      setSelectedIds([]);
+    } catch (error) {
+      toast.error('Failed to mark as read');
+    }
   };
 
   // Delete operations
-  const openDeleteConfirmSingle = (id: string) => {
+  const openDeleteConfirmSingle = (id: string | number) => {
     setTargetId(id);
     setConfirmMode('single');
     setConfirmOpen(true);
@@ -154,21 +188,41 @@ export default function Notifications() {
     setConfirmOpen(true);
   };
 
-  const performDelete = () => {
-    if (confirmMode === 'single' && targetId) {
-      setItems((prev) => prev.filter((it) => it.id !== targetId));
-      setSelectedIds((s) => s.filter((id) => id !== targetId));
-      toast.success(t('notifications.toast.deleted'));
-    }
+  const performDelete = async () => {
+    try {
+      if (confirmMode === 'single' && targetId) {
+        await deleteNotification(targetId as number).unwrap();
+        setSelectedIds((s) => s.filter((id) => id !== targetId));
+        toast.success(t('notifications.toast.deleted'));
+      }
 
-    if (confirmMode === 'bulk') {
-      setItems((prev) => prev.filter((it) => !selectedIds.includes(it.id)));
-      setSelectedIds([]);
-      toast.success(t('notifications.toast.bulkDeleted', { count: selectedIds.length }));
-    }
+      if (confirmMode === 'bulk') {
+        await Promise.all(
+          selectedIds.map((id) => deleteNotification(id as number).unwrap())
+        );
+        setSelectedIds([]);
+        toast.success(
+          t('notifications.toast.bulkDeleted', { count: selectedIds.length })
+        );
+      }
 
-    setConfirmOpen(false);
+      setConfirmOpen(false);
+    } catch (error) {
+      toast.error('Failed to delete notification(s)');
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className='m-2 space-y-4'>
+        <Card>
+          <CardContent className='py-8'>
+            <div className='text-center text-muted-foreground'>Loading...</div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className='m-2 space-y-4'>
