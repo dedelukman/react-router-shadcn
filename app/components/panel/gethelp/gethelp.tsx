@@ -30,28 +30,35 @@ export default function GetHelps() {
   // Get current user to detect user changes
   const { data: currentUser } = useGetCurrentUserQuery();
 
-  // API hooks
+  // Form state untuk tracking sheet open
+  const [createOpen, setCreateOpen] = React.useState(false);
+  const [sheetOpen, setSheetOpen] = React.useState(false);
+
+  // API hooks - Polling ALWAYS ON kecuali tidak perlu
   const {
     data: tickets = [],
     isLoading,
     error: apiError,
     refetch,
-  } = useGetTicketsQuery();
+  } = useGetTicketsQuery(undefined, {
+    refetchOnMountOrArgChange: true, // Refetch saat component mount
+    pollingInterval: createOpen || sheetOpen ? 0 : 30000, // Pause polling saat sheet buka, otherwise every 1/2 menit
+  });
   const [createTicketApi, { isLoading: isSubmitting }] =
     useCreateTicketMutation();
 
   // Refetch tickets when user changes (login/logout)
-  React.useEffect(() => {
-    console.log('[DEBUG] Current user changed:', currentUser?.id);
-    refetch();
-  }, [currentUser?.id, refetch]);
+  // React.useEffect(() => {
+  //   console.log('[DEBUG] Current user changed:', currentUser?.id);
+  //   refetch();
+  // }, [currentUser?.id, refetch]);
 
   // Debug logs
-  React.useEffect(() => {
-    console.log('[DEBUG] gethelp.tsx - tickets:', tickets);
-    console.log('[DEBUG] gethelp.tsx - isLoading:', isLoading);
-    console.log('[DEBUG] gethelp.tsx - apiError:', apiError);
-  }, [tickets, isLoading, apiError]);
+  // React.useEffect(() => {
+  //   console.log('[DEBUG] gethelp.tsx - tickets:', tickets);
+  //   console.log('[DEBUG] gethelp.tsx - isLoading:', isLoading);
+  //   console.log('[DEBUG] gethelp.tsx - apiError:', apiError);
+  // }, [tickets, isLoading, apiError]);
 
   // form state
   const [subject, setSubject] = React.useState('');
@@ -65,11 +72,9 @@ export default function GetHelps() {
   >(undefined);
   const [error, setError] = React.useState<string | null>(null);
   const [info, setInfo] = React.useState<string | null>(null);
-  const [sheetOpen, setSheetOpen] = React.useState(false);
   const [selectedTicket, setSelectedTicket] = React.useState<Ticket | null>(
     null
   );
-  const [createOpen, setCreateOpen] = React.useState(false);
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files && e.target.files[0];
@@ -115,11 +120,7 @@ export default function GetHelps() {
       // Reset form and close sheet
       resetForm();
       setCreateOpen(false);
-
-      // Refetch tickets untuk update table
-      setTimeout(() => {
-        refetch();
-      }, 500);
+      // Tickets akan auto-update dari polling interval
     } catch (err: any) {
       const errorMsg =
         err?.data?.message || t('gethelp.tickets.error.failedToCreate');
@@ -148,7 +149,19 @@ export default function GetHelps() {
               {t('gethelp.tickets.ticketHistory')}
             </p>
           </div>
-          <div>
+          <div className='flex gap-2'>
+            <Button
+              variant='outline'
+              size='sm'
+              onClick={() => refetch()}
+              disabled={isLoading}
+            >
+              {isLoading
+                ? t('gethelp.tickets.refreshing', {
+                    defaultValue: 'Refreshing...',
+                  })
+                : t('gethelp.tickets.refresh', { defaultValue: 'Refresh' })}
+            </Button>
             <Button onClick={() => setCreateOpen(true)} disabled={isSubmitting}>
               {t('gethelp.tickets.createTicket')}
             </Button>
@@ -156,7 +169,7 @@ export default function GetHelps() {
         </div>
 
         {/* Debug: Show API error jika ada */}
-        {apiError && (
+        {/* {apiError && (
           <div className='rounded-md bg-destructive/10 p-4 text-sm text-destructive space-y-2'>
             <div>
               <strong>API Error:</strong> {(apiError as any).status} -{' '}
@@ -174,7 +187,7 @@ export default function GetHelps() {
               </ul>
             </div>
           </div>
-        )}
+        )} */}
 
         <TicketTable
           tickets={tickets}

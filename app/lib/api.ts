@@ -8,6 +8,7 @@ import {
   getStatusForBackend,
   getStatusForFrontend,
 } from './ticket-mapper';
+import {toast} from "sonner"
 
 interface User {
   id?: number;
@@ -124,7 +125,7 @@ export const api = createApi({
     // Ticket endpoints
     getTickets: builder.query<Ticket[], void>({
       query: () => {
-        console.log('[DEBUG] Fetching tickets from endpoint');
+        // console.log('[DEBUG] Fetching tickets from endpoint');
         return 'tickets/me';
       },
       providesTags: ['Ticket'],
@@ -132,21 +133,25 @@ export const api = createApi({
         try {
           await queryFulfilled;
         } catch (error: any) {
-          console.error('[ERROR] Failed to fetch tickets:', error);
-          if (error.status === 404) {
-            console.error(
-              '[ERROR] Endpoint /tickets not found. Check your backend URL.'
-            );
-            console.error('[ERROR] Current API_BASE_URL:', API_BASE_URL);
-          }
+           if (error.status === 404) {
+          toast.error('Endpoint tidak ditemukan. Silakan hubungi administrator.');
+          } else if (error.status === 401) {
+      toast.warning('Sesi Anda telah berakhir. Silakan login kembali.');
+  } else if (error.status === 403) {
+    toast.error('Anda tidak memiliki izin untuk mengakses data ini.');
+  } else if (error.status >= 500) {
+    toast.error('Terjadi kesalahan pada server. Silakan coba lagi nanti.');
+  } else {
+    toast.error('Gagal mengambil data tiket. Silakan coba lagi.');
+  }
         }
       },
       transformResponse: (response: any) => {
-        console.log('[DEBUG] Raw API Response:', response);
-        console.log(
-          '[DEBUG] Response type:',
-          Array.isArray(response) ? 'array' : typeof response
-        );
+        // console.log('[DEBUG] Raw API Response:', response);
+        // console.log(
+        //   '[DEBUG] Response type:',
+        //   Array.isArray(response) ? 'array' : typeof response
+        // );
 
         // Handle jika response wrapped di property tertentu
         const ticketArray = Array.isArray(response)
@@ -154,7 +159,7 @@ export const api = createApi({
           : response?.data || response?.tickets || [];
 
         const transformed = ticketArray.map((ticket: any) => {
-          console.log('[DEBUG] Processing ticket:', ticket);
+          // console.log('[DEBUG] Processing ticket:', ticket);
 
           const mappedTicket = {
             ...ticket,
@@ -167,10 +172,10 @@ export const api = createApi({
             createdAt: ticket.createdAt || new Date().toISOString(),
             updatedAt: ticket.updatedAt || new Date().toISOString(),
           };
-          console.log('[DEBUG] Mapped ticket:', mappedTicket);
+          // console.log('[DEBUG] Mapped ticket:', mappedTicket);
           return mappedTicket;
         });
-        console.log('[DEBUG] Transformed Response:', transformed);
+        // console.log('[DEBUG] Transformed Response:', transformed);
         return transformed;
       },
     }),
@@ -199,6 +204,30 @@ export const api = createApi({
           priority: getPriorityForBackend(body.priority as string),
         },
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled, getState }) {
+        // Optimistic update: tambahkan ticket baru ke cache sebelum response
+        const patchResult = dispatch(
+          api.util.updateQueryData('getTickets', undefined, (draft) => {
+            const newTicket: any = {
+              id: `T-${Date.now()}`,
+              code: `T-${Date.now()}`,
+              subject: arg.subject,
+              category: arg.category,
+              priority: arg.priority,
+              description: arg.description,
+              status: 'Open',
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString(),
+            };
+            draft.push(newTicket);
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
       invalidatesTags: (result) => [{ type: 'Ticket', id: 'LIST' }, 'Ticket'],
       transformResponse: (response: any) => ({
         ...response,
@@ -228,6 +257,44 @@ export const api = createApi({
           }),
         },
       }),
+      async onQueryStarted(
+        { id, body },
+        { dispatch, queryFulfilled, getState }
+      ) {
+        // Optimistic update: ubah ticket di cache sebelum response
+        const patchResult = dispatch(
+          api.util.updateQueryData('getTickets', undefined, (draft) => {
+            const index = draft.findIndex(
+              (t: any) => String(t.id) === String(id)
+            );
+            if (index !== -1) {
+              const updatedTicket: any = { ...draft[index], ...body };
+              if (body.category) {
+                updatedTicket.category = getCategoryForFrontend(
+                  body.category as string
+                );
+              }
+              if (body.priority) {
+                updatedTicket.priority = getPriorityForFrontend(
+                  body.priority as string
+                );
+              }
+              if (body.status) {
+                updatedTicket.status = getStatusForFrontend(
+                  body.status as string
+                );
+              }
+              updatedTicket.updatedAt = new Date().toISOString();
+              draft[index] = updatedTicket;
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
       invalidatesTags: (result, _error, { id }) => [
         { type: 'Ticket', id },
         { type: 'Ticket', id: 'LIST' },
@@ -245,6 +312,24 @@ export const api = createApi({
         url: `tickets/${id}`,
         method: 'DELETE',
       }),
+      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+        // Optimistic update: hapus ticket dari cache sebelum response
+        const patchResult = dispatch(
+          api.util.updateQueryData('getTickets', undefined, (draft) => {
+            const index = draft.findIndex(
+              (t: any) => String(t.id) === String(id)
+            );
+            if (index !== -1) {
+              draft.splice(index, 1);
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          patchResult.undo();
+        }
+      },
       invalidatesTags: [{ type: 'Ticket', id: 'LIST' }],
     }),
 
