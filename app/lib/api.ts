@@ -54,9 +54,47 @@ export interface Website {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/';
 
+// Helper function untuk handle 401 errors dengan auto-refresh
+const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
+  let result = await fetchBaseQuery({
+    baseUrl: API_BASE_URL,
+    credentials: 'include',
+  })(args, api, extraOptions);
+
+  // Jika dapat 401 (Unauthorized), coba refresh token
+  if (result.error && result.error.status === 401) {
+    // Attempt to refresh the token
+    const refreshResult = await fetchBaseQuery({
+      baseUrl: API_BASE_URL,
+      credentials: 'include',
+    })(
+      {
+        url: 'auth/refresh',
+        method: 'POST',
+      },
+      api,
+      extraOptions
+    );
+
+    if (refreshResult.data) {
+      // Retry original request setelah token direfresh
+      result = await fetchBaseQuery({
+        baseUrl: API_BASE_URL,
+        credentials: 'include',
+      })(args, api, extraOptions);
+    } else {
+      // Refresh failed, redirect ke login
+      toast.error('Sesi Anda telah berakhir. Silakan login kembali.');
+      // Bisa redirect ke login page di sini jika diperlukan
+    }
+  }
+
+  return result;
+};
+
 export const api = createApi({
   reducerPath: 'api',
-  baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL, credentials: 'include' }),
+  baseQuery: baseQueryWithReauth,
   tagTypes: ['User', 'Company', 'Website', 'Ticket', 'Notification'],
   endpoints: (builder) => ({
     // User endpoints

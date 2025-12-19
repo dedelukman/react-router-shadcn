@@ -16,6 +16,26 @@ import { store } from '~/lib/store';
 import './i18n/i18n';
 import { Spinner } from './components/ui/spinner';
 import { Toaster } from 'sonner';
+import {
+  useAutoRefreshToken,
+  useRefreshTokenOnFocus,
+} from '~/lib/useAutoRefreshToken';
+
+// Wrapper component for auto-refresh - must be inside Provider
+function AppContent() {
+  // Auto refresh token setiap 14 menit
+  useAutoRefreshToken();
+
+  // Refresh token juga saat user kembali ke app
+  useRefreshTokenOnFocus();
+
+  return (
+    <>
+      <AuthListener />
+      <Outlet />
+    </>
+  );
+}
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -52,8 +72,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <Provider store={store}>
-      <AuthListener />
-      <Outlet />
+      <AppContent />
     </Provider>
   );
 }

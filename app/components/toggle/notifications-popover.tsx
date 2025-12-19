@@ -22,7 +22,12 @@ import type { NotificationResponse } from '~/lib/types';
 
 export function NotificationsPopover() {
   const { t } = useTranslation();
-  const { data: notifications = [], isLoading } = useGetNotificationsQuery();
+  const { data: notifications = [], isLoading } = useGetNotificationsQuery(
+    undefined,
+    {
+      pollingInterval: 5000, // Poll every 5 seconds for real-time updates
+    }
+  );
   const [updateNotification] = useUpdateNotificationMutation();
 
   // Only count unread non-archived notifications

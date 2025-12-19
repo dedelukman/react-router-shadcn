@@ -36,11 +36,17 @@ export default function Notifications() {
 
   // Fetch notifications from API based on active tab
   const { data: allNotifications = [], isLoading: isLoadingAll } =
-    useGetNotificationsQuery();
+    useGetNotificationsQuery(undefined, {
+      pollingInterval: 5000, // Poll every 5 seconds for real-time updates
+    });
   const { data: favoriteNotifications = [], isLoading: isLoadingFav } =
-    useGetFavoriteNotificationsQuery();
+    useGetFavoriteNotificationsQuery(undefined, {
+      pollingInterval: 5000, // Poll every 5 seconds for real-time updates
+    });
   const { data: archivedNotifications = [], isLoading: isLoadingArchived } =
-    useGetArchivedNotificationsQuery();
+    useGetArchivedNotificationsQuery(undefined, {
+      pollingInterval: 5000, // Poll every 5 seconds for real-time updates
+    });
   const [updateNotification] = useUpdateNotificationMutation();
   const [deleteNotification] = useDeleteNotificationMutation();
 
