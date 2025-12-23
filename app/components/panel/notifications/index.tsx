@@ -5,6 +5,4 @@ export { default as NotificationsToolbar } from './notifications-toolbar';
 export { default as NotificationsList } from './notifications-list';
 export { default as NotificationItem } from './notifications-item';
 export { default as DeleteConfirmationSheet } from './delete-confirmation-sheet';
-export * from '../../../lib/types';
-
-
+export * from '../../../store/types';

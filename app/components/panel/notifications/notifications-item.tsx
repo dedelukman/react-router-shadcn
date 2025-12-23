@@ -7,7 +7,7 @@ import {
   IconMail,
   IconStar,
 } from '@tabler/icons-react';
-import type { Notification } from '../../../lib/types';
+import type { Notification } from '../../../store/types';
 
 interface NotificationItemProps {
   notification: Notification;

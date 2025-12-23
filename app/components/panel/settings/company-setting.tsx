@@ -11,7 +11,7 @@ import {
 import { Field, FieldLabel, FieldContent } from '~/components/ui/field';
 import { Avatar, AvatarImage, AvatarFallback } from '~/components/ui/avatar';
 import { useTranslation } from 'react-i18next';
-import { useGetCurrentCompanyQuery, useUpdateCompanyMutation } from '~/lib/api';
+import { useGetCurrentCompanyQuery, useUpdateCompanyMutation } from  "../../../store/api";
 import { toast } from "sonner"
 
 export default function CompanySettings() {

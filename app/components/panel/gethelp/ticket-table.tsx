@@ -10,7 +10,7 @@ import {
 } from '~/components/ui/table';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import type { Ticket } from '../../../lib/types';
+import type { Ticket } from '../../../store/types';
 import { formatDate, priorityVariant } from '../../../lib/utils';
 
 interface TicketTableProps {

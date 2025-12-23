@@ -12,14 +12,14 @@ import './app.css';
 import { useNavigate } from 'react-router';
 import { AuthListener } from '~/lib/auth';
 import { Provider } from 'react-redux';
-import { store } from '~/lib/store';
+import { store } from '~/store/store';
 import './i18n/i18n';
 import { Spinner } from './components/ui/spinner';
 import { Toaster } from 'sonner';
 import {
   useAutoRefreshToken,
   useRefreshTokenOnFocus,
-} from '~/lib/useAutoRefreshToken';
+} from '~/hooks/useAutoRefreshToken';
 
 // Wrapper component for auto-refresh - must be inside Provider
 function AppContent() {

@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import {
   useGetWebsiteQuery,
   useUpdateWebsiteMutation,
-} from "~/lib/api";
+} from "../../../store/api";
 
 export default function WebsiteSettings() {
   const { t } = useTranslation();

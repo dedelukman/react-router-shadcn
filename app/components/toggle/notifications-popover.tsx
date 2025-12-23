@@ -17,8 +17,8 @@ import { useTranslation } from 'react-i18next';
 import {
   useGetNotificationsQuery,
   useUpdateNotificationMutation,
-} from '~/lib/api';
-import type { NotificationResponse } from '~/lib/types';
+} from '~/store/api';
+import type { NotificationResponse } from '~/store/types';
 
 export function NotificationsPopover() {
   const { t } = useTranslation();

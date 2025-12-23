@@ -7,7 +7,7 @@ import {
   SheetDescription,
 } from '~/components/ui/sheet';
 import { Button } from '~/components/ui/button';
-import type { ConfirmMode } from '../../../lib/types';
+import type { ConfirmMode } from '../../../store/types';
 
 interface DeleteConfirmationSheetProps {
   isOpen: boolean;
@@ -34,12 +34,12 @@ export default function DeleteConfirmationSheet({
           <SheetDescription>
             {mode === 'bulk' ? (
               <>
-                {t('notifications.deleteConfirm.descriptionBulk', { count: selectedCount })}
+                {t('notifications.deleteConfirm.descriptionBulk', {
+                  count: selectedCount,
+                })}
               </>
             ) : (
-              <>
-                {t('notifications.deleteConfirm.descriptionSingle')}
-              </>
+              <>{t('notifications.deleteConfirm.descriptionSingle')}</>
             )}
           </SheetDescription>
         </SheetHeader>

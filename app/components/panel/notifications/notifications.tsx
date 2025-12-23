@@ -15,14 +15,14 @@ import type {
   ConfirmMode,
   NotificationCounts,
   NotificationResponse,
-} from '../../../lib/types';
+} from '../../../store/types';
 import {
   useGetNotificationsQuery,
   useGetFavoriteNotificationsQuery,
   useGetArchivedNotificationsQuery,
   useUpdateNotificationMutation,
   useDeleteNotificationMutation,
-} from '../../../lib/api';
+} from '../../../store/api';
 
 export default function Notifications() {
   const { t } = useTranslation();

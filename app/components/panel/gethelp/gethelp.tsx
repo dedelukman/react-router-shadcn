@@ -16,13 +16,13 @@ import {
 import TicketTable from './ticket-table';
 import CreateTicketForm from './create-ticket-form';
 import TicketDetails from './ticket-details';
-import type { Ticket, Category, Priority } from '../../../lib/types';
-import { defaultCategories } from '../../../lib/types';
+import type { Ticket, Category, Priority } from '../../../store/types';
+import { defaultCategories } from '../../../store/types';
 import {
   useGetTicketsQuery,
   useCreateTicketMutation,
   useGetCurrentUserQuery,
-} from '../../../lib/api';
+} from '../../../store/api';
 
 export default function GetHelps() {
   const { t } = useTranslation();

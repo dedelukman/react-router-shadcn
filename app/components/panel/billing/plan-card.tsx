@@ -9,8 +9,8 @@ import {
 } from '~/components/ui/card';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import type { Plan } from '../../../lib/types';
-import { PLANS } from '../../../lib/types';
+import type { Plan } from '../../../store/types';
+import { PLANS } from '../../../store/types';
 
 interface PlanCardProps {
   selectedPlan: string;
@@ -19,11 +19,11 @@ interface PlanCardProps {
   onResetPlan: () => void;
 }
 
-export default function PlanCard({ 
-  selectedPlan, 
-  onPlanChange, 
-  onUpdatePlan, 
-  onResetPlan 
+export default function PlanCard({
+  selectedPlan,
+  onPlanChange,
+  onUpdatePlan,
+  onResetPlan,
 }: PlanCardProps) {
   const { t } = useTranslation();
 

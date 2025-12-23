@@ -12,7 +12,7 @@ import {
   FieldDescription,
   FieldError,
 } from '~/components/ui/field';
-import { useGetCurrentUserQuery, useUpdateUserMutation } from '~/lib/api';
+import { useGetCurrentUserQuery, useUpdateUserMutation } from '~/store/api';
 import { toast } from "sonner"
 
 export default function Page() {

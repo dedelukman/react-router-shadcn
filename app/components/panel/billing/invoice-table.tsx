@@ -11,7 +11,7 @@ import {
   TableBody,
   TableCell,
 } from '~/components/ui/table';
-import type { Invoice } from '../../../lib/types';
+import type { Invoice } from '../../../store/types';
 
 interface InvoiceTableProps {
   invoices: Invoice[];
@@ -20,23 +20,23 @@ interface InvoiceTableProps {
   onPayInvoice: (invoiceId: string) => void;
 }
 
-export default function InvoiceTable({ 
-  invoices, 
-  onViewInvoice, 
-  onDownloadInvoice, 
-  onPayInvoice 
+export default function InvoiceTable({
+  invoices,
+  onViewInvoice,
+  onDownloadInvoice,
+  onPayInvoice,
 }: InvoiceTableProps) {
   const { t } = useTranslation();
 
   const getTranslatedPlan = (planId: string) => {
-    return t(`billing.subscription.plans.${planId.toLowerCase()}.name`, { 
-      defaultValue: planId 
+    return t(`billing.subscription.plans.${planId.toLowerCase()}.name`, {
+      defaultValue: planId,
     });
   };
 
   const getTranslatedStatus = (status: string) => {
-    return t(`billing.billingHistory.statuses.${status}`, { 
-      defaultValue: status 
+    return t(`billing.billingHistory.statuses.${status}`, {
+      defaultValue: status,
     });
   };
 
@@ -47,7 +47,9 @@ export default function InvoiceTable({
           <TableHead>{t('billing.billingHistory.invoice')}</TableHead>
           <TableHead>{t('billing.billingHistory.date')}</TableHead>
           <TableHead>{t('billing.billingHistory.plan')}</TableHead>
-          <TableHead className='text-right'>{t('billing.billingHistory.amount')}</TableHead>
+          <TableHead className='text-right'>
+            {t('billing.billingHistory.amount')}
+          </TableHead>
           <TableHead>{t('billing.billingHistory.status')}</TableHead>
           <TableHead>{t('billing.billingHistory.actions')}</TableHead>
         </TableRow>
@@ -78,13 +80,13 @@ interface InvoiceRowProps {
   getTranslatedStatus: (status: string) => string;
 }
 
-function InvoiceRow({ 
-  invoice, 
-  onView, 
-  onDownload, 
-  onPay, 
-  getTranslatedPlan, 
-  getTranslatedStatus 
+function InvoiceRow({
+  invoice,
+  onView,
+  onDownload,
+  onPay,
+  getTranslatedPlan,
+  getTranslatedStatus,
 }: InvoiceRowProps) {
   const { t } = useTranslation();
 
@@ -98,7 +100,10 @@ function InvoiceRow({
         );
       case 'pending':
         return (
-          <Badge className='border-orange-200 text-orange-700' variant='outline'>
+          <Badge
+            className='border-orange-200 text-orange-700'
+            variant='outline'
+          >
             {getTranslatedStatus('pending')}
           </Badge>
         );
@@ -139,8 +144,8 @@ function InvoiceRow({
             <IconDownload className='size-4' />
           </Button>
           {invoice.status === 'pending' && (
-            <Button 
-              size='sm' 
+            <Button
+              size='sm'
               onClick={() => onPay(invoice.id)}
               title={t('billing.billingHistory.actionsList.pay')}
             >

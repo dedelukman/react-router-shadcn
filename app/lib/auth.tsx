@@ -6,7 +6,7 @@ import {
   useSignupMutation,
   useLogoutMutation,
   useRefreshMutation,
-} from './api';
+} from '../store/api';
 
 interface User {
   id?: number;
