@@ -300,17 +300,17 @@
       "plans": {
         "basic": {
           "name": "Basic",
-          "price": "$0 / bln",
+          "price": " / bln",
           "desc": "Untuk penggunaan pribadi"
         },
         "pro": {
           "name": "Pro",
-          "price": "$12 / bln",
+          "price": " / bln",
           "desc": "Untuk profesional"
         },
         "enterprise": {
           "name": "Enterprise",
-          "price": "Kontak",
+          "price": " / bln",
           "desc": "Untuk tim"
         }
       },

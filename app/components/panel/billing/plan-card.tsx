@@ -9,23 +9,30 @@ import {
 } from '~/components/ui/card';
 import { Badge } from '~/components/ui/badge';
 import { Button } from '~/components/ui/button';
-import type { Plan } from '../../../store/types';
-import { PLANS } from '../../../store/types';
+import type { Plan } from '../../../domain/billing';
 
 interface PlanCardProps {
+  plans: Plan[];
   selectedPlan: string;
+  currentPlan: string;
   onPlanChange: (planId: string) => void;
   onUpdatePlan: () => void;
   onResetPlan: () => void;
 }
 
 export default function PlanCard({
+  plans,
   selectedPlan,
+  currentPlan,
   onPlanChange,
   onUpdatePlan,
   onResetPlan,
 }: PlanCardProps) {
   const { t } = useTranslation();
+
+  const activePlan = plans.find(plan => plan.id === selectedPlan);
+  const isBasicPlan = activePlan?.id === 'basic';
+  const isCurrentPlan = selectedPlan === currentPlan;
 
   return (
     <Card>
@@ -39,7 +46,7 @@ export default function PlanCard({
       </CardHeader>
       <CardContent>
         <div className='flex flex-col gap-3'>
-          {PLANS.map((plan) => {
+          {plans.map((plan) => {
             const active = selectedPlan === plan.id;
             return (
               <PlanOption
@@ -54,10 +61,10 @@ export default function PlanCard({
       </CardContent>
       <CardFooter>
         <div className='flex items-center gap-2'>
-          <Button onClick={onUpdatePlan}>
+          <Button onClick={onUpdatePlan} disabled={isCurrentPlan} >
             {t('billing.subscription.updatePlan')}
           </Button>
-          <Button variant='outline' onClick={onResetPlan}>
+          <Button variant='outline' onClick={onResetPlan} disabled={isBasicPlan}>
             {t('billing.subscription.reset')}
           </Button>
         </div>
@@ -95,6 +102,7 @@ function PlanOption({ plan, active, onSelect }: PlanOptionProps) {
       </div>
       <div className='flex items-center gap-3'>
         <Badge variant='outline' className='text-sm'>
+          {plan.price}
           {t(`billing.subscription.plans.${plan.id}.price`)}
         </Badge>
         <input

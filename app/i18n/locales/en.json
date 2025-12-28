@@ -300,17 +300,17 @@
       "plans": {
         "basic": {
           "name": "Basic",
-          "price": "$0 / mo",
+          "price": " / mo",
           "desc": "For personal use"
         },
         "pro": {
           "name": "Pro",
-          "price": "$12 / mo",
+          "price": " / mo",
           "desc": "For professionals"
         },
         "enterprise": {
           "name": "Enterprise",
-          "price": "Contact",
+          "price": " / mo",
           "desc": "For teams"
         }
       },

@@ -1,80 +1,42 @@
 import * as React from 'react';
-import { useTranslation } from 'react-i18next';
 import PlanCard from './plan-card';
 import BillingHistory from './billing-history';
-import type { Invoice } from '../../../store/types';
-import { SAMPLE_INVOICES } from '../../../store/types';
 
-export default function Billing() {
-  const { t } = useTranslation();
+import {
+  useGetBillingPlansQuery,
+  useGetBillingInvoicesQuery,
+  usePayInvoiceMutation,
+} from '../../../store/api/billing.api';
 
-  const [selectedPlan, setSelectedPlan] = React.useState<string>(() => {
-    try {
-      return localStorage.getItem('billing_plan') || 'basic';
-    } catch {
-      return 'basic';
-    }
-  });
+import {
+  useGetCurrentSubscriptionQuery,
+  useSubscribePlanMutation,
+} from '../../../store/api/subscription.api';
 
-  const [invoices, setInvoices] = React.useState<Invoice[]>(SAMPLE_INVOICES);
+import { mapPlan, mapInvoice, type Plan, type Invoice } from '../../../domain/billing';
+
+export default function BillingPage() {
+  const { data: plansApi = [] } = useGetBillingPlansQuery();
+  const { data: invoicesApi = [] } = useGetBillingInvoicesQuery();
+  const { data: subscription } = useGetCurrentSubscriptionQuery();
+
+  const [subscribe] = useSubscribePlanMutation();
+  const [payInvoice] = usePayInvoiceMutation();
+
+  const plans: Plan[] = plansApi.map(mapPlan);
+  const invoices: Invoice[] = invoicesApi.map(mapInvoice);
+
+  const [selectedPlan, setSelectedPlan] = React.useState(
+    subscription?.plan?.toLowerCase() ?? 'basic'
+  );
+
   const [pageIndex, setPageIndex] = React.useState(0);
   const [pageSize, setPageSize] = React.useState(10);
-
-  React.useEffect(() => {
-    try {
-      localStorage.setItem('billing_plan', selectedPlan);
-    } catch {}
-  }, [selectedPlan]);
 
   const pagedInvoices = React.useMemo(() => {
     const start = pageIndex * pageSize;
     return invoices.slice(start, start + pageSize);
   }, [invoices, pageIndex, pageSize]);
-
-  function viewInvoice(inv: Invoice) {
-    alert(
-      t('billing.invoice.alert', {
-        id: inv.id,
-        date: inv.date,
-        plan: inv.plan,
-        amount: inv.amount,
-        status: inv.status,
-      })
-    );
-  }
-
-  function downloadInvoice(inv: Invoice) {
-    const blob = new Blob([JSON.stringify(inv, null, 2)], {
-      type: 'application/json',
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${inv.id}.json`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  }
-
-  function payInvoice(id: string) {
-    setInvoices((prev) =>
-      prev.map((i) => (i.id === id ? { ...i, status: 'paid' } : i))
-    );
-  }
-
-  function handlePlanChange(planId: string) {
-    setSelectedPlan(planId);
-  }
-
-  function handleUpdatePlan() {
-    alert(t('billing.subscription.success.subscribed', { plan: selectedPlan }));
-  }
-
-  function handleResetPlan() {
-    setSelectedPlan('basic');
-    localStorage.removeItem('billing_plan');
-  }
 
   function handlePageSizeChange(size: number) {
     setPageSize(size);
@@ -86,29 +48,34 @@ export default function Billing() {
   }
 
   return (
-    <div className='m-2 grid grid-cols-1 lg:grid-cols-3 gap-6'>
+   <div className='m-2 grid grid-cols-1 lg:grid-cols-3 gap-6'>
       <div className='lg:col-span-1'>
-        <PlanCard
-          selectedPlan={selectedPlan}
-          onPlanChange={handlePlanChange}
-          onUpdatePlan={handleUpdatePlan}
-          onResetPlan={handleResetPlan}
-        />
+      <PlanCard
+      plans ={plans}
+        selectedPlan={selectedPlan}
+        currentPlan={subscription?.plan?.toLowerCase() ?? 'basic'}
+        onPlanChange={setSelectedPlan}
+        onUpdatePlan={() => subscribe(selectedPlan.toUpperCase())}
+        onResetPlan={() =>
+          setSelectedPlan(subscription?.plan?.toLowerCase() ?? 'basic')
+        }
+      />
       </div>
 
-      <div className='lg:col-span-2'>
-        <BillingHistory
-          invoices={pagedInvoices}
-          pageIndex={pageIndex}
-          pageSize={pageSize}
-          totalItems={invoices.length}
-          onViewInvoice={viewInvoice}
-          onDownloadInvoice={downloadInvoice}
-          onPayInvoice={payInvoice}
-          onPageSizeChange={handlePageSizeChange}
+<div className='lg:col-span-2'> 
+    <BillingHistory
+        invoices={invoices}
+        pageIndex={pageIndex}
+        pageSize={pageSize}
+        totalItems={invoices.length}
+        onViewInvoice={(i) => console.log('view', i)}
+        onDownloadInvoice={(i) => console.log('download', i)}
+        onPayInvoice={(id) => payInvoice(id)}
+        onPageSizeChange={handlePageSizeChange}
           onPageChange={handlePageChange}
-        />
-      </div>
+      />
+</div>
+    
     </div>
   );
 }

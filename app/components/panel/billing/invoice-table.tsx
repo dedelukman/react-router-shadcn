@@ -11,7 +11,7 @@ import {
   TableBody,
   TableCell,
 } from '~/components/ui/table';
-import type { Invoice } from '../../../store/types';
+import type { Invoice } from '../../../domain/billing';
 
 interface InvoiceTableProps {
   invoices: Invoice[];

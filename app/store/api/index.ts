@@ -4,3 +4,6 @@ export * from './company.api';
 export * from './website.api';
 export * from './ticket.api';
 export * from './notification.api';
+export * from './billing.api';
+export * from './subscription.api';
+
