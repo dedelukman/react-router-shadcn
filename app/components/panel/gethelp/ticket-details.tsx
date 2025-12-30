@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Badge } from '~/components/ui/badge';
-import type { Ticket } from '../../../store/types';
+import type { Ticket } from './types';
 import { formatDate, priorityVariant } from '../../../lib/utils';
 
 interface TicketDetailsProps {

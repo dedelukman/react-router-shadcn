@@ -16,8 +16,8 @@ import {
 import TicketTable from './ticket-table';
 import CreateTicketForm from './create-ticket-form';
 import TicketDetails from './ticket-details';
-import type { Ticket, Category, Priority } from '../../../store/types';
-import { defaultCategories } from '../../../store/types';
+import type { Ticket, Category, Priority } from './types';
+import { defaultCategories } from './types';
 import {
   useGetTicketsQuery,
   useCreateTicketMutation,

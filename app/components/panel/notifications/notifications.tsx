@@ -15,7 +15,7 @@ import type {
   ConfirmMode,
   NotificationCounts,
   NotificationResponse,
-} from '../../../store/types';
+} from './types';
 import {
   useGetNotificationsQuery,
   useGetFavoriteNotificationsQuery,

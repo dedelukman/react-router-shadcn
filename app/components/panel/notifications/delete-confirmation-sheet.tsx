@@ -7,7 +7,7 @@ import {
   SheetDescription,
 } from '~/components/ui/sheet';
 import { Button } from '~/components/ui/button';
-import type { ConfirmMode } from '../../../store/types';
+import type { ConfirmMode } from './types';
 
 interface DeleteConfirmationSheetProps {
   isOpen: boolean;
