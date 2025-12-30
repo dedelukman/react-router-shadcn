@@ -297,6 +297,22 @@
       "description": "Choose a plan that fits your needs.",
       "updatePlan": "Update Plan",
       "reset": "Reset",
+      "details": {
+        "title": "Current Subscription",
+        "description": "Your active subscription details.",
+        "plan": "Plan",
+        "status": "Status",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "trial": "Trial",
+        "statuses": {
+          "ACTIVE": "Active",
+          "INACTIVE": "Inactive",
+          "CANCELED": "Canceled"
+        },
+        "yes": "Yes",
+        "no": "No"
+      },
       "plans": {
         "basic": {
           "name": "Basic",

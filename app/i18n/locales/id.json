@@ -297,6 +297,22 @@
       "description": "Pilih paket yang sesuai dengan kebutuhan Anda.",
       "updatePlan": "Perbarui Paket",
       "reset": "Reset",
+      "details": {
+        "title": "Langganan Saat Ini",
+        "description": "Detail langganan aktif Anda.",
+        "plan": "Paket",
+        "status": "Status",
+        "startDate": "Tanggal Mulai",
+        "endDate": "Tanggal Berakhir",
+        "trial": "Percobaan",
+        "statuses": {
+          "ACTIVE": "Aktif",
+          "INACTIVE": "Tidak Aktif",
+          "CANCELED": "Dibatalkan"
+        },
+        "yes": "Ya",
+        "no": "Tidak"
+      },
       "plans": {
         "basic": {
           "name": "Basic",

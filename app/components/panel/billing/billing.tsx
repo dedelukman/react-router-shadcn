@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PlanCard from './plan-card';
 import BillingHistory from './billing-history';
+import SubscriptionDetails from './subscription-details';
 
 import {
   useGetBillingPlansQuery,
@@ -13,7 +14,12 @@ import {
   useSubscribePlanMutation,
 } from '../../../store/api/subscription.api';
 
-import { mapPlan, mapInvoice, type Plan, type Invoice } from '../../../domain/billing';
+import {
+  mapPlan,
+  mapInvoice,
+  type Plan,
+  type Invoice,
+} from '../../../domain/billing';
 
 export default function BillingPage() {
   const { data: plansApi = [] } = useGetBillingPlansQuery();
@@ -48,34 +54,37 @@ export default function BillingPage() {
   }
 
   return (
-   <div className='m-2 grid grid-cols-1 lg:grid-cols-3 gap-6'>
-      <div className='lg:col-span-1'>
-      <PlanCard
-      plans ={plans}
-        selectedPlan={selectedPlan}
-        currentPlan={subscription?.plan?.toLowerCase() ?? 'basic'}
-        onPlanChange={setSelectedPlan}
-        onUpdatePlan={() => subscribe(selectedPlan.toUpperCase())}
-        onResetPlan={() =>
-          setSelectedPlan(subscription?.plan?.toLowerCase() ?? 'basic')
-        }
-      />
+    <div className='m-2 grid grid-cols-1 lg:grid-cols-3 gap-6'>
+      <div className='lg:col-span-3'>
+        <SubscriptionDetails />
+      </div>
+      <div className='lg:col-span-1 space-y-6'>
+       
+        <PlanCard
+          plans={plans}
+          selectedPlan={selectedPlan}
+          currentPlan={subscription?.plan?.toLowerCase() ?? 'basic'}
+          onPlanChange={setSelectedPlan}
+          onUpdatePlan={() => subscribe(selectedPlan.toUpperCase())}
+          onResetPlan={() =>
+            setSelectedPlan(subscription?.plan?.toLowerCase() ?? 'basic')
+          }
+        />
       </div>
 
-<div className='lg:col-span-2'> 
-    <BillingHistory
-        invoices={invoices}
-        pageIndex={pageIndex}
-        pageSize={pageSize}
-        totalItems={invoices.length}
-        onViewInvoice={(i) => console.log('view', i)}
-        onDownloadInvoice={(i) => console.log('download', i)}
-        onPayInvoice={(id) => payInvoice(id)}
-        onPageSizeChange={handlePageSizeChange}
+      <div className='lg:col-span-2'>
+        <BillingHistory
+          invoices={invoices}
+          pageIndex={pageIndex}
+          pageSize={pageSize}
+          totalItems={invoices.length}
+          onViewInvoice={(i) => console.log('view', i)}
+          onDownloadInvoice={(i) => console.log('download', i)}
+          onPayInvoice={(id) => payInvoice(id)}
+          onPageSizeChange={handlePageSizeChange}
           onPageChange={handlePageChange}
-      />
-</div>
-    
+        />
+      </div>
     </div>
   );
 }
