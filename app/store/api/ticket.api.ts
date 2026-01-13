@@ -1,5 +1,5 @@
 import { baseApi } from './baseApi';
-import type { Ticket } from '../types';
+import type { Ticket } from '../../components/panel/gethelp/types';
 import {
   getCategoryForBackend,
   getCategoryForFrontend,

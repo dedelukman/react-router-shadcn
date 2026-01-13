@@ -13,11 +13,7 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
     const refreshResult = await fetchBaseQuery({
       baseUrl: API_BASE_URL,
       credentials: 'include',
-    })(
-      { url: 'auth/refresh', method: 'POST' },
-      api,
-      extraOptions
-    );
+    })({ url: 'auth/refresh', method: 'POST' }, api, extraOptions);
 
     if (refreshResult.data) {
       result = await fetchBaseQuery({
@@ -35,6 +31,16 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 export const baseApi = createApi({
   reducerPath: 'api',
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['User', 'Company', 'Website', 'Ticket', 'Notification','BillingPlan', 'BillingInvoice', 'Subscription'],
+  tagTypes: [
+    'User',
+    'Company',
+    'Website',
+    'Ticket',
+    'Notification',
+    'BillingPlan',
+    'BillingInvoice',
+    'Subscription',
+    'File',
+  ],
   endpoints: () => ({}),
 });
