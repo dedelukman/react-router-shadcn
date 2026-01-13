@@ -11,6 +11,7 @@ import {
   IconReport,
   IconFileWord,
   IconNotification,
+  IconUserCircle,
 } from '@tabler/icons-react';
 
 export interface AppNavItem {
@@ -151,7 +152,7 @@ export const navigationData: {
         },
       ],
       user: [
-          { label: 'app.account', href: '/app/account', icon: IconSettings },
+          { label: 'app.account', href: '/app/account', icon: IconUserCircle },
           { label: 'app.billing', href: '/app/billing', icon: IconSettings },
           {
             label: 'app.notifications',
