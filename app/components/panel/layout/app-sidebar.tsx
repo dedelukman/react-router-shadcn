@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from '~/components/ui/avatar';
 
-import { NavDocuments } from '~/components/panel/layout/nav-documents';
 import { NavMain } from '~/components/panel/layout/nav-main';
 import { NavSecondary } from '~/components/panel/layout/nav-secondary';
 import { NavUser } from '~/components/panel/layout/nav-user';
@@ -61,7 +60,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.main.map(mapItem)} />
-        <NavDocuments items={data.documents.map(mapItem)} />
         <NavSecondary items={data.secondary.map(mapItem)} className='mt-auto' />
       </SidebarContent>
       <SidebarFooter>

@@ -50,7 +50,6 @@ export const navigationData: {
     sidebar: {
       main: AppNavItem[];
       secondary: AppNavItem[];
-      documents: AppNavItem[];
       user: AppNavItem[];
     };
   };
@@ -96,26 +95,7 @@ export const navigationData: {
           href: '/app/dashboard',
           icon: IconDashboard,
         },
-        {
-          label: 'lifecycle',
-          href: '#',
-          icon: IconListDetails,
-        },
-        {
-          label: 'analytics',
-          href: '#',
-          icon: IconChartBar,
-        },
-        {
-          label: 'projects',
-          href: '#',
-          icon: IconFolder,
-        },
-        {
-          label: 'team',
-          href: '#',
-          icon: IconUsers,
-        },
+
       ],
       secondary: [
         {
@@ -134,23 +114,7 @@ export const navigationData: {
           icon: IconSearch,
         },
       ],
-      documents: [
-        {
-          label: 'dataLibrary',
-          href: '#',
-          icon: IconDatabase,
-        },
-        {
-          label: 'reports',
-          href: '#',
-          icon: IconReport,
-        },
-        {
-          label: 'wordAssistant',
-          href: '#',
-          icon: IconFileWord,
-        },
-      ],
+     
       user: [
           { label: 'app.account', href: '/app/account', icon: IconUserCircle },
           { label: 'app.billing', href: '/app/billing', icon: IconSettings },
