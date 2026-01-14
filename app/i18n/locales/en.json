@@ -259,6 +259,7 @@
     "uploadImage": "Upload Image",
     "changeImage": "Change Image",
     "deleteImage": "Delete Image",
+    "uploading": "Uploading...",
     "username": "Username",
     "usernamePlaceholder": "Your username",
     "fullName": "Full Name",
@@ -283,10 +284,14 @@
       "passwordsMismatch": "Passwords do not match",
       "updateFailed": "Update failed. Please try again.",
       "usernameAlreadyTaken": "This username is already taken",
-      "emailAlreadyTaken": "This email is already taken"
+      "emailAlreadyTaken": "This email is already taken",
+      "avatarUploadFailed": "Failed to upload avatar",
+      "avatarDeleteFailed": "Failed to delete avatar"
     },
     "success": {
-      "profileSaved": "Profile succes updated"
+      "profileSaved": "Profile succes updated",
+      "avatarUploaded": "Avatar uploaded successfully",
+      "avatarDeleted": "Avatar deleted successfully"
     }
   },
 

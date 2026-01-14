@@ -259,6 +259,7 @@
     "uploadImage": "Unggah Gambar",
     "changeImage": "Ubah Gambar",
     "deleteImage": "Hapus Gambar",
+    "uploading": "Sedang mengunggah...",
     "username": "Nama Pengguna",
     "usernamePlaceholder": "Nama pengguna Anda",
     "fullName": "Nama Lengkap",
@@ -283,10 +284,14 @@
       "passwordsMismatch": "Kata sandi tidak cocok",
       "updateFailed": "Update Gagal. Silakan dicoba Kembali",
       "usernameAlreadyTaken": "Nama pengguna sudah digunakan",
-      "emailAlreadyTaken": "Email sudah digunakan"
+      "emailAlreadyTaken": "Email sudah digunakan",
+      "avatarUploadFailed": "Gagal mengunggah avatar",
+      "avatarDeleteFailed": "Gagal menghapus avatar"
     },
     "success": {
-      "profileSaved": "Profil berhasil diupdate"
+      "profileSaved": "Profil berhasil diupdate",
+      "avatarUploaded": "Avatar berhasil diunggah",
+      "avatarDeleted": "Avatar berhasil dihapus"
     }
   },
 
