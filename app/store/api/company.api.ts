@@ -11,7 +11,7 @@ interface Company {
   latitude?: number | string;
   longitude?: number | string;
   altitude?: number | string;
-  avatar?: string;
+  logo?: string;
 }
 
 export const companyApi = baseApi.injectEndpoints({
@@ -32,10 +32,21 @@ export const companyApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Company', id: 'CURRENT' }],
     }),
+
+      uploadLogo: builder.mutation<Company, FormData>({
+          query: (formData) => ({
+            url: 'companies/logo',
+            method: 'POST',
+            body: formData,
+          }),
+          invalidatesTags: [{ type: 'Company', id: 'CURRENT' }],
+        }),
+
   }),
 });
 
 export const {
   useGetCurrentCompanyQuery,
   useUpdateCompanyMutation,
+  useUploadLogoMutation,
 } = companyApi;

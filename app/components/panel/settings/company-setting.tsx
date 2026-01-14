@@ -11,8 +11,13 @@ import {
 import { Field, FieldLabel, FieldContent } from '~/components/ui/field';
 import { Avatar, AvatarImage, AvatarFallback } from '~/components/ui/avatar';
 import { useTranslation } from 'react-i18next';
-import { useGetCurrentCompanyQuery, useUpdateCompanyMutation } from  "../../../store/api";
-import { toast } from "sonner"
+import {
+  useGetCurrentCompanyQuery,
+  useUpdateCompanyMutation,
+  useUploadLogoMutation,
+} from '../../../store/api';
+import { toast } from 'sonner';
+import { API_BASE_URL } from '~/store/api/baseApi';
 
 export default function CompanySettings() {
   const { t } = useTranslation();
@@ -31,17 +36,25 @@ export default function CompanySettings() {
 
   const logoFileRef = React.useRef<HTMLInputElement>(null);
 
+  // Helper function to construct full image URL
+  const getFullImageUrl = (url: string | null | undefined): string => {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    return `${API_BASE_URL}${url}`;
+  };
+
   const { data: currentCompany, refetch } = useGetCurrentCompanyQuery(
     undefined,
     { refetchOnMountOrArgChange: true }
   );
   const [updateCompany, { isLoading: isUpdating }] = useUpdateCompanyMutation();
+  const [uploadLogo, { isLoading: isUploading }] = useUploadLogoMutation();
 
   function handleLogoUpload() {
     logoFileRef.current?.click();
   }
 
-  function handleFileChange(
+  async function handleFileChange(
     e: React.ChangeEvent<HTMLInputElement>,
     setter: (v: string) => void
   ) {
@@ -50,6 +63,24 @@ export default function CompanySettings() {
       const reader = new FileReader();
       reader.onloadend = () => setter(reader.result as string);
       reader.readAsDataURL(file);
+
+      // Upload to server
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await uploadLogo(formData).unwrap();
+        toast.success(t('settings.company.success.logoUploaded'), {
+          duration: 3000,
+        });
+        // Update imageUrl from response if available
+        if ((response as any).logo) {
+          setLogoUrl(getFullImageUrl((response as any).logo));
+        }
+      } catch (err: any) {
+        toast.error(t('settings.company.errors.logoUploadFailed'), {
+          duration: 3000,
+        });
+      }
     }
   }
 
@@ -72,7 +103,6 @@ export default function CompanySettings() {
       latitude: companyLatitude || undefined,
       longitude: companyLongitude || undefined,
       altitude: companyAltitude || undefined,
-      avatar: logoUrl || undefined,
     };
 
     (async () => {
@@ -82,9 +112,9 @@ export default function CompanySettings() {
         try {
           await refetch();
         } catch {}
-         toast.success(`${t('settings.company.saved')} ${companyName}`, {
-              duration: 3000,
-            })
+        toast.success(`${t('settings.company.saved')} ${companyName}`, {
+          duration: 3000,
+        });
       } catch (err) {
         console.error('Update company failed', err);
         setCompanyError(
@@ -96,7 +126,6 @@ export default function CompanySettings() {
 
   React.useEffect(() => {
     if (currentCompany) {
-      setLogoUrl((currentCompany as any).avatar ?? '');
       setCompanyName(currentCompany.name ?? '');
       setCompanyAddress(currentCompany.address ?? '');
       setCompanyCity(currentCompany.city ?? '');
@@ -106,6 +135,9 @@ export default function CompanySettings() {
       setCompanyLatitude(String((currentCompany as any).latitude ?? ''));
       setCompanyLongitude(String((currentCompany as any).longitude ?? ''));
       setCompanyAltitude(String((currentCompany as any).altitude ?? ''));
+      // Set logo from currentCompany
+      const logoUrl = currentCompany.logo ?? '';
+      setLogoUrl(getFullImageUrl(logoUrl));
     }
   }, [currentCompany]);
 
@@ -129,10 +161,16 @@ export default function CompanySettings() {
                 <AvatarImage src={logoUrl} alt='Logo' />
                 <AvatarFallback>Logo</AvatarFallback>
               </Avatar>
-              <Button type='button' onClick={handleLogoUpload}>
-                {logoUrl
-                  ? t('settings.company.changeLogo')
-                  : t('settings.company.uploadLogo')}
+              <Button
+                type='button'
+                onClick={handleLogoUpload}
+                disabled={isUploading}
+              >
+                {isUploading
+                  ? t('settings.company.uploading')
+                  : logoUrl
+                    ? t('settings.company.changeLogo')
+                    : t('settings.company.uploadLogo')}
               </Button>
             </div>
 

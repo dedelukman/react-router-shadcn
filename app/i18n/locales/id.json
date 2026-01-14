@@ -157,6 +157,7 @@
       "logo": "Logo Perusahaan",
       "changeLogo": "Ubah Logo",
       "uploadLogo": "Upload Logo",
+      "uploading": "Sedang mengunggah...",
       "name": "Nama Perusahaan",
       "address": "Alamat",
       "city": "Kota",
@@ -165,7 +166,13 @@
       "email": "Email",
       "error": "Nama Perusahaan wajib diisi.",
       "saved": "Perusahaan tersimpan : ",
-      "updateFailed": "Update gagal. Silakan coba lagi."
+      "updateFailed": "Update gagal. Silakan coba lagi.",
+      "success": {
+        "logoUploaded": "Logo berhasil diunggah"
+      },
+      "errors": {
+        "logoUploadFailed": "Gagal mengunggah logo"
+      }
     },
     "website": {
       "info": "Info Website",

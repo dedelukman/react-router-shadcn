@@ -157,6 +157,7 @@
       "logo": "Company Logo",
       "changeLogo": "Change Logo",
       "uploadLogo": "Upload Logo",
+      "uploading": "Uploading...",
       "name": "Company Name",
       "address": "Address",
       "city": "City",
@@ -165,7 +166,13 @@
       "email": "Email",
       "error": "Company name is required.",
       "saved": "Company saved:",
-      "updateFailed": "Update failed. Please try again."
+      "updateFailed": "Update failed. Please try again.",
+      "success": {
+        "logoUploaded": "Logo uploaded successfully"
+      },
+      "errors": {
+        "logoUploadFailed": "Failed to upload logo"
+      }
     },
     "website": {
       "info": "Website Info",
