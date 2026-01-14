@@ -1,6 +1,7 @@
 import { IconDotsVertical, IconLogout, type Icon } from '@tabler/icons-react';
 import { useNavigate, useLocation } from 'react-router';
 import { useAuth } from '~/lib/auth';
+import { API_BASE_URL } from '~/store/api/baseApi';
 
 import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
 import {
@@ -36,6 +37,13 @@ export function NavUser({
   const { t } = useTranslation();
   const location = useLocation();
 
+  // Helper function to construct full image URL
+  const getFullImageUrl = (url: string | null | undefined): string => {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    return `${API_BASE_URL}${url}`;
+  };
+
   const userData = auth.user; // <— berasal dari localStorage
 
   // Derive a display name from common backend fields: prefer `name`, then `fullName`, then `username`, then email local-part
@@ -50,7 +58,7 @@ export function NavUser({
   const user = {
     name: derivedName,
     email: userData?.email || 'guest@example.com',
-    avatar: (userData as any)?.avatar || (userData as any)?.imageUrl || '',
+    avatar: getFullImageUrl((userData as any)?.avatarUrl || ''),
   };
 
   // Cek apakah salah satu item user aktif berdasarkan URL saat ini

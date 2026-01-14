@@ -6,6 +6,7 @@ interface User {
   email?: string;
   role?: string;
   username?: string;
+  avatarUrl?: string;
 }
 
 export const authApi = baseApi.injectEndpoints({

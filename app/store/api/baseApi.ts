@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { toast } from 'sonner';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/';
 
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   let result = await fetchBaseQuery({

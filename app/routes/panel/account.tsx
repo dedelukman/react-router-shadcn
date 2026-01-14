@@ -12,8 +12,14 @@ import {
   FieldDescription,
   FieldError,
 } from '~/components/ui/field';
-import { useGetCurrentUserQuery, useUpdateUserMutation } from '~/store/api';
-import { toast } from "sonner"
+import {
+  useGetCurrentUserQuery,
+  useUpdateUserMutation,
+  useUploadAvatarMutation,
+  useDeleteAvatarMutation,
+} from '~/store/api';
+import { API_BASE_URL } from '~/store/api/baseApi';
+import { toast } from 'sonner';
 
 export default function Page() {
   const { t } = useTranslation();
@@ -28,12 +34,21 @@ export default function Page() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  // Helper function to construct full image URL
+  const getFullImageUrl = (url: string | null | undefined): string => {
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    return `${API_BASE_URL}${url}`;
+  };
+
   // Fetch user data on component mount
   const { data: currentUser, refetch } = useGetCurrentUserQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
 
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+  const [uploadAvatar, { isLoading: isUploading }] = useUploadAvatarMutation();
+  const [deleteAvatar, { isLoading: isDeleting }] = useDeleteAvatarMutation();
 
   useEffect(() => {
     if (currentUser) {
@@ -44,29 +59,62 @@ export default function Page() {
         (currentUser as any).fullName ?? (currentUser as any).full_name ?? ''
       );
       setEmail(currentUser.email ?? '');
-      setImageUrl(
-        (currentUser as any).avatar ?? (currentUser as any).imageUrl ?? ''
-      );
+      const avatarUrl = (currentUser as any).avatarUrl ?? '';
+      setImageUrl(getFullImageUrl(avatarUrl));
     }
   }, [currentUser]);
 
   const handleImageUpload = () => {
-    fileInputRef.current?.click();
+    if (!isUploading) {
+      fileInputRef.current?.click();
+    }
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Preview the image locally
       const reader = new FileReader();
       reader.onloadend = () => {
         setImageUrl(reader.result as string);
       };
       reader.readAsDataURL(file);
+
+      // Upload to server
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        const response = await uploadAvatar(formData).unwrap();
+        toast.success(t('profile.success.avatarUploaded'), {
+          duration: 3000,
+        });
+        // Update imageUrl from response if available
+        if ((response as any).avatarUrl) {
+          setImageUrl(getFullImageUrl((response as any).avatarUrl));
+        }
+      } catch (err: any) {
+        toast.error(t('profile.errors.avatarUploadFailed'), {
+          duration: 3000,
+        });
+      }
     }
   };
 
-  const handleImageDelete = () => {
-    setImageUrl('');
+  const handleImageDelete = async () => {
+    try {
+      await deleteAvatar().unwrap();
+      setImageUrl('');
+      toast.success(t('profile.success.avatarDeleted'), {
+        duration: 3000,
+      });
+      try {
+        await refetch();
+      } catch {}
+    } catch (err: any) {
+      toast.error(t('profile.errors.avatarDeleteFailed'), {
+        duration: 3000,
+      });
+    }
   };
 
   const validate = () => {
@@ -102,9 +150,9 @@ export default function Page() {
       await updateUser({ id: userId, body: userData }).unwrap();
       setNewPassword('');
       setConfirmPassword('');
-       toast.success(t('profile.success.profileSaved'), {
-      duration: 3000,
-    })
+      toast.success(t('profile.success.profileSaved'), {
+        duration: 3000,
+      });
       try {
         await refetch();
       } catch {}
@@ -154,14 +202,19 @@ export default function Page() {
               {(fullName || 'US').substring(0, 2).toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <Button onClick={handleImageUpload}>
-            {imageUrl ? t('profile.changeImage') : t('profile.uploadImage')}
+          <Button onClick={handleImageUpload} disabled={isUploading}>
+            {isUploading
+              ? t('profile.uploading')
+              : imageUrl
+                ? t('profile.changeImage')
+                : t('profile.uploadImage')}
           </Button>
           {imageUrl && (
             <Button
               onClick={handleImageDelete}
               variant='destructive'
               className='bg-red-700 hover:bg-red-600'
+              disabled={isDeleting}
             >
               <IconTrash />
             </Button>
@@ -178,7 +231,6 @@ export default function Page() {
                 onChange={(ev) => setUsername(ev.target.value)}
                 placeholder={t('profile.usernamePlaceholder')}
                 disabled={true}
-                
               />
               <FieldError>{errors.username}</FieldError>
             </FieldContent>
