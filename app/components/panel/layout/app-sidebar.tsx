@@ -43,7 +43,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className='data-[slot=sidebar-menu-button]:!p-1.5'
+              className='data-[slot=sidebar-menu-button]:p-1.5!'
             >
               <a href='/'>
                 <Avatar className='h-6 w-6'>
@@ -59,11 +59,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.main.map(mapItem)} />
-        <NavSecondary items={data.secondary.map(mapItem)} className='mt-auto' />
+        <NavMain items={data.main.filter((item) => item.href).map(mapItem)} />
+        <NavSecondary
+          items={data.secondary.filter((item) => item.href).map(mapItem)}
+          className='mt-auto'
+        />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser items={data.user.map(mapItem)} />
+        <NavUser items={data.user.filter((item) => item.href).map(mapItem)} />
       </SidebarFooter>
     </Sidebar>
   );
@@ -73,7 +76,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       ...item,
       title: t(item.label),
       name: t(item.label),
-      url: item.href,
+      url: item.href || '',
+      icon: item.icon || undefined,
     };
   }
 }
