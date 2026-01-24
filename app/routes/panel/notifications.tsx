@@ -1,5 +1,8 @@
 import Notifications from '~/components/panel/notifications';
+import { RequirePermission } from '~/lib/RequirePermission';
 
 export default function NotificationsPage() {
-  return <Notifications />;
+  return  <RequirePermission permission="NOTIFICATION_VIEW">
+         <Notifications />;
+      </RequirePermission>
 }

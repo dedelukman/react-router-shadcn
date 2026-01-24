@@ -96,7 +96,6 @@ export const navigationData: {
           label: 'app.dashboard',
           href: '/app/dashboard',
           icon: IconDashboard,
-          permissions: ['DASHBOARD_VIEW'],
         },
       ],
       secondary: [
@@ -116,7 +115,6 @@ export const navigationData: {
           label: 'app.search',
           href: '/app/search',
           icon: IconSearch,
-          permissions: ['SEARCH_VIEW'],
         },
       ],
 
