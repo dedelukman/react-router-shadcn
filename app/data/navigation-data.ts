@@ -31,6 +31,8 @@ export interface AppNavItem {
   children?: AppNavItem[];
   /** Role-based restrictions (future support) */
   roles?: string[];
+  /** Permission-based restrictions */
+  permissions?: string[];
 }
 
 export const navigationData: {
@@ -94,36 +96,45 @@ export const navigationData: {
           label: 'app.dashboard',
           href: '/app/dashboard',
           icon: IconDashboard,
+          permissions: ['DASHBOARD_VIEW'],
         },
-
       ],
       secondary: [
         {
           label: 'app.settings',
           href: '/app/settings',
           icon: IconSettings,
+          permissions: ['SETTING_VIEW'],
         },
         {
           label: 'app.gethelp',
           href: '/app/gethelp',
           icon: IconHelp,
+          permissions: ['GETHELP_VIEW'],
         },
         {
           label: 'app.search',
           href: '/app/search',
           icon: IconSearch,
+          permissions: ['SEARCH_VIEW'],
         },
       ],
-     
+
       user: [
-          { label: 'app.account', href: '/app/account', icon: IconUserCircle },
-          { label: 'app.billing', href: '/app/billing', icon: IconSettings },
-          {
-            label: 'app.notifications',
-            href: '/app/notifications',
-            icon: IconNotification,
-          },
-        ],
+        { label: 'app.account', href: '/app/account', icon: IconUserCircle },
+        {
+          label: 'app.billing',
+          href: '/app/billing',
+          icon: IconSettings,
+          permissions: ['BILLING_VIEW'],
+        },
+        {
+          label: 'app.notifications',
+          href: '/app/notifications',
+          icon: IconNotification,
+          permissions: ['NOTIFICATION_VIEW'],
+        },
+      ],
     },
   },
 };

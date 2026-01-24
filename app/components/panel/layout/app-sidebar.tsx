@@ -17,9 +17,11 @@ import { useTranslation } from 'react-i18next';
 import { navigationData, type AppNavItem } from '~/data/navigation-data';
 import { useGetCurrentCompanyQuery } from '~/store/api';
 import { API_BASE_URL } from '~/store/api/baseApi';
+import { useAuth } from '~/lib/auth';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const data = navigationData.menu.sidebar;
   const { data: currentCompany } = useGetCurrentCompanyQuery(undefined, {
     refetchOnMountOrArgChange: true,
@@ -31,6 +33,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     if (url.startsWith('http')) return url;
     return `${API_BASE_URL}${url}`;
   };
+
+  // Helper function to check if user has required permissions
+  const hasPermissions = (permissions?: string[]): boolean => {
+    if (!permissions || permissions.length === 0) return true;
+    if (!user?.permissions) return false;
+    return permissions.every(perm => user.permissions!.includes(perm));
+  };
+
+  // Filter items based on permissions
+  const filteredMain = data.main.filter((item) => item.href && hasPermissions(item.permissions));
+  const filteredSecondary = data.secondary.filter((item) => item.href && hasPermissions(item.permissions));
+  const filteredUser = data.user.filter((item) => item.href && hasPermissions(item.permissions));
 
   const companyName = currentCompany?.name || 'Company';
   const companyLogo = getFullImageUrl(currentCompany?.logo || '');
@@ -59,14 +73,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.main.filter((item) => item.href).map(mapItem)} />
+        <NavMain items={filteredMain.map(mapItem)} />
         <NavSecondary
-          items={data.secondary.filter((item) => item.href).map(mapItem)}
+          items={filteredSecondary.map(mapItem)}
           className='mt-auto'
         />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser items={data.user.filter((item) => item.href).map(mapItem)} />
+        <NavUser items={filteredUser.map(mapItem)} />
       </SidebarFooter>
     </Sidebar>
   );

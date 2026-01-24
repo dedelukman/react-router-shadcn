@@ -12,7 +12,8 @@ interface User {
   id?: number;
   name?: string;
   email?: string;
-  role?: string;
+  roles?: string[];
+  permissions?: string[];
   username?: string;
 }
 
@@ -38,7 +39,7 @@ export function useAuth() {
         return false;
       }
     },
-    [loginTrigger, refetch]
+    [loginTrigger, refetch],
   );
 
   const signup = React.useCallback(
@@ -52,7 +53,7 @@ export function useAuth() {
         throw new Error(String(err));
       }
     },
-    [signupTrigger, refetch]
+    [signupTrigger, refetch],
   );
 
   const logout = React.useCallback(async () => {
@@ -98,7 +99,7 @@ export function AuthListener() {
       () => {
         refreshTrigger().catch(() => {});
       },
-      14 * 60 * 1000
+      14 * 60 * 1000,
     );
 
     return () => clearInterval(interval);
