@@ -130,7 +130,6 @@ export const navigationData: {
           label: 'app.notifications',
           href: '/app/notifications',
           icon: IconNotification,
-          permissions: ['NOTIFICATION_VIEW'],
         },
       ],
     },
